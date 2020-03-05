@@ -1,0 +1,91 @@
+.container {
+    background-color: #D6E4FF;
+}
+.topWrap {
+    display: flex;
+    align-items: center;
+    padding-left: 60rpx;
+    height: 200rpx;
+    margin-bottom: 20rpx;
+    background-color: #597EF7;
+}
+.topWrap .avatar {
+    margin-right: 30rpx;
+}
+.topWrap .avatar image {
+    width: 120rpx;
+    height: 120rpx;
+    border-radius: 10rpx;
+}
+.topWrap .username {
+    font-size: 30rpx;
+    color: #D6E4FF;
+} 
+.funcWrap {
+    margin-bottom: 200rpx;
+}
+.funcWrap .item {
+    height: 90rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20rpx;
+    border-bottom: 1rpx solid #ADC6FF;
+}
+.itemHover {
+    background-color: rgba(0, 0, 0, .1);
+}
+.funcWrap .item {
+    position: relative;
+}
+.funcWrap .item .left {
+    display: flex;
+    align-items: center;
+}
+.funcWrap .item .left .itemName {
+    margin-left: 30rpx;
+    font-size: 28rpx;
+    color: #597ef7;
+}
+.funcWrap .item .right {
+    display: flex;
+    align-items: center;
+}
+.funcWrap .item .right .num {
+    padding: 0 30rpx;
+    font-size: 26rpx;
+    color: #597ef7;
+}
+.funcWrap .item .service {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0);
+}
+.logout {
+    height: 80rpx;
+    width: 690rpx;
+    margin: 0 auto;
+    border-radius: 10rpx;
+    background-color: #ADC6FF;
+    color: 30rpx;
+    text-align: center;
+    line-height: 80rpx;
+    color: #597ef7;
+}
+.rewardWrap {
+    position: absolute;
+    width: 100%;
+    bottom: 30rpx;
+    display: flex;
+    justify-content: center;
+}
+.reward {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 20rpx;
+    color: #85a5ff;
+}

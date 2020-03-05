@@ -1,0 +1,12 @@
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+.idea/
+.DS_Store
+._DS_Store
+._*
+dist/*
+.project
+\.vscode/
+.editorconfig

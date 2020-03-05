@@ -1,0 +1,44 @@
+.container {
+    background-color: #597EF7;
+}
+.welcome {
+    height: 300rpx;
+    font-size: 50rpx;
+    text-align: center;
+    padding-top: 100rpx;
+    color: #d6e4ff;
+    box-sizing: border-box;
+}
+.formWrap {
+    width: 550rpx;
+    margin: 0 auto;
+}
+.formWrap .input {
+    height: 80rpx;
+    margin-bottom: 60rpx;
+    background-color: #d6e4ff;
+    border-radius: 10rpx;
+    padding: 0 30rpx;
+    color: #597ef7;
+}
+.placeholder {
+    color: #adc6ff;
+}
+.formWrap .btn {
+    width: 300rpx;
+    height: 80rpx;
+    margin: 120rpx auto;
+    text-align: center;
+    line-height: 80rpx;
+    color: #d6e4ff;
+    border-radius: 10rpx;
+    background-color: #2f54eb;
+}
+.formWrap .btnHover {
+    opacity: .6;
+}
+.tip {
+    font-size: 24rpx;
+    color: #ADC6FF;
+    text-align: center;
+}

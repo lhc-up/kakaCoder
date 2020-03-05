@@ -1,0 +1,32 @@
+<view class="container">
+    <view class="topWrap">
+        <view class="avatar">
+            <v-image defaultImage="/static/images/avatar.png" src="https://avatars2.githubusercontent.com/u/35326675?v=4"></v-image>
+        </view>
+        <view class="username">
+            <!-- <text>luohao8023</text> -->
+            <text bindtap="goLogin">LOGIN</text>
+        </view>
+    </view>
+    <view class="funcWrap">
+        <view bindtap="funcClick" wx:if="{{userInfo||item.value!=='func'}}" wx:for="{{funcs}}" wx:key="value" data-type="{{item.value}}" hover-stay-time="hover-stay-time" hover-class="itemHover" class="item">
+            <button wx:if="{{item.value==='service'}}" class="service" open-type="contact" bindcontact="handleContact"></button>
+            <view class="left">
+                <v-icon type="{{item.icon}}" color="#597ef7" size="{{item.iconSize}}"></v-icon>
+                <text class="itemName">{{item.text}}</text>
+            </view>
+            <view class="right">
+                <!-- <text class="num">30</text> -->
+                <v-icon type="right" color="#597ef7" size="40"></v-icon>
+            </view>
+        </view>
+    </view>
+    <view bindtap="loginBtnClick" hover-stay-time="hover-stay-time" hover-class="itemHover" class="logout">{{userInfo?'LOGOUT':'LOGIN'}}</view>
+    <view class="rewardWrap">
+        <view bindtap="reward" class="reward">
+            <v-icon type="dashang" color="#ff4d4f" size="40"></v-icon>
+            <text>Reward</text>
+        </view>
+    </view>
+    <actionsheet bindactiontap="actionClick" bindclose="toggleAction" show="{{showActionsheet}}" showCancel="{{false}}" actions="{{groups}}"></actionsheet>
+</view>

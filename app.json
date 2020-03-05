@@ -1,0 +1,46 @@
+{
+    "pages": [
+        "pages/trend/trend",
+        "pages/topic/topic",
+        "pages/me/me",
+        "pages/login/login",
+        "pages/index/index"
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarTextStyle": "white",
+        "navigationBarTitleText": "GitHuber"
+    },
+    "tabBar": {
+        "color": "#bfbfbf",
+        "selectedColor": "#597EF7",
+        "list": [
+            {
+                "pagePath": "pages/trend/trend",
+                "text": "Trending",
+                "iconPath": "/static/images/tab-trend.png",
+                "selectedIconPath": "/static/images/tab-trend-select.png"
+            },
+            {
+                "pagePath": "pages/topic/topic",
+                "text": "Topics",
+                "iconPath": "/static/images/tab-topic.png",
+                "selectedIconPath": "/static/images/tab-topic-select.png"
+            },
+            {
+                "pagePath": "pages/me/me",
+                "text": "Me",
+                "iconPath": "/static/images/tab-me.png",
+                "selectedIconPath": "/static/images/tab-me-select.png"
+            }
+        ]
+    },
+    "usingComponents": {
+        "v-icon": "/component/v-icon/index",
+        "v-image": "/component/v-image/index",
+        "actionsheet": "/component/actionsheet/index"
+    },
+    "style": "v2",
+    "sitemapLocation": "sitemap.json",
+    "navigateToMiniProgramAppIdList": ["wx18a2ac992306a5a4", "wx8abaf00ee8c3202e"]
+}

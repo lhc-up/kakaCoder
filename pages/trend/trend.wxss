@@ -1,0 +1,204 @@
+.container {
+    background-color: #D6E4FF;
+}
+.searchWrap {
+    height: 310rpx;
+    background: #597EF7;
+}
+.tabWrap {
+    display: flex;
+    justify-content: center;
+    padding-top: 20rpx;
+}
+.tabWrap .tab {
+    position: relative;
+    margin: 0 40rpx;
+    padding: 10rpx 0 16rpx;
+    box-sizing: border-box;
+    color: #D6E4FF;
+    font-size: 32rpx;
+}
+.tabWrap .tab:after {
+    position: absolute;
+    bottom: 0;
+    left: 10rpx;
+    content: "";
+    width: calc(100% - 20rpx);
+    height: 6rpx;
+    border-radius: 4rpx;
+    background-color: #1d39c4;
+    transform: scale(0);
+    transition: all ease .2s;
+}
+.tabWrap .tab.selected {
+    color: #1d39c4;
+    font-weight: 600;
+}
+.tabWrap .tab.selected:after {
+    transform: scale(1);
+}
+.cardWrap {
+    display: flex;
+    justify-content: space-between;
+    padding: 50rpx 50rpx 0;
+}
+.cardWrap .card {
+    width: 110rpx;
+    height: 110rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 14rpx;
+    background-color: #597ef7;
+    box-shadow: 0 0 14rpx #B5C3FC;
+}
+.filterWrap {
+    padding: 15rpx 0 0 50rpx;
+}
+.filterWrap .item {
+    margin-right: 20rpx;
+    font-size: 20rpx;
+    color: #92A4EE;
+}
+.moduleTitle {
+    padding: 30rpx 0 0 30rpx;
+    word-break: break-all;
+    color: #85A5FF;
+    font-size: 24rpx;
+}
+
+.listWrap {
+    padding: 20rpx 30rpx;
+}
+.repoItem {
+    padding: 16rpx 30rpx;
+    margin-bottom: 20rpx;
+    background-color: #ADC6FF;
+    border-radius: 14rpx;
+}
+.repoItem .repoTitle {
+    display: flex;
+    align-items: center;
+    color: #2F54EB;
+    font-size: 30rpx;
+}
+.repoItem .repoTitle .thin {
+    margin-left: 10rpx;
+}
+.repoItem .repoTitle .sep {
+    margin: 0 8rpx;
+}
+.repoItem .repoTitle .thick {
+    font-size: 32rpx;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.repoItem .repoDesc {
+    padding: 10rpx 16rpx;
+    word-break: break-all;
+    color: #597EF7;
+    font-size: 24rpx;
+    text-indent: 2em;
+}
+.repoItem .repoAttr {
+    display: flex;
+    align-items: center;
+    padding-left: 10rpx;
+}
+.repoItem .repoAttr .item {
+    display: flex;
+    align-items: center;
+    margin-right: 30rpx;
+    font-size: 20rpx;
+    color: #597EF7;
+}
+.repoItem .repoAttr .item .icon {
+    margin-right: 6rpx;
+}
+.repoItem .developers {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-top: 15rpx;
+    padding-left: 10rpx;
+}
+.repoItem .developers image {
+    width: 40rpx;
+    height: 40rpx;
+    margin-right: 10rpx;
+    border-radius: 6rpx;
+}
+.devItem {
+    position: relative;
+    height: 200rpx;
+    padding: 20rpx;
+    display: flex;
+    margin-bottom: 20rpx;
+    box-sizing: border-box;
+    border-radius: 12rpx;
+    box-shadow: 0 0 16rpx #ADC6FF;
+    background-color: #ADC6FF;
+}
+.devItem .avatar {
+    width: 160prx;
+    height: 160rpx;
+    border-radius: 10rpx;
+}
+.devItem image {
+    width: 160rpx;
+    height: 160rpx;
+    border-radius: 10rpx;
+}
+.devItem .devContent {
+    padding-left: 20rpx;
+    width: calc(100% - 180rpx);
+}
+.devItem .devContent .name {
+    font-size: 30rpx;
+    color: #2F54EB;
+}
+.devItem .devContent .subName {
+    font-size: 26rpx;
+    color: #597EF7;
+}
+.devItem .devContent .repo {
+    display: flex;
+    align-items: center;
+}
+.devItem .devContent .repo .repoName {
+    padding-left: 10rpx;
+    font-size: 26rpx;
+    color: #597EF7;
+    font-weight: 600;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.devItem .devContent .intro {
+    width: 100%;
+    padding-top: 10rpx;
+    font-size: 22rpx;
+    color: #597EF7;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.devItem .btn {
+    position: absolute;
+    top: 20rpx;
+    right: 30rpx;
+    height: 30rpx;
+    width: 80rpx;
+    background-color: #D6E4FF;
+    border-radius: 6rpx;
+    box-shadow: 0 0 6rpx #ADC6FF;
+    color: #597EF7;
+    font-size: 16rpx;
+    text-align: center;
+    line-height: 30rpx;
+}
+.devItem .btn.sp {
+    top: 60rpx;
+}
