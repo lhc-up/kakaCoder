@@ -1,0 +1,47 @@
+<view class="v-index-wrap">
+    <view class="top-content">
+        <view bindtap="onClear" class="clear">
+            <v-icon type="clear" color="#597ef7" size="40"></v-icon>
+        </view>
+        <radio-group class="radio-group" bindchange="onRadioChange">
+            <radio class="radio" color="#597ef7" wx:for="{{radioList}}" wx:key="name" value="{{item.name}}" checked="{{item.name===currentType}}">
+                <text>{{item.name}}</text>
+            </radio>
+        </radio-group>
+        <view class="select-wrap">
+            <view class="select-language">
+                <view class="tag" style="width:120rpx;">language：</view>
+                <scroll-view style="height:30rpx;width:calc(100% - 120rpx);" scroll-x>
+                    <view style="min-width:calc(100% + 1rpx);white-space:nowrap;">{{currentSelectLanguageText||'--'}}</view>
+                </scroll-view>
+            </view>
+            <view class="select-language">
+                <view class="tag" style="width:195rpx;">spokenlanguage：</view>
+                <scroll-view style="height:30rpx;width:calc(100% - 195rpx);" scroll-x>
+                    <view style="min-width:calc(100% + 1rpx);white-space:nowrap;">{{currentSelectSpokenLanguageText||'--'}}</view>
+                </scroll-view>
+            </view>
+        </view>
+    </view>
+    <v-index height="calc(100% - 140rpx);">
+        <v-index-item 
+            wx:for="{{ languages }}" 
+            wx:for-index="index" 
+            wx:key="index" 
+            wx:for-item="item" name="{{item.key}}">
+            <view 
+                class="v-index-item" 
+                hover-stay-time="50"
+                hover-class="item-hover"
+                wx:for="{{item.list}}" 
+                wx:for-index="in" 
+                wx:key="in" 
+                data-param="{{it.param}}"
+                data-name="{{it.name}}"
+                bindtap="onIndexItemClick"
+                wx:for-item="it">
+                {{it.name}}
+            </view>
+        </v-index-item>
+    </v-index>
+</view>

@@ -2,8 +2,23 @@
     background-color: #D6E4FF;
 }
 .searchWrap {
-    height: 310rpx;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 150rpx;
     background: #597EF7;
+    z-index: 2;
+}
+.language {
+    position: absolute;
+    left: 45rpx;
+    top: 28rpx;
+}
+.search {
+    position: absolute;
+    right: 45rpx;
+    top: 32rpx;
 }
 .tabWrap {
     display: flex;
@@ -37,23 +52,13 @@
 .tabWrap .tab.selected:after {
     transform: scale(1);
 }
-.cardWrap {
-    display: flex;
-    justify-content: space-between;
-    padding: 50rpx 50rpx 0;
-}
-.cardWrap .card {
-    width: 110rpx;
-    height: 110rpx;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 14rpx;
-    background-color: #597ef7;
-    box-shadow: 0 0 14rpx #B5C3FC;
-}
 .filterWrap {
-    padding: 15rpx 0 0 50rpx;
+    padding: 12rpx 0 0 50rpx;
+    display: flex;
+    align-items: center;
+}
+.filterWrap .select {
+    padding: 0 20rpx 0 10rpx;
 }
 .filterWrap .item {
     margin-right: 20rpx;
@@ -61,6 +66,7 @@
     color: #92A4EE;
 }
 .moduleTitle {
+    margin-top: 150rpx;
     padding: 30rpx 0 0 30rpx;
     word-break: break-all;
     color: #85A5FF;
@@ -84,6 +90,7 @@
 }
 .repoItem .repoTitle .thin {
     margin-left: 10rpx;
+    flex-shrink: 0;
 }
 .repoItem .repoTitle .sep {
     margin: 0 8rpx;
@@ -100,7 +107,7 @@
     word-break: break-all;
     color: #597EF7;
     font-size: 24rpx;
-    text-indent: 2em;
+    text-indent: 0.5em;
 }
 .repoItem .repoAttr {
     display: flex;
@@ -116,6 +123,12 @@
 }
 .repoItem .repoAttr .item .icon {
     margin-right: 6rpx;
+}
+.repoItem .repoAttr .item .icon .languageColor {
+    width: 20rpx;
+    height: 20rpx;
+    border-radius: 50%;
+    margin-right: 4rpx;
 }
 .repoItem .developers {
     display: flex;

@@ -1,0 +1,98 @@
+<import src="../../../static/skeleton/trend.wxml"/>
+<view class="container">
+    <view class="searchWrap">
+        <!-- 筛选 -->
+        <view class="language" bindtap="goToSelectLanguage">
+            <v-icon type="yuyan-kong" color="#d6e4ff" size="52"></v-icon>
+        </view>
+        <!-- 搜素 -->
+        <view class="search">
+            <v-icon type="sousuo3" color="#d6e4ff" size="46"></v-icon>
+        </view>
+        <view class="tabWrap">
+            <view bindtap="switchTab" class="tab {{currentTab === 'repo' ? 'selected' : ''}}" data-type="repo">Repositories</view>
+            <view bindtap="switchTab" class="tab {{currentTab === 'dev' ? 'selected' : ''}}" data-type="dev">Developers</view>
+        </view>
+        <view class="filterWrap">
+            <picker bindchange="onFilterChange" mode="multiSelector" range="{{pickerList}}" range-key="name">
+                <view class="select">
+                    <v-icon type="shaixuan" color="#d6e4ff" size="34"></v-icon>
+                </view>
+            </picker>        
+            <text class="item">{{selectValue.duration}}</text>
+            <text class="item">{{selectValue.spokenLanguage}}</text>
+            <text class="item">{{selectValue.language}}</text>
+        </view>
+    </view>
+    <view class="moduleTitle">
+        <text hidden="{{currentTab==='dev'}}" class="repo">See what the GitHub community is most excited about today.</text>
+        <text hidden="{{currentTab==='repo'}}" class="dev">These are the developers building the hot tools today.</text>
+    </view>
+    <view class="listWrap">
+        <template is="trend-repo" data="{{show: currentTab==='repo' && !repoList.length, count: 5}}"></template>
+        <template is="trend-dev" data="{{show: currentTab==='dev' && !developerList.length, count: 4}}"></template>
+        <!-- 仓库列表 -->
+        <view hidden="{{currentTab==='dev'}}" class="repoList">
+            <view wx:for="{{repoList}}" wx:key="name" class="repoItem">
+                <view class="repoTitle">
+                    <v-icon type="yunliankeji_gongyinglianfuben" color="#2F54EB" size="40"></v-icon>
+                    <text class="thin">{{item.author}}</text>
+                    <text class="sep">/</text>
+                    <text class="thick">{{item.name}}</text>
+                </view>
+                <view class="repoDesc">
+                    <text>{{item.description}}</text>
+                </view>
+                <view class="repoAttr">
+                    <view wx:if="{{item.language}}" class="item">
+                        <view class="icon">
+                            <view class="languageColor" style="background-color:{{item.languageColor}};"></view>
+                        </view>
+                        <view class="attr">{{item.language}}</view>
+                    </view>
+                    <view class="item">
+                        <view class="icon">
+                            <v-icon type="star2" color="#597EF7" size="20"></v-icon>
+                        </view>
+                        <view class="attr">{{item.stars}}</view>
+                    </view>
+                    <view class="item">
+                        <view class="icon">
+                            <v-icon type="codefork" color="#597EF7" size="24"></v-icon>
+                        </view>
+                        <view class="attr">{{item.forks}}</view>
+                    </view>
+                    <view class="item">
+                        <view class="icon">
+                            <v-icon type="star2" color="#597EF7" size="22"></v-icon>
+                        </view>
+                        <view class="attr">{{item.currentPeriodStars}} stars today</view>
+                    </view>
+                </view>
+                <view class="developers">
+                    <v-image wx:for="{{item.builtBy}}" wx:key="username" wx:for-item="builtBy" defaultImage="/static/images/avatar.png" src="{{builtBy.avatar}}"></v-image>
+                </view>
+            </view>
+        </view>
+        <!-- 开发者列表 -->
+        <view hidden="{{currentTab==='repo'}}" class="devList">
+            <view wx:for="{{developerList}}" wx:key="username" class="devItem">
+                <view class="avatar">
+                    <v-image defaultImage="/static/images/avatar.png" src="{{item.avatar}}"></v-image>
+                </view>
+                <view class="devContent">
+                    <view class="name">{{item.name}}</view>
+                    <view class="subName">{{item.username}}</view>
+                    <view class="repo">
+                        <v-icon type="huojing" color="#FFA940" size="36"></v-icon>
+                        <v-icon type="yunliankeji_gongyinglianfuben" color="#597EF7" size="34"></v-icon>
+                        <text class="repoName">{{item.repo.name}}</text>
+                    </view>
+                    <view class="intro">{{item.repo.description}}</view>
+                </view>
+                <!-- <view class="btn sp">Follow</view> -->
+                <view wx:if="{{item.sponsorUrl}}" class="btn">Sponsor</view>
+            </view>
+        </view>
+    </view>
+</view>

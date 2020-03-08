@@ -1,0 +1,21 @@
+<view class="container">
+    <view class="searchWrap">
+        <!-- 筛选 -->
+        <view class="inputWrap">
+            <view class="select">
+                <picker bindchange="onDurationChange" mode="multiSelector" range="{{selectList}}">
+                    <v-icon type="shaixuan" color="#d6e4ff" size="44"></v-icon>
+                </picker>
+            </view>
+            <input type="search" class="input" placeholder="请输入搜索关键字" placeholder-class="placeholder" />
+            <view class="help">
+                <v-icon type="bangzhu" color="#d6e4ff" size="44"></v-icon>
+            </view>
+        </view>
+        <view class="filterWrap">
+            <text class="item">Java</text>
+            <text class="item">sort</text>
+            <text class="item">111</text>
+        </view>
+    </view>
+</view>

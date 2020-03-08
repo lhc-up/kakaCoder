@@ -1,9 +1,9 @@
 <view class="container">
     <view class="welcome">Welcome</view>
     <view class="formWrap">
-        <input class="input" placeholder-class="placeholder" placeholder="Username"/>
-        <input class="input" placeholder-class="placeholder" placeholder="Password"/>
-        <view hover-stay-time="50" hover-class="btnHover" class="btn">LOGIN</view>
+        <input class="input" data-type="username" bindinput="onInput" placeholder-class="placeholder" placeholder="Username"/>
+        <input class="input" data-type="password" bindinput="onInput" placeholder-class="placeholder" placeholder="Password"/>
+        <view bindtap="login" hover-stay-time="50" hover-class="btnHover" class="btn">LOGIN</view>
     </view>
     <view class="tip">账号密码只做本地存储，不上传服务器，请放心</view>
 </view>

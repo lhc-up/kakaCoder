@@ -1,11 +1,11 @@
 <view class="container">
     <view class="topWrap">
         <view class="avatar">
-            <v-image defaultImage="/static/images/avatar.png" src="https://avatars2.githubusercontent.com/u/35326675?v=4"></v-image>
+            <v-image defaultImage="/static/images/avatar.png" src="{{userInfo.avatar_url}}"></v-image>
         </view>
         <view class="username">
-            <!-- <text>luohao8023</text> -->
-            <text bindtap="goLogin">LOGIN</text>
+            <text wx:if="{{userInfo}}">{{userInfo.login}}</text>
+            <text wx:else bindtap="goLogin">去登录</text>
         </view>
     </view>
     <view class="funcWrap">
@@ -21,7 +21,7 @@
             </view>
         </view>
     </view>
-    <view bindtap="loginBtnClick" hover-stay-time="hover-stay-time" hover-class="itemHover" class="logout">{{userInfo?'LOGOUT':'LOGIN'}}</view>
+    <view bindtap="loginBtnClick" hover-stay-time="hover-stay-time" hover-class="itemHover" class="logout">{{userInfo?'退出登录':'登录'}}</view>
     <view class="rewardWrap">
         <view bindtap="reward" class="reward">
             <v-icon type="dashang" color="#ff4d4f" size="40"></v-icon>

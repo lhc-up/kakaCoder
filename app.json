@@ -1,8 +1,9 @@
 {
     "pages": [
-        "pages/trend/trend",
-        "pages/topic/topic",
-        "pages/me/me",
+        "pages/tabPages/trend/trend",
+        "pages/subPages/language/language",
+        "pages/tabPages/github/github",
+        "pages/tabPages/me/me",
         "pages/login/login",
         "pages/index/index"
     ],
@@ -16,19 +17,19 @@
         "selectedColor": "#597EF7",
         "list": [
             {
-                "pagePath": "pages/trend/trend",
+                "pagePath": "pages/tabPages/trend/trend",
                 "text": "Trending",
                 "iconPath": "/static/images/tab-trend.png",
                 "selectedIconPath": "/static/images/tab-trend-select.png"
             },
             {
-                "pagePath": "pages/topic/topic",
-                "text": "Topics",
-                "iconPath": "/static/images/tab-topic.png",
-                "selectedIconPath": "/static/images/tab-topic-select.png"
+                "pagePath": "pages/tabPages/github/github",
+                "text": "Repos",
+                "iconPath": "/static/images/tab-github.png",
+                "selectedIconPath": "/static/images/tab-github-select.png"
             },
             {
-                "pagePath": "pages/me/me",
+                "pagePath": "pages/tabPages/me/me",
                 "text": "Me",
                 "iconPath": "/static/images/tab-me.png",
                 "selectedIconPath": "/static/images/tab-me-select.png"
@@ -38,6 +39,8 @@
     "usingComponents": {
         "v-icon": "/component/v-icon/index",
         "v-image": "/component/v-image/index",
+        "v-index": "/component/v-index/index",
+        "v-index-item": "/component/v-index-item/index",
         "actionsheet": "/component/actionsheet/index"
     },
     "style": "v2",

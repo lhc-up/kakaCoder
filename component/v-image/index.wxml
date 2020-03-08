@@ -1,2 +1,2 @@
-<image wx:if='{{!finishLoadFlag}}' mode='{{mode}}' src='{{defaultImage}}' style='{{width ? "width:" + width : ""}};{{height ? "height:" + height : ""}}' class='image-class'/>
-<image mode='{{mode}}' class='{{finishLoadFlag ? "" : "before-load"}}' src='{{src}}' bindload='finishLoad' style='{{finishLoadFlag && width ? "width:" + width : ""}};{{finishLoadFlag && height ? "height:" + height : ""}}' />
+<image wx:if='{{!finishLoadFlag}}' mode='{{mode}}' lazy-load src='{{defaultImage}}' style='{{width ? "width:" + width : ""}};{{height ? "height:" + height : ""}}' class='image-class'/>
+<image mode='{{mode}}' lazy-load class='{{finishLoadFlag ? "" : "before-load"}}' src='{{src}}' bindload='finishLoad' binderror="errorLoad" style='{{finishLoadFlag && width ? "width:" + width : ""}};{{finishLoadFlag && height ? "height:" + height : ""}}' />

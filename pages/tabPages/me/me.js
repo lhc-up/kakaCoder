@@ -1,3 +1,9 @@
+/**
+ * @name: 个人中心
+ * @author: haoluo2
+ * @date: 2020-03-05
+*/
+
 let app =  getApp();
 Page({
     data: {
@@ -5,25 +11,25 @@ Page({
         showActionsheet: false,
         funcs: [
             {
-                text: 'Funcs',
+                text: '功能板块',
                 value: 'func',
                 icon: 'gongnengquanxian',
                 iconSize: 40
             },
             {
-                text: 'Tsukkomi',
+                text: '吐个槽吧',
                 value: 'tsukkomi',
                 icon: 'fankui',
                 iconSize: 34
             },
             {
-                text: 'Customer service',
+                text: '客服',
                 value: 'service',
                 icon: 'kefu',
                 iconSize: 38
             },
             {
-                text: 'Clear storage',
+                text: '清除缓存',
                 value: 'clear',
                 icon: 'qingchuhuancun',
                 iconSize: 38
@@ -106,7 +112,7 @@ Page({
         wx.showModal({
             content: '\/\/TODO:',
             showCancel: false,
-            confirmText: 'Confirm',
+            confirmText: 'OK',
             confirmColor: '#597EF7'
         });
     },
@@ -116,17 +122,15 @@ Page({
         });
     },
     logout() {
-        wx.clearStorage({
-            success: (e) => {
-                wx.navigateTo({
-                    url: '/pages/trend/trend'
-                });
-            }
+        wx.removeStorageSync('userInfo');
+        app.globalData.userInfo = null;
+        wx.switchTab({
+            url: '/pages/trend/trend'
         });
     },
     loginBtnClick() {
         if (!this.data.userInfo) {
-            this.goLogin()
+            this.goLogin();
             return;
         }
         this.logout();
@@ -136,7 +140,7 @@ Page({
         wx.navigateToMiniProgram({
             appId: 'wx18a2ac992306a5a4',
             path: 'pages/apps/largess/detail?id=n28eCNrAZGCgPc1CLmE7uw%3D%3D',
-            envVersion: 'develop',
+            // envVersion: 'develop',
             success(res) {
                 // 打开成功
                 console.log('点开了赞赏');

@@ -1,0 +1,42 @@
+<!-- trending -->
+<template name="trend-repo">
+    <view hidden="{{!show}}" class="repoList">
+        <view wx:for="{{count}}" wx:key="*this" class="repoItem">
+            <view class="repoTitle">
+                <view class="icon" style="width:30rpx;height:30rpx;background-color:#d6e4ff;"></view>
+                <text class="thin" style="width:400rpx;height:30rpx;background-color:#d6e4ff;"></text>
+            </view>
+            <view class="repoDesc" style="width:600rpx;height:22rpx;margin:16rpx 0;background-color:#d6e4ff;padding:0;"></view>
+            <view class="repoAttr">
+                <view class="item" style="width: 80rpx;height:22rpx;background-color:#d6e4ff;"></view>
+                <view class="item" style="width: 110rpx;height:22rpx;background-color:#d6e4ff;"></view>
+                <view class="item" style="width: 60rpx;height:22rpx;background-color:#d6e4ff;"></view>
+                <view class="item" style="width: 140rpx;height:22rpx;background-color:#d6e4ff;"></view>
+            </view>
+            <view class="developers">
+                <view class="aratar" style="width:40rpx;height:40rpx;margin-right:10rpx;border-radius:6rpx;background-color:#d6e4ff;"></view>
+                <view class="aratar" style="width:40rpx;height:40rpx;margin-right:10rpx;border-radius:6rpx;background-color:#d6e4ff;"></view>
+                <view class="aratar" style="width:40rpx;height:40rpx;margin-right:10rpx;border-radius:6rpx;background-color:#d6e4ff;"></view>
+                <view class="aratar" style="width:40rpx;height:40rpx;margin-right:10rpx;border-radius:6rpx;background-color:#d6e4ff;"></view>
+                <view class="aratar" style="width:40rpx;height:40rpx;margin-right:10rpx;border-radius:6rpx;background-color:#d6e4ff;"></view>
+            </view>
+        </view>
+    </view>
+</template>
+<template name="trend-dev">
+    <view hidden="{{!show}}" class="devList">
+        <view wx:for="{{count}}" wx:key="*this" class="devItem">
+            <view class="avatar" style="width:160rpx;height:160rpx;border-radius:10rpx;background-color:#d6e4ff;"></view>
+            <view class="devContent">
+                <view class="name" style="width:180rpx;margin:16rpx 0;height:28rpx;background-color:#d6e4ff;"></view>
+                <view class="subName" style="width:200rpx;margin-bottom:16rpx;height:22rpx;background-color:#d6e4ff;"></view>
+                <view class="repo" style="margin-bottom:16rpx;">
+                    <view style="width:26rpx;height:26rpx;margin-right:10rpx;background-color:#d6e4ff;"></view>
+                    <view style="width:26rpx;height:26rpx;margin-right:10rpx;background-color:#d6e4ff;"></view>
+                    <view style="width:200rpx;height:26rpx;margin-right:10rpx;background-color:#d6e4ff;"></view>
+                </view>
+                <view class="intro" style="height: 8rpx;background-color:#d6e4ff;"></view>
+            </view>
+        </view>
+    </view>
+</template>

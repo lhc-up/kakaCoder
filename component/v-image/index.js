@@ -18,6 +18,11 @@ Component({
             this.setData({
                 finishLoadFlag:true
             });
+        },
+        errorLoad: function(e) {
+            this.setData({
+                finishLoadFlag: false
+            });
         }
     }
 });
