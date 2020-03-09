@@ -1,0 +1,13 @@
+<!-- activity -->
+<template name="activity">
+    <view hidden="{{!show}}" class="eventList">
+        <view wx:for="{{count}}" wx:key="*this" class="eventItem">
+            <view class="avatar" style="width:110rpx;height:110rpx;border-radius:10rpx;background-color:#d6e4ff;"></view>
+            <view class="eventContent">
+                <view style="width:80%;height:24rpx;margin-bottom:15rpx;background-color:#d6e4ff;"></view>
+                <view style="width:40%;height:24rpx;margin-bottom:20rpx;background-color:#d6e4ff;"></view>
+                <view style="width:70%;height:18rpx;background-color:#d6e4ff;"></view>
+            </view>
+        </view>
+    </view>
+</template>

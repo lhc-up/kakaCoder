@@ -111,14 +111,17 @@ Page({
             })
             this.setData({
                 'repo.list': [...this.data.repo.list, ...list],
-                'repo.hasNextPage': !!list.length,
-                'load': true
+                'repo.hasNextPage': !!list.length
             });
             this.data.repo.page++;
             utils.hideLoading();
         }).catch(err => {
             utils.showTip(err);
-        });
+        }).finally(() => {
+            this.setData({
+                'load': true
+            });
+        })
     },
     // 获取dev
     searchDevelopers() {

@@ -1,0 +1,61 @@
+.container {
+    background-color: #D6E4FF;
+}
+.eventList {
+    padding: 30rpx;
+}
+.eventItem {
+    position: relative;
+    padding: 15rpx;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20rpx;
+    box-sizing: border-box;
+    border-radius: 12rpx;
+    box-shadow: 0 0 16rpx #ADC6FF;
+    background-color: #ADC6FF;
+}
+.eventItem .avatar {
+    width: 110prx;
+    height: 110rpx;
+    border-radius: 10rpx;
+}
+.eventItem image {
+    width: 110rpx;
+    height: 110rpx;
+    border-radius: 10rpx;
+}
+.eventItem .eventContent {
+    padding-left: 20rpx;
+    width: calc(100% - 130rpx);
+    font-size: 26rpx;
+    word-break: break-all;
+}
+.user,
+.repo {
+    color: #1d39c4;
+    font-weight: 600;
+}
+.do {
+    padding: 0 10rpx;
+    color: #597ef7;
+}
+.time {
+    padding-top: 5rpx;
+    color: #597ef7;
+    font-size: 22rpx;
+}
+.emptyData {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.emptyText {
+    padding: 30rpx 0;
+    font-size: 32rpx;
+    color: #85a5ff;
+}

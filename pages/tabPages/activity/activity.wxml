@@ -1,0 +1,35 @@
+<import src="../../../static/skeleton/activity.wxml"/>
+<view class="container">
+    <template is="activity" data="{{show: !load, count: 8}}"></template>
+    <view wx:if="{{load && !eventList.length}}" class="emptyData">
+        <v-icon type="zanwu1" color="#85a5ff" size="120"></v-icon>
+        <text class="emptyText">Nothing here</text>
+    </view>
+    <view wx:if="{{load && eventList.length}}" class="eventList">
+        <view wx:for="{{eventList}}" wx:key="id" class="eventItem">
+            <view class="avatar">
+                <v-image defaultImage="/static/images/avatar.png" src="{{item.actor.avatar_url}}"></v-image>
+            </view>
+            <view class="eventContent">
+                <text class="user">{{item.actor.display_login}}</text>
+                <text wx:if="{{item.type==='WatchEvent'}}" class="do">{{item.payload.action}}</text>
+                <text wx:elif="{{item.type==='CreateEvent'}}" class="do">create a {{item.payload.ref_type}}</text>
+                <text wx:elif="{{item.type==='ForkEvent'}}" class="do">forked</text>
+                <text wx:elif="{{item.type==='IssuesEvent'}}" class="do">{{item.payload.action}} a issue in</text>
+                <text wx:elif="{{item.type==='IssueCommentEvent'}}" class="do">{{item.payload.action}} a issue comment in</text>
+                <text wx:elif="{{item.type==='FollowEvent'}}" class="do">starred following</text>
+                <text wx:elif="{{item.type==='PushEvent'}}" class="do">pushed commits in</text>
+                <text wx:elif="{{item.type==='PullRequestEvent'}}" class="do">{{item.payload.action}} a PullRequest in</text>
+                <text wx:elif="{{item.type==='PullRequestReviewCommentEvent'}}" class="do">{{item.payload.action}} a pullRequest comment in</text>
+                <text wx:elif="{{item.type==='CommitCommentEvent'}}" class="do">creates a commit comment in</text>
+                <text wx:elif="{{item.type==='DeleteEvent'}}" class="do">deleted a {{item.payload.ref_type}}</text>
+                <text wx:elif="{{item.type==='MemberEvent'}}" class="do">{{item.payload.action}} a member in</text>
+                <text wx:elif="{{item.type==='PublicEvent'}}" class="do">make</text>
+                <text wx:elif="{{item.type==='ReleaseEvent'}}" class="do">{{item.payload.action}}</text>
+                <text wx:else class="do">do something</text>
+                <text class="repo">{{item.repo.name}}</text>
+                <view class="time">update at: {{item.created_at}}</view>
+            </view>
+        </view>
+    </view>
+</view>

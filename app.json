@@ -5,7 +5,7 @@
         "pages/subPages/language/language",
         "pages/subPages/searchResult/searchResult",
         "pages/subPages/search/search",
-        "pages/tabPages/github/github",
+        "pages/tabPages/activity/activity",
         "pages/tabPages/me/me",
         "pages/login/login",
         "pages/index/index"
@@ -26,8 +26,8 @@
                 "selectedIconPath": "/static/images/tab-trend-select.png"
             },
             {
-                "pagePath": "pages/tabPages/github/github",
-                "text": "Repos",
+                "pagePath": "pages/tabPages/activity/activity",
+                "text": "Activity",
                 "iconPath": "/static/images/tab-github.png",
                 "selectedIconPath": "/static/images/tab-github-select.png"
             },

@@ -10,7 +10,13 @@ const CONST = {
     // 常用编程语言
     STORAGE_LANGUAGE: 'often_language',
     // 常用语言
-    STORAGE_SPOKEN_LANGUAGE: 'often_spoken_language'
+    STORAGE_SPOKEN_LANGUAGE: 'often_spoken_language',
+    // 用户名
+    STORAGE_USERNAME: 'username',
+    // 密码
+    STORAGE_PASSWORD: 'password',
+    // 用户信息
+    STORAGE_USERINFO: 'userInfo'
 }
 
 export default CONST;

@@ -29,5 +29,12 @@ export default {
     // sort:Sorts the results of your query by number of followers or repositories, or when the person joined GitHub. Default: best match
     // order:Determines whether the first search result returned is the highest number of matches (desc) or lowest number of matches (asc). This parameter is ignored unless you provide sort. Default: desc
     searchDevelopers: "https://api.github.com/search/users",
+
+
+    // activity
+    // We delay the public events feed by five minutes, which means the most recent event returned by the public events API actually occurred at least five minutes ago.
+    getPublicEvents: 'https://api.github.com/events',
+    // 使用时替换掉username!!!
+    getReceivedEvents: 'https://api.github.com/users/username/received_events'
     // repositories
 }
