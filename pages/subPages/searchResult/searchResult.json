@@ -1,6 +1,6 @@
 {
     "usingComponents": {},
-    "navigationBarTitleText": "Trending",
+    "navigationBarTitleText": "Search result",
     "navigationBarBackgroundColor": "#597EF7",
     "backgroundColor": "#D6E4FF",
     "enablePullDownRefresh": true

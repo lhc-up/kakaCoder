@@ -1,7 +1,10 @@
 {
     "pages": [
+        
         "pages/tabPages/trend/trend",
         "pages/subPages/language/language",
+        "pages/subPages/searchResult/searchResult",
+        "pages/subPages/search/search",
         "pages/tabPages/github/github",
         "pages/tabPages/me/me",
         "pages/login/login",

@@ -7,10 +7,9 @@
 import utils from '../../../utils/util.js';
 import url from '../../../utils/interface.js';
 import request from '../../../utils/request.js';
+import CONST from '../../../utils/const.js';
 // async await
 const regeneratorRuntime = require('../../../utils/regenerator-runtime.js');
-const LANGUAGE_KEY = 'often-language';
-const SPOKEN_KEY = 'often-spoken-language';
 Page({
     data: {
         currentTab: 'repo',//dev
@@ -21,11 +20,11 @@ Page({
         spokenLanguageList: [],
         selectValue: {
             duration: 'Daily',
-            language: 'Any',
-            spokenLanguage: 'Any'
+            language: 'Language',
+            spokenLanguage: 'Spoken Language'
         },
         selectParam: {
-            duration: '',
+            duration: 'daily',
             language: '',
             spokenLanguage: ''
         }
@@ -36,27 +35,39 @@ Page({
     onShow() {
         this.getPickerList();
     },
+    // 下拉刷新
+    onPullDownRefresh() {
+        wx.stopPullDownRefresh();
+        this.searchList();
+    },
     switchTab(e) {
         const tabName = e.currentTarget.dataset.type;
+        wx.pageScrollTo({
+            scrollTop: 0,
+            duration: 300
+        });
         if (tabName === this.data.currentTab) return;
         this.setData({
             currentTab: tabName
         });
         this.getPickerList();
     },
+    // 选择语言
     goToSelectLanguage() {
         wx.navigateTo({
             url: '/pages/subPages/language/language'
+        });
+    },
+    // 去搜索页面
+    gotoSearchPage() {
+        wx.navigateTo({
+            url: '/pages/subPages/search/search'
         });
     },
     // 获取picker列表，不同tab列表不同
     getPickerList() {
         const pickerList = [];
         const durationList = [
-            {
-                name: 'Date range',
-                param: ''
-            },
             {
                 name: 'Today',
                 param: 'daily'
@@ -70,8 +81,8 @@ Page({
                 param: 'monthly'
             }
         ];
-        const localLanguage = wx.getStorageSync(LANGUAGE_KEY);
-        const localSpokeLanguage = wx.getStorageSync(SPOKEN_KEY);
+        const localLanguage = wx.getStorageSync(CONST.STORAGE_LANGUAGE);
+        const localSpokeLanguage = wx.getStorageSync(CONST.STORAGE_SPOKEN_LANGUAGE);
         const tabName = this.data.currentTab;
 
         let languageList, spokenLanguageList;
@@ -112,7 +123,7 @@ Page({
             'selectValue.duration': duration,
             'selectValue.language': language,
             'selectParam.duration': durationParam,
-            'selectParam.language': languageParam,
+            'selectParam.language': languageParam
         });
         
         if (this.currentTab === 'repo') {
@@ -127,7 +138,7 @@ Page({
         
         this.searchList();
     },
-    // 获取当前tab对应列表,hard,强制获取
+    // 获取列表
     async searchList() {
         utils.showLoading();
         try {
@@ -145,8 +156,8 @@ Page({
     // 获取repo trending
     getRepositories() {
         return new Promise((resolve, reject) => {
-            const { duration } = this.getParams();
-            request.get(url.getTrendingRepositories+'?since='+duration).then(data => {
+            const paramStr = this.getParams('repo');
+            request.get(url.getTrendingRepositories + paramStr).then(data => {
                 resolve(data);
             }).catch(err => {
                 reject(err);
@@ -156,8 +167,8 @@ Page({
     // 获取dev trending
     getDevelopers() {
         return new Promise((resolve, reject) => {
-            const { duration } = this.getParams();
-            request.get(url.getTrendingDevelopers+'?since='+duration).then(data => {
+            const paramStr = this.getParams('dev');
+            request.get(url.getTrendingDevelopers + paramStr).then(data => {
                 resolve(data);
             }).catch(err => {
                 reject(err);
@@ -165,13 +176,12 @@ Page({
         });
     },
     // 获取请求参数
-    getParams() {
-        const durationMap = {
-            'Today': 'daily',
-            'Thisweek': 'weekly',
-            'Thismonth': 'monthly'
-        };
-        const duration = durationMap[this.data.selectValue.duration.replace(' ', '')];
-        return { duration };
+    getParams(type) {
+        let { duration, language, spokenLanguage } = this.data.selectParam;
+        let paramStr = `?since=${duration}`;
+        if (!!language) paramStr += `&language=${language}`;
+        if (!!spokenLanguage && type === 'repo') paramStr += `&spokenLanguageCode=${spokenLanguage}`;
+        
+        return paramStr;
     }
 });

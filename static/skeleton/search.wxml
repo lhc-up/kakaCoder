@@ -1,0 +1,18 @@
+<!-- search -->
+<template name="search-repo">
+    <view hidden="{{!show}}" class="repoList">
+        <view wx:for="{{count}}" wx:key="*this" class="repoItem">
+            <view class="repoTitle">
+                <view class="icon" style="width:30rpx;height:30rpx;background-color:#d6e4ff;"></view>
+                <text class="thin" style="width:400rpx;height:30rpx;background-color:#d6e4ff;"></text>
+            </view>
+            <view class="repoDesc" style="width:600rpx;height:22rpx;margin:16rpx 0;background-color:#d6e4ff;padding:0;"></view>
+            <view class="repoAttr">
+                <view class="item" style="width: 80rpx;height:22rpx;background-color:#d6e4ff;"></view>
+                <view class="item" style="width: 110rpx;height:22rpx;background-color:#d6e4ff;"></view>
+                <view class="item" style="width: 60rpx;height:22rpx;background-color:#d6e4ff;"></view>
+                <view class="item" style="width: 140rpx;height:22rpx;background-color:#d6e4ff;"></view>
+            </view>
+        </view>
+    </view>
+</template>

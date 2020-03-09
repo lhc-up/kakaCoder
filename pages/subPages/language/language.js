@@ -7,10 +7,9 @@
 import utils from '../../../utils/util.js';
 import url from '../../../utils/interface.js';
 import request from '../../../utils/request.js';
+import CONST from '../../../utils/const.js';
 // async await
 const regeneratorRuntime = require('../../../utils/regenerator-runtime.js');
-const LANGUAGE_KEY = 'often-language';
-const SPOKEN_KEY = 'often-spoken-language';
 Page({
     data: {
         languageList: [],
@@ -34,9 +33,8 @@ Page({
         // 当前选择的语言名称字符串
         currentSelectSpokenLanguageText: ''
     },
-    onReady() {
+    onLoad() {
         this.init();
-        this.getLanguageStorage();
     },
     onUnload() {
         this.setLanguageStorage();
@@ -46,20 +44,20 @@ Page({
         const type = this.data.currentType;
         if (type === 'language') {
             this.setData({
-                currentSelectLanguage: '',
+                currentSelectLanguage: [],
                 currentSelectLanguageText: ''
             });
         } else {
             this.setData({
-                currentSelectSpokenLanguage: '',
+                currentSelectSpokenLanguage: [],
                 currentSelectSpokenLanguageText: ''
             });
         }
     },
     // 获取语言本地缓存
     getLanguageStorage() {
-        const language = wx.getStorageSync(LANGUAGE_KEY);
-        const spokenLanguage = wx.getStorageSync(SPOKEN_KEY);
+        const language = wx.getStorageSync(CONST.STORAGE_LANGUAGE);
+        const spokenLanguage = wx.getStorageSync(CONST.STORAGE_SPOKEN_LANGUAGE);
         const languageList = language ? JSON.parse(language) : [];
         const spokenLanguageList = spokenLanguage ? JSON.parse(spokenLanguage) : [];
         this.setData({
@@ -71,8 +69,8 @@ Page({
     },
     // 设置语言本地缓存
     setLanguageStorage() {
-        wx.setStorageSync(LANGUAGE_KEY, JSON.stringify(this.data.currentSelectLanguage));
-        wx.setStorageSync(SPOKEN_KEY, JSON.stringify(this.data.currentSelectSpokenLanguage));
+        wx.setStorageSync(CONST.STORAGE_LANGUAGE, JSON.stringify(this.data.currentSelectLanguage));
+        wx.setStorageSync(CONST.STORAGE_SPOKEN_LANGUAGE, JSON.stringify(this.data.currentSelectSpokenLanguage));
     },
     // 单选变化
     onRadioChange(e) {
@@ -103,12 +101,15 @@ Page({
     async init() {
         utils.showLoading();
         try {
+            // 只需先同步获取一种列表
             let languageList = await this.getLanguagesList();
-            let spokenLanguageList = await this.getSpokenLanguagesList();
             this.data.languageList = languageList || [];
-            this.data.spokenLanguageList = spokenLanguageList || [];
+            this.getLanguageStorage();
             this.buildData();
             utils.hideLoading();
+
+            let spokenLanguageList = await this.getSpokenLanguagesList();
+            this.data.spokenLanguageList = spokenLanguageList || [];
         } catch(err) {
             utils.showTip(err);
         }

@@ -1,0 +1,30 @@
+<view class="container">
+    <view class="searchWrap">
+        <view class="inputWrap">
+            <view class="icon">
+                <v-icon type="sousuo3" size="40" color="#ffffff"></v-icon>
+            </view>
+            <input 
+                bindconfirm="onSearch"
+                class="input" 
+                type="search" 
+                confirm-type="search" 
+                placeholder="keyword" 
+                placeholder-class="placeholder"/>
+        </view>
+    </view>
+    <view class="mainContent">
+        <view class="tip">
+            <block wx:if="{{keywordList.length}}">
+                <text class="text">搜索历史</text>
+                <v-icon bindtap="onClear" type="clear" color="#adc6ff" size="32"></v-icon>
+            </block>
+            <text class="text" wx:else>暂无搜索历史</text>
+        </view>
+        <view class="keywordList">
+            <view bindtap="onKeywordClick" wx:for="{{keywordList}}" wx:key="*this" data-keyword="{{item}}" hover-stay-time="50" hover-class="hoverKeyword" class="keyword">
+                {{item}}
+            </view>
+        </view>
+    </view>
+</view>

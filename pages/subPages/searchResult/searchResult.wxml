@@ -1,0 +1,66 @@
+<import src="../../../static/skeleton/search.wxml"/>
+<view class="container">
+    <view wx:if="{{load && (currentTab === 'repo' ? !repo.list.length : !dev.list.length)}}" class="emptyData">
+        <v-icon type="zanwu1" color="#85a5ff" size="120"></v-icon>
+        <text class="emptyText">Nothing here</text>
+    </view>
+    <view class="searchWrap">
+        <!-- 筛选 -->
+        <view class="select" bindtap="showActionSheet">
+            <v-icon type="shaixuan" color="#d6e4ff" size="44"></v-icon>
+        </view>
+        <view class="tabWrap">
+            <view bindtap="switchTab" class="tab {{currentTab === 'repo' ? 'selected' : ''}}" data-type="repo">Repositories</view>
+            <view bindtap="switchTab" class="tab {{currentTab === 'dev' ? 'selected' : ''}}" data-type="dev">Developers</view>
+        </view>
+    </view>
+    <view class="listWrap">
+        <template is="search-repo" data="{{show: currentTab==='repo' && !load, count: 8}}"></template>
+        <!-- 仓库列表 -->
+        <view hidden="{{currentTab==='dev'}}" class="repoList">
+            <view wx:for="{{repo.list}}" wx:key="id" class="repoItem">
+                <view class="repoTitle">
+                    <v-icon type="yunliankeji_gongyinglianfuben" color="#2F54EB" size="40"></v-icon>
+                    <text class="thick">{{item.full_name}}</text>
+                </view>
+                <view class="repoDesc">
+                    <text>{{item.description}}</text>
+                </view>
+                <view class="repoAttr">
+                    <view wx:if="{{item.language}}" class="item">
+                        <view class="attr">{{item.language}}</view>
+                    </view>
+                    <view class="item">
+                        <view class="icon">
+                            <v-icon type="star2" color="#597EF7" size="20"></v-icon>
+                        </view>
+                        <view class="attr">{{item.stargazers_count}}</view>
+                    </view>
+                    <view class="item">
+                        <view class="icon">
+                            <v-icon type="codefork" color="#597EF7" size="24"></v-icon>
+                        </view>
+                        <view class="attr">{{item.forks}}</view>
+                    </view>
+                    <view class="item">
+                        <view class="icon">
+                            <v-icon type="shuaxin" color="#597EF7" size="24"></v-icon>
+                        </view>
+                        <view class="attr">{{item.updated_time}}</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <!-- 开发者列表 -->
+        <view hidden="{{currentTab==='repo'}}" class="devList">
+            <view wx:for="{{dev.list}}" wx:key="id" class="devItem">
+                <view class="avatar">
+                    <v-image defaultImage="/static/images/avatar.png" src="{{item.avatar_url}}"></v-image>
+                </view>
+                <view class="devContent">
+                    <view class="name">{{item.login}}</view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

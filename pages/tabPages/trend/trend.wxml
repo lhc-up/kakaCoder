@@ -6,7 +6,7 @@
             <v-icon type="yuyan-kong" color="#d6e4ff" size="52"></v-icon>
         </view>
         <!-- 搜素 -->
-        <view class="search">
+        <view class="search" bindtap="gotoSearchPage">
             <v-icon type="sousuo3" color="#d6e4ff" size="46"></v-icon>
         </view>
         <view class="tabWrap">
@@ -20,8 +20,8 @@
                 </view>
             </picker>        
             <text class="item">{{selectValue.duration}}</text>
-            <text class="item">{{selectValue.spokenLanguage}}</text>
             <text class="item">{{selectValue.language}}</text>
+            <text class="item">{{selectValue.spokenLanguage}}</text>
         </view>
     </view>
     <view class="moduleTitle">
