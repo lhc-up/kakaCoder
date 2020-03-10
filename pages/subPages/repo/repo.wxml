@@ -1,0 +1,58 @@
+<view class="container">
+    <view class="topContent">
+        <view class="name">ddddddddd</view>
+        <view class="desc">
+            firecrackerfirecrackerfirecrackerfirecrackerfirecrackerfirecracker
+        </view>
+    </view>
+    <view class="mainContent">
+        <view class="card">
+            <view class="cardItem">
+                <view class="itemTop">
+                    <v-icon type="eye1" color="#597ef7" size="50"></v-icon>
+                </view>
+                <view class="itemBottom">339</view>
+            </view>
+            <view class="cardItem">
+                <view class="itemTop">
+                    <v-icon type="star3" color="#597ef7" size="50"></v-icon>
+                </view>
+                <view class="itemBottom">339</view>
+            </view>
+            <view class="cardItem">
+                <view class="itemTop">
+                    <v-icon type="codefork" color="#597ef7" size="50"></v-icon>
+                </view>
+                <view class="itemBottom">339</view>
+            </view>
+            <view class="cardItem">
+                <view class="itemTop">
+                    <v-icon type="link1" color="#597ef7" size="50"></v-icon>
+                </view>
+                <view class="itemBottom">Copy link</view>
+            </view>
+            <view class="cardItem">
+                <view class="itemTop">
+                    <v-icon type="downloadfromthecloud" color="#597ef7" size="50"></v-icon>
+                </view>
+                <view class="itemBottom">Down zip</view>
+            </view>
+            <view class="cardItem">
+                <view class="itemTop">
+                    <v-icon type="codefork" color="#597ef7" size="50"></v-icon>
+                </view>
+                <view class="itemBottom">339</view>
+            </view>
+        </view>
+        <view class="list">
+            <v-cell-group>
+                <v-cell title="Code" is-link></v-cell>
+                <v-cell title="Issues" is-link></v-cell>
+                <v-cell title="Pull requests" is-link></v-cell>
+                <v-cell title="Contributors" is-link></v-cell>
+                <v-cell title="Author" is-link></v-cell>
+                <v-cell title="License" is-link></v-cell>
+            </v-cell-group>
+        </view>
+    </view>
+</view>

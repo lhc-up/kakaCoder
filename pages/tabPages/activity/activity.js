@@ -12,7 +12,7 @@ Page({
     data: {
         eventList: [],
         page: 1,
-        pageSize: 10,
+        pageSize: 15,
         hasNextPage: true,
         // 第一次是否加载完毕
         load: false
@@ -59,7 +59,7 @@ Page({
     // 获取请求路径，有用户信息时，获取用户events，否则获取public events
     getApiUrl() {
         const username = wx.getStorageSync(CONST.STORAGE_USERNAME);
-        const api = !!username ? url.getReceivedEvents.replace('username', username) : url.getPublicEvents;
+        const api = !!username ? url.getReceivedEvents(username) : url.getPublicEvents;
         return api + '?page=' + this.data.page + '&per_page=' + this.data.pageSize;
     }
 });

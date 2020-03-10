@@ -35,6 +35,16 @@ export default {
     // We delay the public events feed by five minutes, which means the most recent event returned by the public events API actually occurred at least five minutes ago.
     getPublicEvents: 'https://api.github.com/events',
     // 使用时替换掉username!!!
-    getReceivedEvents: 'https://api.github.com/users/username/received_events'
+    getReceivedEvents(username) {
+        return `https://api.github.com/users/${username}/received_events`;
+    },
+
     // repositories
+    // 获取仓库详情，使用时替换掉username、repoName！！！
+    getRepoDetail(username, repoName){
+        if (!username || !repoName) return false;
+        return `https://api.github.com/repos/${username}/${repoName}`;
+    },
+    
+
 }
