@@ -1,58 +1,69 @@
 <view class="container">
     <view class="topContent">
-        <view class="name">ddddddddd</view>
-        <view class="desc">
-            firecrackerfirecrackerfirecrackerfirecrackerfirecrackerfirecracker
-        </view>
+        <view class="name">{{repoDetail.name}}</view>
+        <view class="desc">{{repoDetail.description}}</view>
     </view>
     <view class="mainContent">
         <view class="card">
             <view class="cardItem">
                 <view class="itemTop">
-                    <v-icon type="eye1" color="#597ef7" size="50"></v-icon>
+                    <v-icon type="eye1" color="#597ef7" size="40"></v-icon>
                 </view>
-                <view class="itemBottom">339</view>
+                <view class="itemBottom">{{repoDetail.watchers_count}}</view>
             </view>
             <view class="cardItem">
                 <view class="itemTop">
-                    <v-icon type="star3" color="#597ef7" size="50"></v-icon>
+                    <v-icon type="star3" color="#597ef7" size="40"></v-icon>
                 </view>
-                <view class="itemBottom">339</view>
+                <view class="itemBottom">{{repoDetail.stargazers_count}}</view>
             </view>
             <view class="cardItem">
                 <view class="itemTop">
-                    <v-icon type="codefork" color="#597ef7" size="50"></v-icon>
+                    <v-icon type="codefork" color="#597ef7" size="40"></v-icon>
                 </view>
-                <view class="itemBottom">339</view>
+                <view class="itemBottom">{{repoDetail.forks_count}}</view>
             </view>
             <view class="cardItem">
                 <view class="itemTop">
-                    <v-icon type="link1" color="#597ef7" size="50"></v-icon>
+                    <v-icon type="link1" color="#597ef7" size="40"></v-icon>
                 </view>
                 <view class="itemBottom">Copy link</view>
             </view>
             <view class="cardItem">
                 <view class="itemTop">
-                    <v-icon type="downloadfromthecloud" color="#597ef7" size="50"></v-icon>
+                    <v-icon type="downloadfromthecloud" color="#597ef7" size="40"></v-icon>
                 </view>
                 <view class="itemBottom">Down zip</view>
             </view>
             <view class="cardItem">
                 <view class="itemTop">
-                    <v-icon type="codefork" color="#597ef7" size="50"></v-icon>
+                    <v-icon type="weibiaoti-" color="#597ef7" size="40"></v-icon>
                 </view>
-                <view class="itemBottom">339</view>
+                <view class="itemBottom">Share</view>
             </view>
         </view>
         <view class="list">
             <v-cell-group>
-                <v-cell title="Code" is-link></v-cell>
-                <v-cell title="Issues" is-link></v-cell>
-                <v-cell title="Pull requests" is-link></v-cell>
-                <v-cell title="Contributors" is-link></v-cell>
-                <v-cell title="Author" is-link></v-cell>
-                <v-cell title="License" is-link></v-cell>
+                <v-cell bindclick="viewCode" title="Code" titleSize="34rpx" is-link></v-cell>
+                <v-cell bindclick="viewIssues" title="Issues" titleSize="34rpx" is-link>
+                    <view slot="footer">{{repoDetail.open_issues_count}}</view>
+                </v-cell>
+                <v-cell bindclick="viewPr" title="Pull requests" titleSize="34rpx" is-link></v-cell>
+                <v-cell bindclick="viewContributors" title="Contributors" titleSize="34rpx" is-link></v-cell>
+                <v-cell bindclick="viewAuthor" title="Author" titleSize="34rpx" is-link>
+                    <view slot="footer">{{repoDetail.owner.login}}</view>
+                </v-cell>
+                <v-cell title="License" titleSize="34rpx">
+                    <view slot="footer">{{repoDetail.license.name}}</view>
+                </v-cell>
             </v-cell-group>
+        </view>
+        <view class="readme">
+            <view class="title">README.md</view>
+            <v-parse content="{{readmeDetail.content}}"></v-parse>
+        </view>
+        <view class="rewardWrap">
+            <v-reward></v-reward>
         </view>
     </view>
 </view>

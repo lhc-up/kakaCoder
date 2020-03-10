@@ -1,0 +1,6 @@
+<view class="rewardWrap">
+    <view bindtap="reward" class="reward">
+        <v-icon type="dashang" color="#ff4d4f" size="40"></v-icon>
+        <text>Reward</text>
+    </view>
+</view>

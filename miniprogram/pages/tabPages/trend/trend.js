@@ -183,5 +183,12 @@ Page({
         if (!!spokenLanguage && type === 'repo') paramStr += `&spokenLanguageCode=${spokenLanguage}`;
         
         return paramStr;
+    },
+    // 查看仓库详情
+    viewRepoDetail(e) {
+        const { name, author } = e.currentTarget.dataset;
+        wx.navigateTo({
+            url: `/pages/subPages/repo/repo?author=${author}&name=${name}`
+        })
     }
 });

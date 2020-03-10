@@ -33,7 +33,7 @@
         <template is="trend-dev" data="{{show: currentTab==='dev' && !developerList.length, count: 4}}"></template>
         <!-- 仓库列表 -->
         <view hidden="{{currentTab==='dev'}}" class="repoList">
-            <view wx:for="{{repoList}}" wx:key="name" class="repoItem">
+            <view bindtap="viewRepoDetail" data-name="{{item.name}}" data-author="{{item.author}}" wx:for="{{repoList}}" wx:key="name" class="repoItem">
                 <view class="repoTitle">
                     <v-icon type="yunliankeji_gongyinglianfuben" color="#2F54EB" size="40"></v-icon>
                     <text class="thin">{{item.author}}</text>

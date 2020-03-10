@@ -21,6 +21,10 @@ Component({
         title: {
             type: String
         },
+        titleSize: {
+            type: String,
+            value: '14px'
+        },
         // 标题下方的描述信息
         label: {
             type: String

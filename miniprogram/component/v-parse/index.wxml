@@ -1,0 +1,6 @@
+<view hidden="{{!loading}}" class="loadingWrap">
+    <v-icon class="loading" type="ios-loading1" size="60" color="#85a5ff"></v-icon>
+</view>
+<view hidden="{{loading}}">
+    <towxml hidden="{{loading}}" nodes="{{article}}"></towxml>
+</view>

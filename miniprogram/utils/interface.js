@@ -42,9 +42,16 @@ export default {
     // repositories
     // 获取仓库详情，使用时替换掉username、repoName！！！
     getRepoDetail(username, repoName){
-        if (!username || !repoName) return false;
         return `https://api.github.com/repos/${username}/${repoName}`;
     },
+    // 获取仓库readme
+    getRepoReadme(repoFullName) {
+        return `https://api.github.com/repos/${repoFullName}/readme`;
+    },
+    // 是否star了某仓库
+    isStardRepo(repoFullName) {
+        return `https://api.github.com/user/starred/${repoFullName}`;
+    }
     
 
 }

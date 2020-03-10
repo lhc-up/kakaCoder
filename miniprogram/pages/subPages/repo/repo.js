@@ -9,29 +9,77 @@ import request from '../../../utils/request.js';
 import utils from '../../../utils/util.js';
 Page({
     data: {
-        repoDetailUrl: '',
-        repoDetail: {}
+        option: {},
+        repoDetail: {},
+        readmeDetail: {}
     },
     onLoad(option) {
-        this.setData({
-            // repoDetailUrl: url.getRepoDetail(option.username, option.repoName)
-            repoDetailUrl: url.getRepoDetail('firecracker-microvm', 'firecracker')
-        });
+        this.data.option = option;
+        this.init();
         // wx.setNavigationBarTitle({
-        //     title: option.repoName || 'firecracker'
+        //     title: option.name || 'firecracker'
         // });
-          
-        // this.getRepoDetail();
     },
+    // 初始化
+    init() {
+        this.getRepoDetail();
+    },
+    // 获取仓库详情
     getRepoDetail() {
-        request.get(this.data.repoDetailUrl).then(data => {
+        const option = this.data.option;
+        const api = url.getRepoDetail(option.author, option.name);
+        request.get(api).then(data => {
             console.log(data);
             if (!data) return;
             this.setData({
                 repoDetail: data
             });
+            this.getReadme(data.full_name);
         }).catch(err => {
             utils.showTip(err);
         });
+    },
+    // 获取仓库readme
+    getReadme(repoFullName) {
+        const api = url.getRepoReadme(repoFullName);
+        request.get(api).then(data => {
+            this.setData({
+                readmeDetail: data
+            });
+        }).catch(err => {
+            utils.showTip(err);
+        });
+    },
+    // 解析markdown
+    parseMarkdown(content) {
+        // 云函数解析
+        wx.cloud.callFunction({
+            name: 'parseMd',
+            data: {
+                content,
+                type: 'markdown'
+            }
+        }).then(res => {
+            console.log(res);
+        }).catch(err => {
+            console.log(err)
+        }).finally(() => {
+            console.log(1)
+        });
+    },
+    viewCode() {
+
+    },
+    viewIssues() {
+
+    },
+    viewPr() {
+
+    },
+    viewContributors() {
+
+    },
+    viewAuthor() {
+
     }
 });

@@ -1,11 +1,11 @@
 {
   "pages": [
-      "pages/subPages/repo/repo",
+      
       "pages/tabPages/trend/trend",
       "pages/subPages/language/language",
       "pages/subPages/searchResult/searchResult",
       "pages/subPages/search/search",
-      
+      "pages/subPages/repo/repo",
       "pages/tabPages/activity/activity",
       "pages/tabPages/me/me",
       "pages/login/login",
@@ -44,6 +44,8 @@
       "v-icon": "/component/v-icon/index",
       "v-image": "/component/v-image/index",
       "v-index": "/component/v-index/index",
+      "v-parse": "/component/v-parse/index",
+      "v-reward": "/component/v-reward/index",
       "v-cell": "/component/cell/index",
       "v-cell-group": "/component/cell-group/index",
       "v-index-item": "/component/v-index-item/index",

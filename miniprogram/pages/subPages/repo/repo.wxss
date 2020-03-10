@@ -43,7 +43,24 @@
     color: #597ef7;
 }
 .list {
+    margin-bottom: 20rpx;
     background-color: #f0f5ff;
     color: #597ef7;
     border-radius: 10rpx;
+}
+.readme {
+    padding: 20rpx;
+    background-color: #f0f5ff;
+    border-radius: 10rpx;
+}
+.title {
+    padding: 10rpx 0 0 20rpx;
+    font-size: 36rpx;
+    font-weight: 600;
+    color: #333333;
+}
+.rewardWrap {
+    padding-top: 30rpx;
+    width: 100%;
+    height: 100rpx;
 }
