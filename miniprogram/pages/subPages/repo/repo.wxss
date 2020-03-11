@@ -11,7 +11,7 @@
     background-color: #597ef7;
 }
 .topContent .name {
-    margin-bottom: 10rpx;
+    padding-bottom: 10rpx;
     font-size: 44rpx;
 }
 .topContent .desc {
