@@ -1,0 +1,110 @@
+.container {
+    background-color: #D6E4FF;
+}
+.topContent {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 20rpx 30rpx;
+    min-height: 180rpx;
+    background-color: #597ef7;
+    box-sizing: border-box;
+}
+.intro .name {
+    font-size: 40rpx;
+}
+.intro .desc {
+    font-size: 30rpx;
+}
+.followBtn {
+    position: absolute;
+    top: 20rpx;
+    right: 30rpx;
+    padding: 6rpx 15rpx;
+    font-size: 26rpx;
+    border-radius: 6rpx;
+    background-color: #d6e4ff;
+    color: #597ef7;
+}
+.avatar {
+    width: 140rpx;
+    height: 140rpx;
+}
+.avatar image {
+    width: 140rpx;
+    height: 140rpx;
+    border-radius: 50%;
+}
+.intro {
+    padding-left: 30rpx;
+    word-break: break-all;
+    color: #d6e4ff;
+    font-size: 30rpx;
+}
+.mainContent {
+    padding: 30rpx;
+}
+.cardWrap {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    padding: 20rpx 0;
+    margin-bottom: 20rpx;
+    background-color: #fff;
+    border-radius: 10rpx;
+}
+.cardWrap .item {
+    position: relative;
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.cardWrap .item:after {
+    position: absolute;
+    right: 0;
+    top: 20rpx;
+    content: "";
+    width: 2px;
+    height: 50rpx;
+    transform: scaleX(.5);
+    background-color: #adc6ff;
+}
+.cardWrap .item:last-child:after {
+    display: none;
+}
+.cardWrap .item .itemTop {
+    margin-bottom: 10rpx;
+    font-size: 32rpx;
+    font-weight: bold;
+    color: #597ef7;
+}
+.cardWrap .item .itemBottom {
+    font-size: 28rpx;
+    color: #85a5ff;
+    font-weight: 400;
+}
+.listWrap {
+    background-color: #ffffff;
+    border-radius: 10rpx;
+    padding: 20rpx;
+}
+.listWrap .item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80rpx;
+    padding: 0 20rpx;
+}
+.item .itemLeft {
+    font-size: 32rpx;
+    color: #595959;
+}
+.item .itemRight {
+    font-size: 26rpx;
+    color: #8c8c8c;
+}
+.reardWrap {
+    padding: 50rpx;
+}

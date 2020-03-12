@@ -76,7 +76,7 @@
         </view>
         <!-- 开发者列表 -->
         <view hidden="{{currentTab==='repo'}}" class="devList">
-            <view wx:for="{{developerList}}" wx:key="username" class="devItem">
+            <view bindtap="viewDeveloperDetail" data-name="{{item.username}}" wx:for="{{developerList}}" wx:key="username" class="devItem">
                 <view class="avatar">
                     <v-image defaultImage="/static/images/avatar.png" src="{{item.avatar}}"></v-image>
                 </view>

@@ -111,7 +111,7 @@ Page({
             let spokenLanguageList = await this.getSpokenLanguagesList();
             this.data.spokenLanguageList = spokenLanguageList || [];
         } catch(err) {
-            utils.showTip(err);
+            utils.showTip(err.toString());
         }
     },
     // 为索引器组件构造数据
@@ -143,8 +143,14 @@ Page({
     // 获取编程语言列表
     getLanguagesList() {
         return new Promise((resolve, reject) => {
-            request.get(url.getLanguages).then(data => {
-                resolve(data);
+            wx.cloud.callFunction({
+                name: 'trending',
+                data: {
+                    type: 'language'
+                }
+            }).then(data => {
+                const list = JSON.parse(data.result);
+                resolve(list);
             }).catch(err => {
                 reject(err);
             });
@@ -153,8 +159,14 @@ Page({
     // 获取语言列表
     getSpokenLanguagesList() {
         return new Promise((resolve, reject) => {
-            request.get(url.getSpokenLanguages).then(data => {
-                resolve(data);
+            wx.cloud.callFunction({
+                name: 'trending',
+                data: {
+                    type: 'spoken'
+                }
+            }).then(data => {
+                const list = JSON.parse(data.result);
+                resolve(list);
             }).catch(err => {
                 reject(err);
             });

@@ -3,20 +3,14 @@
 }
 .topContent {
     width: 100%;
-    padding: 0 30rpx 30rpx;
-    font-size: 30rpx;
+    padding: 30rpx;
     color: #f0f5ff;
     word-break: break-all;
     box-sizing: border-box;
     background-color: #597ef7;
-}
-.topContent .name {
-    padding-bottom: 10rpx;
-    font-size: 44rpx;
-}
-.topContent .desc {
     font-size: 30rpx;
-    line-height: 36rpx;
+    line-height: 40rpx;
+    text-indent: 1em;
 }
 .mainContent {
     width: 100%;

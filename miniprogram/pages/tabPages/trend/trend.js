@@ -150,15 +150,20 @@ Page({
             });
             utils.hideLoading();
         } catch(err) {
-            utils.showTip(err);
+            utils.showTip(err.toString());
+            console.log(err);
         }
     },
     // 获取repo trending
     getRepositories() {
         return new Promise((resolve, reject) => {
-            const paramStr = this.getParams('repo');
-            request.get(url.getTrendingRepositories + paramStr).then(data => {
-                resolve(data);
+            const param = this.getParams('repo');
+            wx.cloud.callFunction({
+                name: 'trending',
+                data: param
+            }).then(data => {
+                const list = JSON.parse(data.result);
+                resolve(list);
             }).catch(err => {
                 reject(err);
             });
@@ -167,9 +172,13 @@ Page({
     // 获取dev trending
     getDevelopers() {
         return new Promise((resolve, reject) => {
-            const paramStr = this.getParams('dev');
-            request.get(url.getTrendingDevelopers + paramStr).then(data => {
-                resolve(data);
+            const param = this.getParams('dev');
+            wx.cloud.callFunction({
+                name: 'trending',
+                data: param
+            }).then(data => {
+                const list = JSON.parse(data.result);
+                resolve(list);
             }).catch(err => {
                 reject(err);
             });
@@ -178,17 +187,26 @@ Page({
     // 获取请求参数
     getParams(type) {
         let { duration, language, spokenLanguage } = this.data.selectParam;
-        let paramStr = `?since=${duration}`;
-        if (!!language) paramStr += `&language=${language}`;
-        if (!!spokenLanguage && type === 'repo') paramStr += `&spokenLanguageCode=${spokenLanguage}`;
-        
-        return paramStr;
+        const param = {
+            since: duration,
+            type,
+            language
+        }
+        if (type === 'repo') param.spokenLanguage = spokenLanguage;
+        return param;
     },
     // 查看仓库详情
     viewRepoDetail(e) {
         const { name, author } = e.currentTarget.dataset;
         wx.navigateTo({
             url: `/pages/subPages/repo/repo?author=${author}&name=${name}`
-        })
+        });
+    },
+    // 查看开发者
+    viewDeveloperDetail(e) {
+        const { name } = e.currentTarget.dataset;
+        wx.navigateTo({
+            url: `/pages/subPages/developer/developer?username=${name}`
+        });
     }
 });

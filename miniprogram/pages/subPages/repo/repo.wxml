@@ -1,8 +1,5 @@
 <view class="container">
-    <view class="topContent">
-        <view class="name">{{repoDetail.name}}</view>
-        <view class="desc">{{repoDetail.description}}</view>
-    </view>
+    <view class="topContent">{{repoDetail.description}}</view>
     <view class="mainContent">
         <view class="card">
             <view class="cardItem">

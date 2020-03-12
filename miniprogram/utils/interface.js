@@ -51,7 +51,13 @@ export default {
     // 是否star了某仓库
     isStardRepo(repoFullName) {
         return `https://api.github.com/user/starred/${repoFullName}`;
-    }
+    },
     
+
+
+    // user，获取用户信息
+    getUserInfo(username) {
+        return `https://api.github.com/users/${username}`;
+    }
 
 }

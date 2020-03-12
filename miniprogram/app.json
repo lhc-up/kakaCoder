@@ -1,11 +1,12 @@
 {
   "pages": [
-      
+    
       "pages/tabPages/trend/trend",
       "pages/subPages/language/language",
       "pages/subPages/searchResult/searchResult",
       "pages/subPages/search/search",
       "pages/subPages/repo/repo",
+      "pages/subPages/developer/developer",
       "pages/tabPages/activity/activity",
       "pages/tabPages/me/me",
       "pages/login/login",
