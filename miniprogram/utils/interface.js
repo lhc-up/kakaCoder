@@ -58,6 +58,21 @@ export default {
     // user，获取用户信息
     getUserInfo(username) {
         return `https://api.github.com/users/${username}`;
+    },
+    // 获取followers
+    getFollowers(username) {
+        return `https://api.github.com/users/${username}/followers`;
+    },
+    // 获取following
+    getFollowing(username) {
+        return `https://api.github.com/users/${username}/following`;
+    },
+    // 获取用户的公共仓库
+    getUserPublicRepos(username) {
+        return `https://api.github.com/users/${username}/repos`;
+    },
+    // 获取用户star过的仓库
+    getUserStarredRepos(username) {
+        return `https://api.github.com/users/${username}/starred`;
     }
-
 }

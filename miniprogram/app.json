@@ -6,7 +6,10 @@
       "pages/subPages/searchResult/searchResult",
       "pages/subPages/search/search",
       "pages/subPages/repo/repo",
+      "pages/subPages/repoList/repoList",
       "pages/subPages/developer/developer",
+      "pages/subPages/developerList/developerList",
+      
       "pages/tabPages/activity/activity",
       "pages/tabPages/me/me",
       "pages/login/login",

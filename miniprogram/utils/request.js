@@ -38,7 +38,7 @@ const request = {
                 },
                 fail(err) {
                     console.log(err);
-                    reject('网络已断开连接，请连接网络后重试');
+                    reject('墙太高了，稍后试试吧！');
                 }
             });
         });

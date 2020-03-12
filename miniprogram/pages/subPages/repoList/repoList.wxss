@@ -1,0 +1,73 @@
+.container {
+    background-color: #D6E4FF;
+}
+.listWrap {
+    padding: 20rpx 30rpx;
+}
+.repoItem {
+    padding: 16rpx 30rpx;
+    margin-bottom: 20rpx;
+    background-color: #ADC6FF;
+    border-radius: 14rpx;
+}
+.repoItem .repoTitle {
+    display: flex;
+    align-items: center;
+    color: #2F54EB;
+    font-size: 30rpx;
+}
+.repoItem .repoTitle .thin {
+    margin-left: 10rpx;
+    flex-shrink: 0;
+}
+.repoItem .repoTitle .sep {
+    margin: 0 8rpx;
+}
+.repoItem .repoTitle .thick {
+    font-size: 32rpx;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.repoItem .repoDesc {
+    padding: 10rpx 16rpx;
+    word-break: break-all;
+    color: #597EF7;
+    font-size: 24rpx;
+    text-indent: 0.5em;
+}
+.repoItem .repoAttr {
+    display: flex;
+    align-items: center;
+    padding-left: 10rpx;
+}
+.repoItem .repoAttr .item {
+    display: flex;
+    align-items: center;
+    margin-right: 30rpx;
+    font-size: 20rpx;
+    color: #597EF7;
+}
+.repoItem .repoAttr .item .icon {
+    margin-right: 6rpx;
+}
+.repoItem .repoAttr .item .icon .languageColor {
+    width: 20rpx;
+    height: 20rpx;
+    border-radius: 50%;
+    margin-right: 4rpx;
+}
+.repoItem .developers {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-top: 15rpx;
+    padding-left: 10rpx;
+}
+.repoItem .developers image {
+    width: 40rpx;
+    height: 40rpx;
+    margin-right: 10rpx;
+    border-radius: 6rpx;
+}

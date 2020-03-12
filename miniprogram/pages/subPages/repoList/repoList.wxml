@@ -1,0 +1,39 @@
+<import src="../../../static/skeleton/trend.wxml"/>
+<view class="container">
+    <view class="listWrap">
+        <template is="trend-repo" data="{{show: !repoList.length, count: 5}}"></template>
+        <view class="repoList">
+            <view bindtap="viewRepoDetail" data-name="{{item.name}}" data-author="{{item.owner.login}}" wx:for="{{repoList}}" wx:key="name" class="repoItem">
+                <view class="repoTitle">
+                    <v-icon type="yunliankeji_gongyinglianfuben" color="#2F54EB" size="40"></v-icon>
+                    <text class="thin">{{item.owner.login}}</text>
+                    <text class="sep">/</text>
+                    <text class="thick">{{item.name}}</text>
+                </view>
+                <view class="repoDesc">
+                    <text>{{item.description}}</text>
+                </view>
+                <view class="repoAttr">
+                    <view wx:if="{{item.language}}" class="item">
+                        <view class="attr">{{item.language}}</view>
+                    </view>
+                    <view class="item">
+                        <view class="icon">
+                            <v-icon type="star2" color="#597EF7" size="20"></v-icon>
+                        </view>
+                        <view class="attr">{{item.stars||0}}</view>
+                    </view>
+                    <view class="item">
+                        <view class="icon">
+                            <v-icon type="codefork" color="#597EF7" size="24"></v-icon>
+                        </view>
+                        <view class="attr">{{item.forks}}</view>
+                    </view>
+                </view>
+                <view class="developers">
+                    <v-image wx:for="{{item.builtBy}}" wx:key="username" wx:for-item="builtBy" defaultImage="/static/images/avatar.png" src="{{builtBy.avatar}}"></v-image>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

@@ -11,21 +11,21 @@
     </view>
     <view class="mainContent">
         <view class="cardWrap">
-            <view class="item">
+            <view bindtap="viewPages" data-type="repos" class="item">
                 <view class="itemTop">{{userInfo.public_repos}}</view>
                 <view class="itemBottom">Repos</view>
             </view>
-            <view class="item">
+            <view bindtap="viewPages" data-type="followers" class="item">
                 <view class="itemTop">{{userInfo.followers}}</view>
                 <view class="itemBottom">Followers</view>
             </view>
-            <view class="item">
+            <view bindtap="viewPages" data-type="following" class="item">
                 <view class="itemTop">{{userInfo.following}}</view>
                 <view class="itemBottom">Following</view>
             </view>
         </view>
         <view class="listWrap">
-            <view class="item">
+            <view bindtap="viewPages" data-type="stars" class="item">
                 <view class="itemLeft">Stars</view>
                 <view class="itemRight">
                     <v-icon type="right" size="38"></v-icon>
