@@ -48,9 +48,17 @@ export default {
     getRepoReadme(repoFullName) {
         return `https://api.github.com/repos/${repoFullName}/readme`;
     },
-    // 是否star了某仓库
+    // 是否star了某仓库get
     isStardRepo(repoFullName) {
         return `https://api.github.com/user/starred/${repoFullName}`;
+    },
+    // star某个仓库PUT
+    starRepo(repoFullName) {
+        return `https://api.github.com/user/starred/${repoFullName}`;
+    },
+    // 获取一个仓库的issues
+    getRepoIssues(owner, repoName) {
+        return `https://api.github.com/repos/${owner}/${repoName}/issues`;
     },
     
 

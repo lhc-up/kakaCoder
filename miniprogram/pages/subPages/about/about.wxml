@@ -1,0 +1,24 @@
+<view class="container">
+    <view class="listWrap">
+        <view class="item">
+            <view class="itemLeft">Version</view>
+            <view class="itemRight">1.0.0</view>
+        </view>
+        <view class="item">
+            <view class="itemLeft">GitHub</view>
+            <view class="itemRight">https://github.com/luohao8023/kakaCoder</view>
+        </view>
+        <view class="item">
+            <view class="itemLeft">Email</view>
+            <view class="itemRight">18513102276@163.com</view>
+        </view>
+        <view hover-stay-time="50" hover-class="itemHover" class="item">
+            <button class="feedback" style="width:100%;" open-type="feedback"></button>
+            <view class="itemLeft">WeChat Feedback</view>
+            <view class="itemRight">
+                <v-icon type="right" size="38"></v-icon>
+            </view>
+        </view>
+    </view>
+    <view bindtap="logout" class="logout" hover-stay-time="50" hover-class="btnHover">LOGOUT</view>
+</view>

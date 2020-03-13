@@ -42,7 +42,7 @@ Page({
             const list = res.data || [];
             this.setData({
                 developerList: [...this.data.developerList, ...list],
-                hasNextPage: data.length === this.data.pageSize
+                hasNextPage: list.length === this.data.pageSize
             });
             this.data.page++;
             utils.hideLoading();

@@ -1,6 +1,5 @@
 {
   "pages": [
-    
       "pages/tabPages/trend/trend",
       "pages/subPages/language/language",
       "pages/subPages/searchResult/searchResult",
@@ -9,9 +8,11 @@
       "pages/subPages/repoList/repoList",
       "pages/subPages/developer/developer",
       "pages/subPages/developerList/developerList",
-      
-      "pages/tabPages/activity/activity",
+      "pages/subPages/issue/issue",
+      "pages/subPages/issueList/issueList",
+      "pages/subPages/about/about",
       "pages/tabPages/me/me",
+      "pages/tabPages/activity/activity",
       "pages/login/login",
       "pages/index/index"
   ],

@@ -5,160 +5,152 @@
 */
 
 import CONST from '../../../utils/const.js';
+import url from '../../../utils/interface.js';
+import utils from '../../../utils/util.js';
+import request from '../../../utils/request.js';
 let app =  getApp();
 Page({
     data: {
         userInfo: null,
-        showActionsheet: false,
-        funcs: [
-            {
-                text: '功能板块',
-                value: 'func',
-                icon: 'gongnengquanxian',
-                iconSize: 40
-            },
-            {
-                text: '吐个槽吧',
-                value: 'tsukkomi',
-                icon: 'fankui',
-                iconSize: 34
-            },
-            {
-                text: '客服',
-                value: 'service',
-                icon: 'kefu',
-                iconSize: 38
-            },
-            {
-                text: '清除缓存',
-                value: 'clear',
-                icon: 'qingchuhuancun',
-                iconSize: 38
-            }
-        ],
-        groups: [
-            { text: 'Overview', value: 1 },
-            { text: 'Repositories', value: 2 },
-            { text: 'Projects', value: 3 },
-            { text: 'Packages', value: 4 },
-            { text: 'Stars', value: 5 },
-            { text: 'Followers', value: 6 },
-            { text: 'Following', value: 7 }
-        ]
+        isStarred: false
     },
     onShow() {
-        const userInfo = app.globalData.userInfo;
-        this.setData({
-            userInfo
-        });
+        this.getUserInfo();
+        this.isStarredMe();
     },
-    // 点击功能列表
-    funcClick(e) {
-        const type = e.currentTarget.dataset.type;
-        const handler = {
-            'func': this.toggleAction,
-            'tsukkomi': this.gotoTsukkomi,
-            'service': '',//由btn唤起客服会话
-            'clear': this.clearStorage
+    // 下拉刷新
+    onPullDownRefresh() {
+        wx.stopPullDownRefresh();
+        this.getUserInfo();
+        this.isStarredMe();
+    },
+    // 获取用户信息
+    getUserInfo() {
+        const userInfo = wx.getStorageSync(CONST.STORAGE_USERINFO);
+        if (userInfo) {
+            this.setData({
+                userInfo: JSON.parse(userInfo)
+            });
+            return;
         }
-        handler[type] && handler[type]();
-    },
-    // 打开、关闭actionSheet
-    toggleAction() {
-        this.setData({
-            showActionsheet: !this.data.showActionsheet
+        const username = wx.getStorageSync(CONST.STORAGE_USERNAME)
+        const password = wx.getStorageSync(CONST.STORAGE_PASSWORD)
+        if (!username || !password) {
+            this.setData({
+                userInfo: null
+            });
+            return;
+        }
+        utils.showLoading();
+        request.get(url.login).then(res => {
+            if (res.statusCode !== 200) {
+                this.removeStorage();
+                return false;
+            }
+            const data = res.data;
+            if (!data) return;
+            app.globalData.userInfo = data;
+            wx.setStorageSync(CONST.STORAGE_USERINFO, JSON.stringify(data));
+            this.setData({
+                userInfo: data
+            });
+        }).catch(err => {
+            utils.showTip(err);
+        }).finally(() => {
+            utils.hideLoading();
         });
     },
-    // 去吐槽
-    gotoTsukkomi() {
+    // 清除本地缓存
+    removeStorage() {
+        wx.removeStorageSync(CONST.STORAGE_USERNAME);
+        wx.removeStorageSync(CONST.STORAGE_USERINFO);
+        wx.removeStorageSync(CONST.STORAGE_PASSWORD);
+    },
+    // 查看各类型页面
+    viewPages(e) {
+        const type = e.currentTarget.dataset.type;
+        const userInfo = this.data.userInfo;
+        const pageRouteMap = {
+            'repos': '/pages/subPages/repoList/repoList',
+            'followers': '/pages/subPages/developerList/developerList',
+            'following': '/pages/subPages/developerList/developerList',
+            'stars': '/pages/subPages/repoList/repoList',
+            'issues': '/pages/subPages/issueList/issueList',
+            'about': '/pages/subPages/about/about'
+        };
+        const apisMap = {
+            'repos': url.getUserPublicRepos(userInfo.login),
+            'followers': url.getFollowers(userInfo.login),
+            'following': url.getFollowing(userInfo.login),
+            'stars': url.getUserStarredRepos(userInfo.login),
+            'issues': url.getRepoIssues('luohao8023', 'kakaCoder'),
+            'about': ''
+        }
+        wx.navigateTo({
+            url: pageRouteMap[type] + '?url=' + encodeURI(apisMap[type])
+        });
+    },
+    // star
+    starMe() {
+        const username = wx.getStorageSync(CONST.STORAGE_USERNAME)
+        const password = wx.getStorageSync(CONST.STORAGE_PASSWORD)
+        if (!username || !password) {
+            wx.showModal({
+                content: '请先登录',
+                showCancel: false,
+                confirmText: '确定',
+                confirmColor: '#597ef7',
+            });
+            return false;
+        }
+        const apiUrl = url.starRepo('luohao8023/kakaCoder');
+        utils.showLoading();
+        request.put(apiUrl).then(res => {
+            utils.hideLoading();
+            if (res.statusCode === 204) {
+                utils.showTip('Thank you!');
+                this.setData({
+                    isStarred: true
+                });
+            }
+        }).catch(err => {
+            utils.showTip(err);
+        });
+    },
+    // 是否star了
+    isStarredMe() {
+        const username = wx.getStorageSync(CONST.STORAGE_USERNAME)
+        const password = wx.getStorageSync(CONST.STORAGE_PASSWORD)
+        if (!username || !password) return;
+        const apiUrl = url.isStardRepo('luohao8023/kakaCoder');
+        request.get(apiUrl).then(res => {
+            if (res.statusCode === 404) {
+                this.setData({
+                    isStarred: false
+                });
+            } else if (res.statusCode === 204) {
+                this.setData({
+                    isStarred: true
+                });
+            }
+        }).catch(err => {
+            utils.showTip(err);
+        });
+    },
+    // 意见反馈
+    feedback() {
         wx.navigateToMiniProgram({
             appId: 'wx8abaf00ee8c3202e',
             extraData: {
                 // 吐槽项目id
                 id: 132328
-            },
-            success(res) {
-                // 打开成功
-                console.log('点开了赞赏');
             }
-        });
-    },
-    // 清除缓存
-    clearStorage() {
-        wx.clearStorage({
-            success: (e) => {
-                wx.showToast({
-                    title: 'SUCCSSS',
-                    icon: 'none',
-                    image: '',
-                    duration: 1500,
-                    mask: false
-                });
-            },
-            fail: (e) => {
-                wx.showToast({
-                    title: 'ERROR',
-                    icon: 'none',
-                    image: '',
-                    duration: 1500,
-                    mask: false
-                });
-            }
-        });
-    },
-    // 点击actionSheet选项
-    actionClick(e) {
-        const value = e.detail.value;
-        this.toggleAction();
-        wx.showModal({
-            content: '\/\/TODO:',
-            showCancel: false,
-            confirmText: 'OK',
-            confirmColor: '#597EF7'
         });
     },
     goLogin() {
+        if (!!this.data.userInfo) return;
         wx.navigateTo({
             url: '/pages/login/login'
-        });
-    },
-    logout() {
-        wx.removeStorageSync(CONST.STORAGE_USERNAME);
-        wx.removeStorageSync(CONST.STORAGE_USERINFO);
-        wx.removeStorageSync(CONST.STORAGE_PASSWORD);
-        app.globalData.userInfo = null;
-        wx.showModal({
-            content: '退出成功',
-            showCancel: false,
-            confirmText: '确定',
-            confirmColor: '#597ef7',
-            success: (result) => {
-                if (result.confirm) {
-                    wx.switchTab({
-                        url: '/pages/tabPages/trend/trend'
-                    });
-                }
-            }
-        });
-          
-    },
-    loginBtnClick() {
-        if (!this.data.userInfo) {
-            this.goLogin();
-            return;
-        }
-        this.logout();
-    },
-    // reward
-    reward() {
-        wx.navigateToMiniProgram({
-            appId: 'wx18a2ac992306a5a4',
-            path: 'pages/apps/largess/detail?id=n28eCNrAZGCgPc1CLmE7uw%3D%3D',
-            // envVersion: 'develop',
-            success(res) {
-                // 打开成功
-                console.log('点开了赞赏');
-            }
         });
     }
 });

@@ -1,33 +1,103 @@
 <view class="container">
-    <view class="topWrap">
-        <view class="avatar">
+    <view class="topContent">
+        <view bindtap="goLogin" class="avatar">
             <v-image defaultImage="/static/images/avatar.png" src="{{userInfo.avatar_url}}"></v-image>
         </view>
-        <view class="username">
-            <text wx:if="{{userInfo}}">{{userInfo.login}}</text>
-            <text wx:else bindtap="goLogin">去登录</text>
+        <view class="intro">
+            <block wx:if="{{!!userInfo}}">
+                <view class="name">{{userInfo.login}}</view>
+                <view class="desc">{{userInfo.bio || ''}}</view>
+            </block>
+            <view wx:else bindtap="goLogin" class="name">LOGIN</view>
         </view>
     </view>
-    <v-nomore></v-nomore>
-    <view class="funcWrap">
-        <view bindtap="funcClick" wx:if="{{userInfo||item.value!=='func'}}" wx:for="{{funcs}}" wx:key="value" data-type="{{item.value}}" hover-stay-time="hover-stay-time" hover-class="itemHover" class="item">
-            <button wx:if="{{item.value==='service'}}" class="service" open-type="contact" bindcontact="handleContact"></button>
-            <view class="left">
-                <v-icon type="{{item.icon}}" color="#597ef7" size="{{item.iconSize}}"></v-icon>
-                <text class="itemName">{{item.text}}</text>
+    <view hidden="{{!!userInfo}}" class="mainContent unLogin">
+        <view bindtap="goLogin" class="lock">
+            <v-icon type="denglu1" size="120" color="#85a5ff"></v-icon>
+        </view>
+    </view>
+    <view hidden="{{!userInfo}}" class="mainContent">
+        <view class="cardWrap">
+            <view bindtap="viewPages" data-type="repos" class="item">
+                <view class="itemTop">{{userInfo.public_repos}}</view>
+                <view class="itemBottom">Repos</view>
             </view>
-            <view class="right">
-                <!-- <text class="num">30</text> -->
-                <v-icon type="right" color="#597ef7" size="40"></v-icon>
+            <view bindtap="viewPages" data-type="followers" class="item">
+                <view class="itemTop">{{userInfo.followers}}</view>
+                <view class="itemBottom">Followers</view>
+            </view>
+            <view bindtap="viewPages" data-type="following" class="item">
+                <view class="itemTop">{{userInfo.following}}</view>
+                <view class="itemBottom">Following</view>
             </view>
         </view>
-    </view>
-    <view bindtap="loginBtnClick" hover-stay-time="hover-stay-time" hover-class="itemHover" class="logout">{{userInfo?'退出登录':'登录'}}</view>
-    <view class="rewardWrap">
-        <view bindtap="reward" class="reward">
-            <v-icon type="dashang" color="#ff4d4f" size="40"></v-icon>
-            <text>Reward</text>
+        <view wx:if="{{!isStarred}}" class="listWrap starMe">
+            <view bindtap="starMe" hover-stay-time="50" hover-class="itemHover" data-type="stars" class="item">
+                <view class="itemLeft">
+                    <text class="text">Give me a star</text>
+                    <v-icon type="star" size="30" color="#f5222d"></v-icon>
+                </view>
+                <view class="itemRight">
+                    <v-icon type="right" size="38"></v-icon>
+                </view>
+            </view>
         </view>
+        <view class="listWrap">
+            <view bindtap="viewPages" data-type="stars" hover-stay-time="50" hover-class="itemHover" class="item">
+                <view class="itemLeft">Stars</view>
+                <view class="itemRight">
+                    <v-icon type="right" size="38"></v-icon>
+                </view>
+            </view>
+            <view bindtap="viewPages" data-type="issues" hover-stay-time="50" hover-class="itemHover" class="item">
+                <view class="itemLeft">Issues</view>
+                <view class="itemRight">
+                    <v-icon type="right" size="38"></v-icon>
+                </view>
+            </view>
+            <view class="item">
+                <view class="itemLeft">Name</view>
+                <view class="itemRight">{{userInfo.name||'-'}}</view>
+            </view>
+            <view class="item">
+                <view class="itemLeft">Location</view>
+                <view class="itemRight">{{userInfo.location||'-'}}</view>
+            </view>
+            <view class="item">
+                <view class="itemLeft">Company</view>
+                <view class="itemRight">{{userInfo.company||'-'}}</view>
+            </view>
+            <view class="item">
+                <view class="itemLeft">Email</view>
+                <view class="itemRight">{{userInfo.email||'-'}}</view>
+            </view>
+            <view class="item">
+                <view class="itemLeft">Blog</view>
+                <view class="itemRight">{{userInfo.blog||'-'}}</view>
+            </view>
+        </view>
+        <view class="listWrap">
+            <view data-type="service" hover-stay-time="50" hover-class="itemHover" class="item">
+                <button class="service" style="width:100%;" open-type="contact"></button>
+                <view class="itemLeft">Service</view>
+                <view class="itemRight">
+                    <v-icon type="right" size="38"></v-icon>
+                </view>
+            </view>
+            <view bindtap="feedback" hover-stay-time="50" hover-class="itemHover" class="item">
+                <view class="itemLeft">Feedback</view>
+                <view class="itemRight">
+                    <v-icon type="right" size="38"></v-icon>
+                </view>
+            </view>
+            <view bindtap="viewPages" data-type="about" hover-stay-time="50" hover-class="itemHover" class="item">
+                <view class="itemLeft">About</view>
+                <view class="itemRight">
+                    <v-icon type="right" size="38"></v-icon>
+                </view>
+            </view>
+        </view>
+        <!-- 赞赏 -->
+        <v-reward></v-reward>
     </view>
-    <actionsheet bindactiontap="actionClick" bindclose="toggleAction" show="{{showActionsheet}}" showCancel="{{false}}" actions="{{groups}}"></actionsheet>
 </view>
