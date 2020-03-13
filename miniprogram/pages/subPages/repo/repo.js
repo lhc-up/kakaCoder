@@ -20,16 +20,13 @@ Page({
         wx.setNavigationBarTitle({
             title: this.data.option.name || 'Github'
         });
-        this.init();
-    },
-    // 初始化
-    init() {
         this.getRepoDetail();
     },
     // 获取仓库详情
     getRepoDetail() {
         const option = this.data.option;
         const api = url.getRepoDetail(option.author, option.name);
+        utils.showLoading();
         request.get(api).then(data => {
             if (!data) return;
             this.setData({
@@ -38,7 +35,9 @@ Page({
             this.getReadme(data.full_name);
         }).catch(err => {
             utils.showTip(err);
-        });
+        }).finally(() => {
+            utils.hideLoading();
+        })
     },
     // 获取仓库readme
     getReadme(repoFullName) {

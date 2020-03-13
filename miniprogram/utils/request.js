@@ -19,19 +19,19 @@ Promise.prototype.finally = function(cb) {
 }
 
 const request = {
-    request(method, url, data, config={}) {
-        let _config = Object.assign({}, config);
+    request(method, url, data) {
         let _this = this;
         const authHeader = _this.getAuthBase64();
+        const header = {};
         if (authHeader) {
-            _config.header['Authorization'] = authHeader;
+            header['Authorization'] = authHeader;
         }
         return new Promise((resolve, reject) => {
             wx.request({
                 method,
                 url,
                 data: data,
-                header: _config.header,
+                header: header,
                 success(res) {
                     _this.handleRequestLimit(res);
                     resolve(res.data || '');
@@ -110,11 +110,11 @@ const request = {
             confirmColor: '#597ef7'
         });
     },
-    get(url, data, config) {
-        return this.request('get', url, data, config);
+    get(url, data) {
+        return this.request('get', url, data);
     },
-    post(url, data, config) {
-        return this.request('post', url, data, config);
+    post(url, data) {
+        return this.request('post', url, data);
     },
     // graphlQl请求本身是post请求，body体内放入固定格式的参数
     graphql(data={}) {
