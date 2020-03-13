@@ -1,7 +1,7 @@
 <import src="../../../static/skeleton/trend.wxml"/>
 <view class="container">
     <view class="listWrap">
-        <template is="trend-repo" data="{{show: !repoList.length, count: 5}}"></template>
+        <template is="trend-repo" data="{{show: !repoList.length, count: 10, hideIcons: true}}"></template>
         <view class="repoList">
             <view bindtap="viewRepoDetail" data-name="{{item.name}}" data-author="{{item.owner.login}}" wx:for="{{repoList}}" wx:key="name" class="repoItem">
                 <view class="repoTitle">
@@ -35,5 +35,6 @@
                 </view>
             </view>
         </view>
+        <v-nomore wx:if="{{repoList.length>=10&&!hasNextPage}}"></v-nomore>
     </view>
 </view>

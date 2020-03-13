@@ -9,7 +9,10 @@ import utils from '../../../utils/util.js';
 Page({
     data: {
         apiUrl: '',
-        repoList: []
+        repoList: [],
+        page: 1,
+        hasNextPage: true,
+        pageSize: 15
     },
     onLoad(option) {
         this.data.apiUrl = decodeURI(option.url || 'https://api.github.com/users/dagar/repos');
@@ -17,13 +20,31 @@ Page({
     onShow() {
         this.getRepoList();
     },
+    // 下拉刷新
+    onPullDownRefresh() {
+        wx.stopPullDownRefresh();
+        this.data.repoList = [];
+        this.data.page = 1;
+        this.data.hasNextPage = true;
+        this.getRepoList();
+    },
+    // 上拉加载
+    onReachBottom() {
+        this.getRepoList();
+    },
+    // 获取仓库列表
     getRepoList() {
         if (!this.data.apiUrl) return;
+        if (!this.data.hasNextPage) return;
+        const pageParam = `?page=${this.data.page}&per_page=${this.data.pageSize}`;
         utils.showLoading();
-        request.get(this.data.apiUrl).then(data => {
+        request.get(this.data.apiUrl+pageParam).then(data => {
+            const list = data || [];
             this.setData({
-                repoList: data
+                repoList: [...this.data.repoList, ...list],
+                hasNextPage: data.length === this.data.pageSize
             });
+            this.data.page++;
             utils.hideLoading();
         }).catch(err => {
             utils.showTip(err);

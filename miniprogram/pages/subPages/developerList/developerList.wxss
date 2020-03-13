@@ -1,0 +1,38 @@
+.container {
+    background-color: #D6E4FF;
+}
+.listWrap {
+    padding: 20rpx 30rpx;
+}
+.devItem {
+    position: relative;
+    padding: 20rpx;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20rpx;
+    box-sizing: border-box;
+    border-radius: 12rpx;
+    box-shadow: 0 0 16rpx #ADC6FF;
+    background-color: #ADC6FF;
+}
+.devItem .avatar {
+    width: 100prx;
+    height: 100rpx;
+    border-radius: 10rpx;
+}
+.devItem image {
+    width: 100rpx;
+    height: 100rpx;
+    border-radius: 10rpx;
+}
+.devItem .devContent {
+    padding-left: 30rpx;
+    width: calc(100% - 180rpx);
+    display: flex;
+    align-items: center;
+}
+.name {
+    font-size: 34rpx;
+    color: #597ef7;
+    word-break: break-all;
+}

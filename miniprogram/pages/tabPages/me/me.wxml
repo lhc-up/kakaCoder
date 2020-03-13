@@ -8,6 +8,7 @@
             <text wx:else bindtap="goLogin">去登录</text>
         </view>
     </view>
+    <v-nomore></v-nomore>
     <view class="funcWrap">
         <view bindtap="funcClick" wx:if="{{userInfo||item.value!=='func'}}" wx:for="{{funcs}}" wx:key="value" data-type="{{item.value}}" hover-stay-time="hover-stay-time" hover-class="itemHover" class="item">
             <button wx:if="{{item.value==='service'}}" class="service" open-type="contact" bindcontact="handleContact"></button>

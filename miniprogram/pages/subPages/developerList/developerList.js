@@ -9,21 +9,42 @@ import utils from '../../../utils/util.js';
 Page({
     data: {
         apiUrl: '',
-        developerList: []
+        developerList: [],
+        page: 1,
+        hasNextPage: true,
+        pageSize: 15
     },
     onLoad(option) {
-        this.data.apiUrl = decodeURI(option.url || '');
+        this.data.apiUrl = decodeURI(option.url || 'https://api.github.com/users/dagar/followers');
     },
     onShow() {
         this.getDeveloperList();
     },
+    // 下拉刷新
+    onPullDownRefresh() {
+        wx.stopPullDownRefresh();
+        this.data.developerList = [];
+        this.data.page = 1;
+        this.data.hasNextPage = true;
+        this.getDeveloperList();
+    },
+    // 上拉加载
+    onReachBottom() {
+        this.getDeveloperList();
+    },
+    // 获取开发者列表
     getDeveloperList() {
         if (!this.data.apiUrl) return;
+        if (!this.data.hasNextPage) return;
+        const pageParam = `?page=${this.data.page}&per_page=${this.data.pageSize}`;
         utils.showLoading();
-        request.get(this.data.apiUrl).then(data => {
+        request.get(this.data.apiUrl+pageParam).then(data => {
+            const list = data || [];
             this.setData({
-                repoList: data
+                developerList: [...this.data.developerList, ...list],
+                hasNextPage: data.length === this.data.pageSize
             });
+            this.data.page++;
             utils.hideLoading();
         }).catch(err => {
             utils.showTip(err);

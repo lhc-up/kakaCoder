@@ -16,7 +16,11 @@ const CONST = {
     // 密码
     STORAGE_PASSWORD: 'password',
     // 用户信息
-    STORAGE_USERINFO: 'userInfo'
+    STORAGE_USERINFO: 'userInfo',
+    // 接口调用限制的原因
+    STORAGE_LIMIT_TYPE: 'storage_limit_type',
+    // 接口调用限制解封时间
+    STORAGE_LIMIT_RESET_TIME: 'storage_limit_reset_time'
 }
 
 export default CONST;

@@ -7,6 +7,7 @@
 import utils from '../../utils/util.js';
 import url from '../../utils/interface.js';
 import request from '../../utils/request.js';
+import CONST from '../../utils/const.js';
 const app = getApp();
 Page({
     data: {
@@ -37,9 +38,9 @@ Page({
         }).then(res => {
             if (!res) return;
             app.globalData.userInfo = res;
-            wx.setStorageSync('userInfo', JSON.stringify(res));
-            wx.setStorageSync('username', username);
-            wx.setStorageSync('password', password);
+            wx.setStorageSync(CONST.STORAGE_USERINFO, JSON.stringify(res));
+            wx.setStorageSync(CONST.STORAGE_USERNAME, username);
+            wx.setStorageSync(CONST.STORAGE_PASSWORD, password);
             wx.navigateBack();
         }).catch(err => {
             utils.showTip(err);

@@ -83,7 +83,7 @@
                 <view class="devContent">
                     <view class="name">{{item.name}}</view>
                     <view class="subName">{{item.username}}</view>
-                    <view class="repo">
+                    <view catchtap="viewRepoDetail" data-name="{{item.repo.name}}" data-author="{{item.username}}" class="repo">
                         <v-icon type="huojing" color="#FFA940" size="36"></v-icon>
                         <v-icon type="yunliankeji_gongyinglianfuben" color="#597EF7" size="34"></v-icon>
                         <text class="repoName">{{item.repo.name}}</text>

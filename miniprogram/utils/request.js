@@ -7,6 +7,7 @@
 
 
 import utils from "./util.js";
+import CONST from './const.js';
 import url from './interface.js'
 // 给Promise添加finally事件
 Promise.prototype.finally = function(cb) {
@@ -18,14 +19,13 @@ Promise.prototype.finally = function(cb) {
 }
 
 const request = {
-    config: {
-        header: {
-            'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-        }
-    },
     request(method, url, data, config={}) {
-        let _config = Object.assign(this.config, config);
+        let _config = Object.assign({}, config);
         let _this = this;
+        const authHeader = _this.getAuthBase64();
+        if (authHeader) {
+            _config.header['Authorization'] = authHeader;
+        }
         return new Promise((resolve, reject) => {
             wx.request({
                 method,
@@ -33,48 +33,82 @@ const request = {
                 data: data,
                 header: _config.header,
                 success(res) {
-                    let response = _this.responseFormatter(res);
-                    resolve(response);
+                    _this.handleRequestLimit(res);
+                    resolve(res.data || '');
                 },
                 fail(err) {
                     console.log(err);
-                    reject('墙太高了，稍后试试吧！');
+                    if (_this.ifLimitError()) {
+                        resolve();
+                    } else {
+                        reject('墙太高了，稍后试试吧！');
+                    }
                 }
             });
         });
     },
     // 获取鉴权码，'Basic ' + base64('username:password')
     getAuthBase64() {
-        const username = wx.getStorageSync('username');
-        const password = wx.getStorageSync('password');
+        const username = wx.getStorageSync(CONST.STORAGE_USERNAME) || '';
+        const password = wx.getStorageSync(CONST.STORAGE_PASSWORD) || '';
+        if (!username || !password) return false;
         return 'Basic ' + utils.encodeBase64(`${username}:${password}`);
     },
-    // 根据状态码格式化response
-    responseFormatter(response) {
-        const errStatus = {
-            300: "资源已被转移至其他位置",
-            301: "请求的资源已被永久移动到新URI",
-            302: "请求的资源已被临时移动到新URI",
-            305: "请求的资源必须通过代理访问",
-            400: "错误资源访问请求",
-            401: "资源访问未授权",
-            403: "资源禁止访问",
-            404: "未找到要访问的资源",
-            405: "请更换请求方法",
-            406: "无法访问",
-            408: "请求超时",
-            413: "请求实体过大",
-            414: "请求URI过长",
-            500: "内部服务器错误",
-            501: "未实现",
-            503: "服务无法获得",
-            504: "接口访问超时"
-        };
-        
-        const statusCode = response.statusCode;
-        if (statusCode === 200) return response.data;
-        utils.showTip(errStatus[response.statusCode] || response.data.message );
-        return null;
+    // 是否是接口限制错误
+    ifLimitError() {
+        const type = wx.getStorageSync(CONST.STORAGE_LIMIT_TYPE);
+        if (!type) return false;
+        let tip = '';
+        if (type === 'login') {
+            tip = `根据GitHub规定，您本小时内的接口调用次数已使用完毕，请登录获取更多调用次数`;
+        } else if (type === 'exceed') {
+            const time = wx.getStorageSync(CONST.STORAGE_LIMIT_RESET_TIME);
+            tip = `根据GitHub规定，您本小时内的接口调用次数已使用完毕，${time}后将重置次数。`
+        }
+        wx.showModal({
+            content: tip,
+            showCancel: false,
+            confirmText: '确定',
+            confirmColor: '#597ef7'
+        });
+        return true;
+    },
+    // 处理请求限制的问题
+    handleRequestLimit(res) {
+        // 总次数
+        const totalCount = res.header['X-RateLimit-Limit'];
+        // 剩余次数
+        const remainCount = res.header['X-RateLimit-Remaining'];
+        // 重置时间
+        const resetTime = res.header['X-RateLimit-Reset'];
+        // 只处理GitHub的请求
+        if (!totalCount) return false;
+        if (remainCount > 5) return;
+        // 剩余5次机会以内时提示
+        let tip = '';
+        if (remainCount >= 0) {
+            if (!this.getAuthBase64()) {
+                tip = `GitHub规定未授权ip每小时接口调用限制为${totalCount}次，您当前剩余${remainCount}次，请登录以获得更多调用次数。`;  
+            } else {
+                tip = `GitHub规定授权ip每小时接口调用限制为${totalCount}次，您当前剩余${remainCount}次，请节约使用。`;
+            }
+        } else {
+            const time = utils.formatTime(new Date(resetTime * 1000), 'yyyy-MM-dd hh:mm:ss');
+            if (!this.getAuthBase64()) {
+                tip = `根据GitHub规定，您本小时内的接口调用次数已使用完毕，请登录获取更多调用次数`;
+                wx.setStorageSync(CONST.STORAGE_LIMIT_TYPE, 'login');
+            } else {
+                tip = `根据GitHub规定，您本小时内的接口调用次数已使用完毕，${time}后将重置次数。`
+                wx.setStorageSync(CONST.STORAGE_LIMIT_TYPE, 'exceed');
+            }
+            wx.setStorageSync(CONST.STORAGE_LIMIT_RESET_TIME, time);
+        }
+        wx.showModal({
+            content: tip,
+            showCancel: false,
+            confirmText: '确定',
+            confirmColor: '#597ef7'
+        });
     },
     get(url, data, config) {
         return this.request('get', url, data, config);
@@ -103,7 +137,6 @@ const request = {
                 }),
                 header: header,
                 success(res) {
-                    let response = _this.responseFormatter(res);
                     resolve(response);
                 },
                 fail(err) {

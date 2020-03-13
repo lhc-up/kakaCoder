@@ -13,7 +13,7 @@
                 <view class="item" style="width: 60rpx;height:22rpx;background-color:#d6e4ff;"></view>
                 <view class="item" style="width: 140rpx;height:22rpx;background-color:#d6e4ff;"></view>
             </view>
-            <view class="developers">
+            <view wx:if="{{!hideIcons}}" class="developers">
                 <view class="aratar" style="width:40rpx;height:40rpx;margin-right:10rpx;border-radius:6rpx;background-color:#d6e4ff;"></view>
                 <view class="aratar" style="width:40rpx;height:40rpx;margin-right:10rpx;border-radius:6rpx;background-color:#d6e4ff;"></view>
                 <view class="aratar" style="width:40rpx;height:40rpx;margin-right:10rpx;border-radius:6rpx;background-color:#d6e4ff;"></view>

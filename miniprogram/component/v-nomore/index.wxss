@@ -1,0 +1,18 @@
+.no-more-wrap {
+    width: 100%;
+    padding: 50rpx 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.no-more-wrap .line {
+    width: 25%;
+    height: 2px;
+    background-color: #bfbfbf;
+    transform: scaleY(.3);
+}
+.no-more-wrap .text {
+    padding: 0 20rpx;
+    font-size: 30rpx;
+    color: #bfbfbf;
+}

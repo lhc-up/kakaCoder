@@ -49,6 +49,7 @@
       "v-image": "/component/v-image/index",
       "v-index": "/component/v-index/index",
       "v-parse": "/component/v-parse/index",
+      "v-nomore": "/component/v-nomore/index",
       "v-reward": "/component/v-reward/index",
       "v-cell": "/component/cell/index",
       "v-cell-group": "/component/cell-group/index",
