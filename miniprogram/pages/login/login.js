@@ -36,9 +36,10 @@ Page({
                 'Authorization': 'Basic ' + utils.encodeBase64(`${username}:${password}`)
             }
         }).then(res => {
-            if (!res) return;
-            app.globalData.userInfo = res;
-            wx.setStorageSync(CONST.STORAGE_USERINFO, JSON.stringify(res));
+            const data = res.data;
+            if (!data) return;
+            app.globalData.userInfo = data;
+            wx.setStorageSync(CONST.STORAGE_USERINFO, JSON.stringify(data));
             wx.setStorageSync(CONST.STORAGE_USERNAME, username);
             wx.setStorageSync(CONST.STORAGE_PASSWORD, password);
             wx.navigateBack();

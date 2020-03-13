@@ -5,8 +5,6 @@
 */
 
 import utils from '../../../utils/util.js';
-import url from '../../../utils/interface.js';
-import request from '../../../utils/request.js';
 import CONST from '../../../utils/const.js';
 // async await
 const regeneratorRuntime = require('../../../utils/regenerator-runtime.js');

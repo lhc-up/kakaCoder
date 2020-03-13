@@ -37,8 +37,8 @@ Page({
         if (!this.data.hasNextPage) return;
         const api = this.getApiUrl();
         utils.showLoading();
-        request.get(api).then(data => {
-            if (!data || !(data instanceof Array)) return;
+        request.get(api).then(res => {
+            const data = res.data || [];
             data.forEach(item => {
                 item.created_at = utils.formatTime(new Date(item.created_at), 'yyyy-MM-dd hh:mm:ss');
             });
@@ -61,5 +61,12 @@ Page({
         const username = wx.getStorageSync(CONST.STORAGE_USERNAME);
         const api = !!username ? url.getReceivedEvents(username) : url.getPublicEvents;
         return api + '?page=' + this.data.page + '&per_page=' + this.data.pageSize;
+    },
+    // 查看开发者
+    viewDeveloperDetail(e) {
+        const { name } = e.currentTarget.dataset;
+        wx.navigateTo({
+            url: `/pages/subPages/developer/developer?username=${name}`
+        });
     }
 });

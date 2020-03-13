@@ -74,5 +74,13 @@ export default {
     // 获取用户star过的仓库
     getUserStarredRepos(username) {
         return `https://api.github.com/users/${username}/starred`;
+    },
+    // 检查你（当前用户）是否follow了另外一个用户,username目标用户
+    checkIfYouAreFollowing(username) {
+        return `https://api.github.com/user/following/${username}`;
+    },
+    // 检查一个用户是否follow了另外一个用户
+    checkIsFollowing(username, targetUsername) {
+        return `https://api.github.com/users/${username}/following/${targetUsername}`;
     }
 }

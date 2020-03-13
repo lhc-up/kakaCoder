@@ -27,7 +27,8 @@ Page({
         const option = this.data.option;
         const api = url.getRepoDetail(option.author, option.name);
         utils.showLoading();
-        request.get(api).then(data => {
+        request.get(api).then(res => {
+            const data = res.data;
             if (!data) return;
             this.setData({
                 repoDetail: data
@@ -42,9 +43,10 @@ Page({
     // 获取仓库readme
     getReadme(repoFullName) {
         const api = url.getRepoReadme(repoFullName);
-        request.get(api).then(data => {
+        request.get(api).then(res => {
+            if (!res.data) return;
             this.setData({
-                readmeDetail: data
+                readmeDetail: res.data
             });
         }).catch(err => {
             utils.showTip(err);

@@ -6,7 +6,7 @@
         <text class="emptyText">Nothing here</text>
     </view>
     <view wx:if="{{load && eventList.length}}" class="eventList">
-        <view wx:for="{{eventList}}" wx:key="id" class="eventItem">
+        <view bindtap="viewDeveloperDetail" data-name="{{item.actor.login}}" wx:for="{{eventList}}" wx:key="id" class="eventItem">
             <view class="avatar">
                 <v-image defaultImage="/static/images/avatar.png" src="{{item.actor.avatar_url}}"></v-image>
             </view>

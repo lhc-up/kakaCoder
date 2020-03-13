@@ -34,15 +34,11 @@ const request = {
                 header: header,
                 success(res) {
                     _this.handleRequestLimit(res);
-                    resolve(res.data || '');
+                    resolve(res);
                 },
                 fail(err) {
                     console.log(err);
-                    if (_this.ifLimitError()) {
-                        resolve();
-                    } else {
-                        reject('墙太高了，稍后试试吧！');
-                    }
+                    reject('墙太高了，稍后试试吧！');
                 }
             });
         });
@@ -54,25 +50,6 @@ const request = {
         if (!username || !password) return false;
         return 'Basic ' + utils.encodeBase64(`${username}:${password}`);
     },
-    // 是否是接口限制错误
-    ifLimitError() {
-        const type = wx.getStorageSync(CONST.STORAGE_LIMIT_TYPE);
-        if (!type) return false;
-        let tip = '';
-        if (type === 'login') {
-            tip = `根据GitHub规定，您本小时内的接口调用次数已使用完毕，请登录获取更多调用次数`;
-        } else if (type === 'exceed') {
-            const time = wx.getStorageSync(CONST.STORAGE_LIMIT_RESET_TIME);
-            tip = `根据GitHub规定，您本小时内的接口调用次数已使用完毕，${time}后将重置次数。`
-        }
-        wx.showModal({
-            content: tip,
-            showCancel: false,
-            confirmText: '确定',
-            confirmColor: '#597ef7'
-        });
-        return true;
-    },
     // 处理请求限制的问题
     handleRequestLimit(res) {
         // 总次数
@@ -83,7 +60,11 @@ const request = {
         const resetTime = res.header['X-RateLimit-Reset'];
         // 只处理GitHub的请求
         if (!totalCount) return false;
-        if (remainCount > 5) return;
+        if (remainCount > 5) {
+            wx.removeStorageSync(CONST.STORAGE_LIMIT_TYPE);
+            wx.removeStorageSync(CONST.STORAGE_LIMIT_RESET_TIME);
+            return;
+        }
         // 剩余5次机会以内时提示
         let tip = '';
         if (remainCount >= 0) {

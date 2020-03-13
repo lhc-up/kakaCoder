@@ -7,26 +7,88 @@
 import request from '../../../utils/request.js';
 import utils from '../../../utils/util.js';
 import url from '../../../utils/interface.js';
+import CONST from '../../../utils/const.js';
 Page({
     data: {
         username: '',
-        userInfo: {}
+        userInfo: {},
+        // 是否follow了该作者
+        isFollowing: false
     },
     onLoad(option) {
         this.data.username = option.username;
     },
     onShow() {
         this.getUserInfo();
+        this.checkIsFollowing();
     },
     // 获取用户信息
     getUserInfo() {
         const api = url.getUserInfo(this.data.username);
         utils.showLoading();
-        request.get(api).then(data => {
+        request.get(api).then(res => {
+            const data = res.data;
+            if (!data) return;
             this.setData({
                 userInfo: data
             });
             utils.hideLoading();
+        }).catch(err => {
+            utils.showTip(err);
+        });
+    },
+    // 点击follow按钮
+    handleFollowBtnClick() {
+        if (!this.isLogin()) {
+            this.showLoginModal();
+        } else {
+            if (this.data.isFollowing) {
+                this.follow();
+            } else {
+                this.unFollow();
+            }
+        }
+    },
+    // 显示去登录弹窗
+    showLoginModal() {
+        wx.showModal({
+            content: '需要登录',
+            showCancel: true,
+            cancelText: '取消',
+            cancelColor: '#000000',
+            confirmText: '确定',
+            confirmColor: '#597ef7',
+            success: (result) => {
+                if (result.confirm) {
+                    wx.navigateTo({
+                        url: '/pages/login/login'
+                    });
+                }
+            }
+        });
+    },
+    // follow
+    follow() {
+        
+    },
+    // unFollow
+    unFollow() {
+
+    },
+    // 是否登录
+    isLogin() {
+        const username = wx.getStorageSync(CONST.STORAGE_USERNAME);
+        const password = wx.getStorageSync(CONST.STORAGE_PASSWORD);
+        return username && password;
+    },
+    // 检查是否follow了该用户,只有当前用户登录了才会检查
+    checkIsFollowing() {
+        if (!this.isLogin()) return;
+        const username = wx.getStorageSync(CONST.STORAGE_USERNAME);
+        const targetUsername = this.data.username;
+        const apiUrl = url.checkIsFollowing(username, targetUsername);
+        request.get(apiUrl).then(res => {
+            console.log(res);
         }).catch(err => {
             utils.showTip(err);
         });
@@ -51,7 +113,7 @@ Page({
         const targetPageRoute = pageRouteMap[type];
         // 查看页面栈，如果页面栈中已存在目标页面，则使用navigateBackTo的方式跳转，防止循环跳转，页面栈溢出
         let allPages =  getCurrentPages();
-        const index = allPages.findIndex(item => targetPageRoute === item.route);
+        const index = allPages.findIndex(item => targetPageRoute.indexOf(item.route) >= 0);
         if (index < 0) {
             // 页面栈中不存在，则正常跳转
             wx.navigateTo({
@@ -66,7 +128,7 @@ Page({
             // 确保目标页面使用apiUrl作为请求地址
             targetPageObj.data.apiUrl = apisMap[type];
             wx.navigateBack({
-                delta: allPages.length - index
+                delta: allPages.length - index - 1
             });
         }
     }

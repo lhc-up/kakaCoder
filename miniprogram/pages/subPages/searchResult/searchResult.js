@@ -102,7 +102,8 @@ Page({
         if (!this.data.repo.hasNextPage) return;
         const paramStr = this.getParams('repo');
         utils.showLoading();
-        request.get(url.searchRepositories + paramStr).then(data => {
+        request.get(url.searchRepositories + paramStr).then(res => {
+            const data = res.data;
             if (!data) return;
             console.log(data)
             const list = data.items || [];
@@ -128,7 +129,8 @@ Page({
         if (!this.data.dev.hasNextPage) return;
         const paramStr = this.getParams('dev');
         utils.showLoading();
-        request.get(url.searchDevelopers + paramStr).then(data => {
+        request.get(url.searchDevelopers + paramStr).then(res => {
+            const data = res.data;
             if (!data) return;
             console.log(data)
             const list = data.items || [];

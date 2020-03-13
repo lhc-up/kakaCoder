@@ -38,8 +38,8 @@ Page({
         if (!this.data.hasNextPage) return;
         const pageParam = `?page=${this.data.page}&per_page=${this.data.pageSize}`;
         utils.showLoading();
-        request.get(this.data.apiUrl+pageParam).then(data => {
-            const list = data || [];
+        request.get(this.data.apiUrl+pageParam).then(res => {
+            const list = res.data || [];
             this.setData({
                 repoList: [...this.data.repoList, ...list],
                 hasNextPage: data.length === this.data.pageSize
@@ -57,7 +57,7 @@ Page({
         const targetPageRoute = '/pages/subPages/repo/repo';
         // 查看页面栈，如果页面栈中已存在目标页面，则使用navigateBackTo的方式跳转，防止循环跳转，页面栈溢出
         let allPages =  getCurrentPages();
-        const index = allPages.findIndex(item => targetPageRoute === item.route);
+        const index = allPages.findIndex(item => targetPageRoute.indexOf(item.route) >= 0);
         if (index < 0) {
             // 页面栈中不存在，则正常跳转
             wx.navigateTo({
@@ -74,7 +74,7 @@ Page({
                 'option.author': author
             });
             wx.navigateBack({
-                delta: allPages.length - index
+                delta: allPages.length - index - 1
             });
         }
     }
