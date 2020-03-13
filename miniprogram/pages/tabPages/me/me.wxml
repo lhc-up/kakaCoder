@@ -8,7 +8,7 @@
                 <view class="name">{{userInfo.login}}</view>
                 <view class="desc">{{userInfo.bio || ''}}</view>
             </block>
-            <view wx:else bindtap="goLogin" class="name">LOGIN</view>
+            <view wx:else bindtap="goLogin" class="name">请先登录</view>
         </view>
     </view>
     <view hidden="{{!!userInfo}}" class="mainContent unLogin">
@@ -79,19 +79,19 @@
         <view class="listWrap">
             <view data-type="service" hover-stay-time="50" hover-class="itemHover" class="item">
                 <button class="service" style="width:100%;" open-type="contact"></button>
-                <view class="itemLeft">Service</view>
+                <view class="itemLeft">客服</view>
                 <view class="itemRight">
                     <v-icon type="right" size="38"></v-icon>
                 </view>
             </view>
             <view bindtap="feedback" hover-stay-time="50" hover-class="itemHover" class="item">
-                <view class="itemLeft">Feedback</view>
+                <view class="itemLeft">吐槽</view>
                 <view class="itemRight">
                     <v-icon type="right" size="38"></v-icon>
                 </view>
             </view>
             <view bindtap="viewPages" data-type="about" hover-stay-time="50" hover-class="itemHover" class="item">
-                <view class="itemLeft">About</view>
+                <view class="itemLeft">关于</view>
                 <view class="itemRight">
                     <v-icon type="right" size="38"></v-icon>
                 </view>

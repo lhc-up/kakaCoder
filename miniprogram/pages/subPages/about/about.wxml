@@ -1,7 +1,7 @@
 <view class="container">
     <view class="listWrap">
         <view class="item">
-            <view class="itemLeft">Version</view>
+            <view class="itemLeft">版本</view>
             <view class="itemRight">1.0.0</view>
         </view>
         <view class="item">
@@ -14,11 +14,11 @@
         </view>
         <view hover-stay-time="50" hover-class="itemHover" class="item">
             <button class="feedback" style="width:100%;" open-type="feedback"></button>
-            <view class="itemLeft">WeChat Feedback</view>
+            <view class="itemLeft">意见反馈</view>
             <view class="itemRight">
                 <v-icon type="right" size="38"></v-icon>
             </view>
         </view>
     </view>
-    <view bindtap="logout" class="logout" hover-stay-time="50" hover-class="btnHover">LOGOUT</view>
+    <view bindtap="logout" class="logout" hover-stay-time="50" hover-class="btnHover">退出登录</view>
 </view>

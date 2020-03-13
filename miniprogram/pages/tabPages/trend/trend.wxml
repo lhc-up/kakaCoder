@@ -18,7 +18,8 @@
                 <view class="select">
                     <v-icon type="shaixuan" color="#d6e4ff" size="34"></v-icon>
                 </view>
-            </picker>        
+            </picker>       
+            <text class="item">筛选条件</text>   
             <text class="item">{{selectValue.duration}}</text>
             <text class="item">{{selectValue.language}}</text>
             <text class="item">{{selectValue.spokenLanguage}}</text>
