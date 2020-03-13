@@ -7,7 +7,7 @@
             <view class="name">{{userInfo.login}}</view>
             <view class="desc">{{userInfo.bio || ''}}</view>
         </view>
-        <view class="followBtn" size="mini">Follow</view>
+        <view class="followBtn" bindtap="handleFollowBtnClick" size="mini">{{isFollowing?'unFollow':'follow'}}</view>
     </view>
     <view class="mainContent">
         <view class="cardWrap">

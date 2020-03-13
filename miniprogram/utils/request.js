@@ -97,6 +97,12 @@ const request = {
     post(url, data) {
         return this.request('post', url, data);
     },
+    put(url, data) {
+        return this.request('put', url, data);
+    },
+    delete(url, data) {
+        return this.request('delete', url, data);
+    },
     // graphlQl请求本身是post请求，body体内放入固定格式的参数
     graphql(data={}) {
         let header = {};

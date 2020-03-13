@@ -30,18 +30,21 @@ Page({
             utils.showTip('Password is required!');
             return false;
         }
+        // 这里存入缓存，供公共请求方法添加auth使用，登录失败时需清除
+        wx.setStorageSync(CONST.STORAGE_USERNAME, username);
+        wx.setStorageSync(CONST.STORAGE_PASSWORD, password);
         utils.showLoading();
-        request.get(url.login, null, {
-            header: {
-                'Authorization': 'Basic ' + utils.encodeBase64(`${username}:${password}`)
+        request.get(url.login).then(res => {
+            if (res.statusCode !== 200) {
+                wx.removeStorageSync(CONST.STORAGE_USERNAME);
+                wx.removeStorageSync(CONST.STORAGE_PASSWORD);
+                wx.removeStorageSync(CONST.STORAGE_USERINFO);
+                return;
             }
-        }).then(res => {
             const data = res.data;
             if (!data) return;
             app.globalData.userInfo = data;
             wx.setStorageSync(CONST.STORAGE_USERINFO, JSON.stringify(data));
-            wx.setStorageSync(CONST.STORAGE_USERNAME, username);
-            wx.setStorageSync(CONST.STORAGE_PASSWORD, password);
             wx.navigateBack();
         }).catch(err => {
             utils.showTip(err);

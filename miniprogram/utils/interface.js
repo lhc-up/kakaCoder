@@ -82,5 +82,13 @@ export default {
     // 检查一个用户是否follow了另外一个用户
     checkIsFollowing(username, targetUsername) {
         return `https://api.github.com/users/${username}/following/${targetUsername}`;
+    },
+    // Follow a user,PUT
+    followUser(username) {
+        return `https://api.github.com/user/following/${username}`;
+    },
+    // Unfollow a user DELETE
+    unFollowUser(username) {
+        return `https://api.github.com/user/following/${username}`;
     }
 }

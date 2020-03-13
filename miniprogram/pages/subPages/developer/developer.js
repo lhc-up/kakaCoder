@@ -20,7 +20,7 @@ Page({
     },
     onShow() {
         this.getUserInfo();
-        this.checkIsFollowing();
+        this.checkIfYouAreFollowing();
     },
     // 获取用户信息
     getUserInfo() {
@@ -42,7 +42,7 @@ Page({
         if (!this.isLogin()) {
             this.showLoginModal();
         } else {
-            if (this.data.isFollowing) {
+            if (!this.data.isFollowing) {
                 this.follow();
             } else {
                 this.unFollow();
@@ -69,11 +69,31 @@ Page({
     },
     // follow
     follow() {
-        
+        const targetUsername = this.data.username;
+        const apiUrl = url.followUser(targetUsername);
+        utils.showLoading();
+        request.put(apiUrl).then(res => {
+            utils.hideLoading();
+            this.setData({
+                isFollowing: res.statusCode === 204
+            });
+        }).catch(err => {
+            url.showTip(err);
+        });
     },
     // unFollow
     unFollow() {
-
+        const targetUsername = this.data.username;
+        const apiUrl = url.unFollowUser(targetUsername);
+        utils.showLoading();
+        request.delete(apiUrl).then(res => {
+            utils.hideLoading();
+            this.setData({
+                isFollowing: res.statusCode !== 204
+            })
+        }).catch(err => {
+            url.showTip(err);
+        });
     },
     // 是否登录
     isLogin() {
@@ -82,13 +102,16 @@ Page({
         return username && password;
     },
     // 检查是否follow了该用户,只有当前用户登录了才会检查
-    checkIsFollowing() {
+    checkIfYouAreFollowing() {
         if (!this.isLogin()) return;
-        const username = wx.getStorageSync(CONST.STORAGE_USERNAME);
         const targetUsername = this.data.username;
-        const apiUrl = url.checkIsFollowing(username, targetUsername);
+        const apiUrl = url.checkIfYouAreFollowing(targetUsername);
         request.get(apiUrl).then(res => {
-            console.log(res);
+            // 204，follow
+            // 404，unFollow
+            this.setData({
+                isFollowing: res.statusCode === 204
+            });
         }).catch(err => {
             utils.showTip(err);
         });

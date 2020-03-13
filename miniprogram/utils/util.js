@@ -36,7 +36,7 @@ const utils = {
     // 微信默认提示
     showTip(msg) {
         wx.showToast({
-            title: msg || '',
+            title: (msg || '').toString(),
             icon: 'none',
             image: '',
             duration: 2000,

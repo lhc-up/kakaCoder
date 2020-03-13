@@ -4,6 +4,7 @@
  * @date: 2020-03-05
 */
 
+import CONST from '../../../utils/const.js';
 let app =  getApp();
 Page({
     data: {
@@ -122,11 +123,24 @@ Page({
         });
     },
     logout() {
-        wx.removeStorageSync('userInfo');
+        wx.removeStorageSync(CONST.STORAGE_USERNAME);
+        wx.removeStorageSync(CONST.STORAGE_USERINFO);
+        wx.removeStorageSync(CONST.STORAGE_PASSWORD);
         app.globalData.userInfo = null;
-        wx.switchTab({
-            url: '/pages/trend/trend'
+        wx.showModal({
+            content: '退出成功',
+            showCancel: false,
+            confirmText: '确定',
+            confirmColor: '#597ef7',
+            success: (result) => {
+                if (result.confirm) {
+                    wx.switchTab({
+                        url: '/pages/tabPages/trend/trend'
+                    });
+                }
+            }
         });
+          
     },
     loginBtnClick() {
         if (!this.data.userInfo) {
