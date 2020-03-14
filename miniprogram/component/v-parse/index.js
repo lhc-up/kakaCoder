@@ -20,6 +20,11 @@ Component({
         type: {
             type: String,
             value: 'markdown'
+        },
+        // 默认接受base64
+        base64: {
+            type: Boolean,
+            value: true
         }
     },
     data: {
@@ -28,8 +33,8 @@ Component({
     },
     methods: {
         parse() {
-            const { content, type } = this.data;
-            const result = towxml(utils.decodeBase64(content), type);
+            const { content, type, base64 } = this.data;
+            const result = towxml(base64 ? utils.decodeBase64(content) : content, type);
             this.setData({
                 loading: false,
                 article: result

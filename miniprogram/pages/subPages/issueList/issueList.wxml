@@ -1,0 +1,30 @@
+<view class="container">
+    <view wx:if="{{load && issuelist.length}}" class="emptyData">
+        <v-icon type="zanwu1" color="#85a5ff" size="120"></v-icon>
+        <text class="emptyText">暂无数据</text>
+    </view>
+    <view class="searchWrap">
+        <view class="tabWrap">
+            <view bindtap="switchTab" class="tab {{currentTab === 'open' ? 'selected' : ''}}" data-type="open">open</view>
+            <view bindtap="switchTab" class="tab {{currentTab === 'closed' ? 'selected' : ''}}" data-type="closed">closed</view>
+        </view>
+    </view>
+    <view class="listWrap">
+        <view bindtap="viewIssueDetail" data-number="{{item.number}}" wx:for="{{issuelist}}" wx:key="id" class="item">
+            <view class="itemLeft">
+                <v-icon wx:if="{{item.state==='open'}}" type="issue-opened" size="40" color="#259B35"></v-icon>
+                <v-icon wx:else type="issue-opened" size="40" color="#BD0F26"></v-icon>
+            </view>
+            <view class="itemRight">
+                <view class="title">#{{item.number}}  {{item.title}}</view>
+                <view class="info">
+                    <text wx:if="{{!!item.comments}}" class="comments">{{item.comments}} comments</text>
+                    <text wx:if="{{item.state==='open'}}">updated at {{item.updated_at}}</text>
+                    <text wx:else>closed at {{item.closed_at}}</text>
+                </view>
+            </view>
+        </view>
+        <v-nomore wx:if="{{!hasNextPage}}"></v-nomore>
+    </view>
+</view>
+  

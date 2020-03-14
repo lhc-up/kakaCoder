@@ -1,0 +1,38 @@
+<view class="container">
+    <view class="mainContent">
+        <view class="topCard">
+            <view class="cardTitle">
+                #{{issueDetail.number}} {{issueDetail.title}}
+                <view class="desc">
+                    <text>{{issueDetail.user.login}}</text>
+                    <block wx:if="{{issueDetail.state==='open'}}">
+                        created at
+                        <text>{{issueDetail.created_at}}</text>
+                    </block>
+                    <block wx:else>
+                        closed at
+                        <text>{{issueDetail.closed_at}}</text>
+                    </block>
+                </view>
+            </view>
+            <v-parse base64="{{false}}" content="{{issueDetail.body}}"></v-parse>
+        </view>
+        <view class="listWrap">
+            <view wx:for="{{commentsList}}" wx:key="id" class="item">
+                <view class="itemTitle">
+                    <view class="avatar">
+                        <v-image defaultImage="/static/images/avatar.png" src="{{item.user.avatar_url}}"></v-image>
+                    </view>
+                    <view class="titleContent">
+                        <view class="user">{{item.user.login}}</view>
+                        <view class="info">commented at {{item.created_at}}</view>
+                    </view>
+                </view>
+                <view class="itemContent">
+                    <v-parse base64="{{false}}" content="{{item.body}}"></v-parse>
+                </view>
+            </view>
+            <v-nomore wx:if="{{commentsList.length>=10 && !hasNextPage}}"></v-nomore>
+        </view>
+    </view>
+</view>

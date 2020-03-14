@@ -2,8 +2,8 @@
   "pages": [
       "pages/tabPages/trend/trend",
       "pages/subPages/language/language",
-      "pages/subPages/searchResult/searchResult",
       "pages/subPages/search/search",
+      "pages/subPages/searchResult/searchResult",
       "pages/subPages/repo/repo",
       "pages/subPages/repoList/repoList",
       "pages/subPages/developer/developer",

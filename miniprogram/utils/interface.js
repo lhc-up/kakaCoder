@@ -60,7 +60,14 @@ export default {
     getRepoIssues(owner, repoName) {
         return `https://api.github.com/repos/${owner}/${repoName}/issues`;
     },
-    
+    // 获取issue详情
+    getIssueDetail(owner, repoName, issueNumber) {
+        return `https://api.github.com/repos/${owner}/${repoName}/issues/${issueNumber}`;
+    },
+    // 获取一个issue的评论
+    getIssueComments(owner, repoName, issueNumber) {
+        return `https://api.github.com/repos/${owner}/${repoName}/issues/${issueNumber}/comments`;
+    },
 
 
     // user，获取用户信息

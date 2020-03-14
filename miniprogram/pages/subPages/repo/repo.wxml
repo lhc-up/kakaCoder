@@ -42,7 +42,7 @@
         <view class="list">
             <v-cell-group>
                 <v-cell bindclick="viewCode" title="Code" titleSize="34rpx" is-link></v-cell>
-                <v-cell bindclick="viewIssues" title="Issues" titleSize="34rpx" is-link>
+                <v-cell bindclick="viewPages" data-type="issues" title="Issues" titleSize="34rpx" is-link>
                     <view slot="footer">{{repoDetail.open_issues_count}}</view>
                 </v-cell>
                 <v-cell bindclick="viewPr" title="Pull requests" titleSize="34rpx" is-link></v-cell>
