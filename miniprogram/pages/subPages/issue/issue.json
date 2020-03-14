@@ -2,6 +2,6 @@
     "usingComponents": {},
     "navigationBarTitleText": "Issue",
     "navigationBarBackgroundColor": "#597EF7",
-    "backgroundColor": "#D6E4FF",
+    "backgroundColor": "#f0f5ff",
     "enablePullDownRefresh": true
 }
