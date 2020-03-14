@@ -105,7 +105,6 @@ Page({
         request.get(url.searchRepositories + paramStr).then(res => {
             const data = res.data;
             if (!data) return;
-            console.log(data)
             const list = data.items || [];
             list.forEach(item => {
                 item.updated_time = utils.formatTime(new Date(item.updated_at), 'yyyy-MM-dd hh:mm:ss');
@@ -132,7 +131,6 @@ Page({
         request.get(url.searchDevelopers + paramStr).then(res => {
             const data = res.data;
             if (!data) return;
-            console.log(data)
             const list = data.items || [];
             this.setData({
                 'dev.list': [...this.data.dev.list, ...list],
@@ -159,5 +157,20 @@ Page({
             }
         }
         return paramStr;
+    },
+    // 查看开发者
+    viewDeveloperDetail(e) {
+        const { name } = e.currentTarget.dataset;
+        wx.redirectTo({
+            url: `/pages/subPages/developer/developer?username=${name}`
+        });
+    },
+    // 查看仓库详情
+    viewRepoDetail(e) {
+        const { name } = e.currentTarget.dataset;
+        const arr = name.split('/');
+        wx.redirectTo({
+            url: `/pages/subPages/repo/repo?name=${arr[1]}&author=${arr[0]}`
+        });
     }
 });

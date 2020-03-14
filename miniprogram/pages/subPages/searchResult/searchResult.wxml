@@ -18,7 +18,7 @@
         <template is="search-repo" data="{{show: currentTab==='repo' && !load, count: 8}}"></template>
         <!-- 仓库列表 -->
         <view hidden="{{currentTab==='dev'}}" class="repoList">
-            <view wx:for="{{repo.list}}" wx:key="id" class="repoItem">
+            <view bindtap="viewRepoDetail" data-name="{{item.full_name}}" wx:for="{{repo.list}}" wx:key="id" class="repoItem">
                 <view class="repoTitle">
                     <v-icon type="yunliankeji_gongyinglianfuben" color="#2F54EB" size="40"></v-icon>
                     <text class="thick">{{item.full_name}}</text>
@@ -53,7 +53,7 @@
         </view>
         <!-- 开发者列表 -->
         <view hidden="{{currentTab==='repo'}}" class="devList">
-            <view wx:for="{{dev.list}}" wx:key="id" class="devItem">
+            <view bindtap="viewDeveloperDetail" data-name="{{item.login}}" wx:for="{{dev.list}}" wx:key="id" class="devItem">
                 <view class="avatar">
                     <v-image defaultImage="/static/images/avatar.png" src="{{item.avatar_url}}"></v-image>
                 </view>
