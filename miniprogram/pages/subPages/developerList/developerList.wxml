@@ -1,7 +1,9 @@
-<import src="../../../static/skeleton/trend.wxml"/>
 <view class="container">
-    <view class="listWrap">
-        <template is="trend-dev" data="{{show: currentTab==='dev' && !developerList.length, count: 4}}"></template>
+    <view wx:if="{{load && !developerList.length}}" class="emptyData">
+        <v-icon type="zanwu1" color="#85a5ff" size="120"></v-icon>
+        <text class="emptyText">Nothing here</text>
+    </view>
+    <view hidden="{{!developerList.length}}" class="listWrap">
        <view bindtap="viewDeveloperDetail" data-name="{{item.login}}" wx:for="{{developerList}}" wx:key="id" class="devItem">
             <view class="avatar">
                 <v-image defaultImage="/static/images/avatar.png" src="{{item.avatar_url}}"></v-image>

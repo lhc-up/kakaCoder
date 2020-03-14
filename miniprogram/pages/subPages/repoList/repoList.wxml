@@ -1,7 +1,9 @@
-<import src="../../../static/skeleton/trend.wxml"/>
 <view class="container">
-    <view class="listWrap">
-        <template is="trend-repo" data="{{show: !repoList.length, count: 10, hideIcons: true}}"></template>
+    <view wx:if="{{load && !repoList.length}}" class="emptyData">
+        <v-icon type="zanwu1" color="#85a5ff" size="120"></v-icon>
+        <text class="emptyText">Nothing here</text>
+    </view>
+    <view hidden="{{!repoList.length}}" class="listWrap">
         <view class="repoList">
             <view bindtap="viewRepoDetail" data-name="{{item.name}}" data-author="{{item.owner.login}}" wx:for="{{repoList}}" wx:key="name" class="repoItem">
                 <view class="repoTitle">

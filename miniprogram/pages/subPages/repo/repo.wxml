@@ -1,48 +1,58 @@
 <view class="container">
     <view class="topContent">{{repoDetail.description}}</view>
     <view class="mainContent">
-        <view class="card">
-            <view class="cardItem">
-                <view class="itemTop">
-                    <v-icon type="eye1" color="#597ef7" size="40"></v-icon>
+        <view class="cardWrap">
+            <view bindtap="watchRepo" hover-stay-time="50" hover-class="cardHover" class="cardItem">
+                <view class="icon">
+                    <v-icon type="{{isWatched?'eye':'eye1'}}" color="#597ef7" size="30"></v-icon>
                 </view>
-                <view class="itemBottom">{{repoDetail.watchers_count}}</view>
+                <view class="content">{{repoDetail.subscribers_count}}</view>
             </view>
-            <view class="cardItem">
-                <view class="itemTop">
-                    <v-icon type="star3" color="#597ef7" size="40"></v-icon>
+            <view bindtap="starRepo" hover-stay-time="50" hover-class="cardHover" class="cardItem">
+                <view class="icon">
+                    <v-icon type="{{isStarred?'star2':'star3'}}" color="#597ef7" size="30"></v-icon>
                 </view>
-                <view class="itemBottom">{{repoDetail.stargazers_count}}</view>
+                <view class="content">{{repoDetail.stargazers_count}}</view>
             </view>
-            <view class="cardItem">
-                <view class="itemTop">
-                    <v-icon type="codefork" color="#597ef7" size="40"></v-icon>
+            <view bindtap="forkRepo" hover-stay-time="50" hover-class="cardHover" class="cardItem">
+                <view class="icon">
+                    <v-icon type="codefork" color="#597ef7" size="30"></v-icon>
                 </view>
-                <view class="itemBottom">{{repoDetail.forks_count}}</view>
+                <view class="content">{{repoDetail.forks_count}}</view>
             </view>
+            <picker bindchange="onPickerChange" range="{{operateList}}">
+                <view hover-stay-time="50" hover-class="cardHover" class="cardItem">
+                    <view class="icon">
+                        <v-icon type="gongnengquanxian" color="#597ef7" size="30"></v-icon>
+                    </view>
+                    <view class="content">Operate</view>
+                </view>
+            </picker>
+        </view>
+        <!-- <view class="card">
             <view class="cardItem">
                 <view class="itemTop">
-                    <v-icon type="link1" color="#597ef7" size="40"></v-icon>
+                    <v-icon type="link1" color="#597ef7" size="30"></v-icon>
                 </view>
                 <view class="itemBottom">Copy link</view>
             </view>
             <view class="cardItem">
                 <view class="itemTop">
-                    <v-icon type="downloadfromthecloud" color="#597ef7" size="40"></v-icon>
+                    <v-icon type="downloadfromthecloud" color="#597ef7" size="30"></v-icon>
                 </view>
                 <view class="itemBottom">Down zip</view>
             </view>
             <view class="cardItem">
                 <view class="itemTop">
-                    <v-icon type="weibiaoti-" color="#597ef7" size="40"></v-icon>
+                    <v-icon type="weibiaoti-" color="#597ef7" size="30"></v-icon>
                 </view>
                 <view class="itemBottom">Share</view>
             </view>
-        </view>
+        </view> -->
         <view class="list">
             <v-cell-group>
                 <v-cell bindclick="viewCode" title="Code" titleSize="34rpx" is-link></v-cell>
-                <v-cell bindclick="viewPages" data-type="issues" title="Issues" titleSize="34rpx" is-link>
+                <v-cell bindclick="viewIssues" title="Issues" titleSize="34rpx" is-link>
                     <view slot="footer">{{repoDetail.open_issues_count}}</view>
                 </v-cell>
                 <v-cell bindclick="viewPr" title="Pull requests" titleSize="34rpx" is-link></v-cell>

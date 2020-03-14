@@ -56,6 +56,18 @@ export default {
     starRepo(repoFullName) {
         return `https://api.github.com/user/starred/${repoFullName}`;
     },
+    // unstar某个仓库DELETE
+    unStarRepo(repoFullName) {
+        return `https://api.github.com/user/starred/${repoFullName}`;
+    },
+    // 是否watch了某个仓库
+    isWatchedRepo(repoFullName) {
+        return `https://api.github.com/repos/${repoFullName}/subscription`;
+    },
+    // fork仓库
+    forkRepo(repoFullName) {
+        return `https://api.github.com/repos/${repoFullName}/forks`;
+    },
     // 获取一个仓库的issues
     getRepoIssues(owner, repoName) {
         return `https://api.github.com/repos/${owner}/${repoName}/issues`;
@@ -67,6 +79,10 @@ export default {
     // 获取一个issue的评论
     getIssueComments(owner, repoName, issueNumber) {
         return `https://api.github.com/repos/${owner}/${repoName}/issues/${issueNumber}/comments`;
+    },
+    // 获取仓库参与者
+    getContributers(owner, repoName) {
+        return `https://api.github.com/repos/${owner}/${repoName}/contributors`;
     },
 
 

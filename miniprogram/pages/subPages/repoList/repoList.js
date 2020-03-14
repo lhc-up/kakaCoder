@@ -12,7 +12,8 @@ Page({
         repoList: [],
         page: 1,
         hasNextPage: true,
-        pageSize: 15
+        pageSize: 15,
+        load: false
     },
     onLoad(option) {
         this.data.apiUrl = decodeURI(option.url || 'https://api.github.com/users/dagar/repos');
@@ -42,7 +43,8 @@ Page({
             const list = res.data || [];
             this.setData({
                 repoList: [...this.data.repoList, ...list],
-                hasNextPage: list.length === this.data.pageSize
+                hasNextPage: list.length === this.data.pageSize,
+                load: true
             });
             this.data.page++;
             utils.hideLoading();

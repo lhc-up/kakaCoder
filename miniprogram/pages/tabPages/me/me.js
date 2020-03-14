@@ -33,8 +33,8 @@ Page({
             });
             return;
         }
-        const username = wx.getStorageSync(CONST.STORAGE_USERNAME)
-        const password = wx.getStorageSync(CONST.STORAGE_PASSWORD)
+        const username = wx.getStorageSync(CONST.STORAGE_USERNAME);
+        const password = wx.getStorageSync(CONST.STORAGE_PASSWORD);
         if (!username || !password) {
             this.setData({
                 userInfo: null
@@ -92,14 +92,20 @@ Page({
     },
     // star
     starMe() {
-        const username = wx.getStorageSync(CONST.STORAGE_USERNAME)
-        const password = wx.getStorageSync(CONST.STORAGE_PASSWORD)
+        const username = wx.getStorageSync(CONST.STORAGE_USERNAME);
+        const password = wx.getStorageSync(CONST.STORAGE_PASSWORD);
         if (!username || !password) {
             wx.showModal({
                 content: '请先登录',
-                showCancel: false,
                 confirmText: '确定',
                 confirmColor: '#597ef7',
+                success: (result) => {
+                    if (result.confirm) {
+                        wx.navigateTo({
+                            url: '/pages/login/login'
+                        });
+                    }
+                }
             });
             return false;
         }
@@ -119,9 +125,14 @@ Page({
     },
     // 是否star了
     isStarredMe() {
-        const username = wx.getStorageSync(CONST.STORAGE_USERNAME)
-        const password = wx.getStorageSync(CONST.STORAGE_PASSWORD)
-        if (!username || !password) return;
+        const username = wx.getStorageSync(CONST.STORAGE_USERNAME);
+        const password = wx.getStorageSync(CONST.STORAGE_PASSWORD);
+        if (!username || !password) {
+            this.setData({
+                isStarred: false
+            });
+            return false;
+        }
         const apiUrl = url.isStardRepo('luohao8023/kakaCoder');
         request.get(apiUrl).then(res => {
             if (res.statusCode === 404) {
