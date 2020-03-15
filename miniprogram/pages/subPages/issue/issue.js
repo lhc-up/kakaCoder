@@ -27,9 +27,10 @@ Page({
     },
     getIssueDetail() {
         utils.showLoading();
-        request.get(this.data.apiUrl).then(res => {
+        request.cloud('get', this.data.apiUrl).then(res => {
             utils.hideLoading();
             const data = res.data;
+            if (!data) return;
             data.created_at = utils.formatTime(new Date(data.created_at), 'yyyy-MM-dd hh:mm:ss');
             if (data.closed_at) {
                 data.closed_at = utils.formatTime(new Date(data.closed_at), 'yyyy-MM-dd hh:mm:ss');
@@ -46,9 +47,10 @@ Page({
         if (!this.data.hasNextPage) return;
         const pageParams = `?page=${this.data.page}&per_page=${this.data.pageSize}`;
         utils.showLoading();
-        request.get(`${this.data.apiUrl}/comments${pageParams}`).then(res => {
+        request.cloud('get', `${this.data.apiUrl}/comments${pageParams}`).then(res => {
             utils.hideLoading();
-            const list = res.data || [];
+            let list = res.data;
+            if (!list || !(list instanceof Array)) list = [];
             list.forEach(item => {
                 item.created_at = utils.formatTime(new Date(item.created_at), 'yyyy-MM-dd hh:mm:ss');
             });

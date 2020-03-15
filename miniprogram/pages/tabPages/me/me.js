@@ -42,7 +42,8 @@ Page({
             return;
         }
         utils.showLoading();
-        request.get(url.login).then(res => {
+        request.cloud('get', url.login).then(res => {
+            utils.hideLoading();
             if (res.statusCode !== 200) {
                 this.removeStorage();
                 return false;
@@ -56,8 +57,6 @@ Page({
             });
         }).catch(err => {
             utils.showTip(err);
-        }).finally(() => {
-            utils.hideLoading();
         });
     },
     // 清除本地缓存
@@ -111,7 +110,7 @@ Page({
         }
         const apiUrl = url.starRepo('luohao8023/kakaCoder');
         utils.showLoading();
-        request.put(apiUrl).then(res => {
+        request.cloud('put', apiUrl).then(res => {
             utils.hideLoading();
             if (res.statusCode === 204) {
                 utils.showTip('Thank you!');
@@ -134,7 +133,7 @@ Page({
             return false;
         }
         const apiUrl = url.isStardRepo('luohao8023/kakaCoder');
-        request.get(apiUrl).then(res => {
+        request.cloud('get', apiUrl).then(res => {
             if (res.statusCode === 404) {
                 this.setData({
                     isStarred: false

@@ -103,33 +103,32 @@ const request = {
     delete(url, data) {
         return this.request('delete', url, data);
     },
-    // graphlQl请求本身是post请求，body体内放入固定格式的参数
-    graphql(data={}) {
-        let header = {};
-        if (typeof data.header === 'function') {
-            header = data.header();
-        }
-        if (typeof data.header === 'object') {
-            header = data.header;
-        }
-        header['Authorization'] = this.getAuthBase64();
-        let _this = this;
+    cloud(method, url) {
         return new Promise((resolve, reject) => {
-            wx.request({
-                url: url.graphql,
-                method: 'POST',
-                data: JSON.stringify({
-                    query: data.query,
-                    variables: data.variables
-                }),
-                header: header,
-                success(res) {
-                    resolve(response);
-                },
-                fail(err) {
-                    console.log(err);
-                    reject('墙太高了，请重试！');
+            const username = wx.getStorageSync(CONST.STORAGE_USERNAME) || '';
+            const password = wx.getStorageSync(CONST.STORAGE_PASSWORD) || '';
+            const systemInfo = wx.getSystemInfoSync();
+            const base64 = username && password ? ('Basic ' + utils.encodeBase64(`${username}:${password}`)) : '';
+            const headers = {
+                'User-Agent': username || (systemInfo.model + systemInfo.system),
+                'Authorization': base64
+            };
+            wx.cloud.callFunction({
+                name: 'requestTransfer',
+                data: {
+                    url, method, headers
                 }
+            }).then(res => {
+                const { result } = res;
+                console.log(res);
+                if (result.statusCode === 8023) {
+                    reject(result.message);
+                } else {
+                    result.data = JSON.parse(result.data);
+                    resolve(result);
+                }
+            }).catch(err => {
+                reject(err);
             });
         });
     }

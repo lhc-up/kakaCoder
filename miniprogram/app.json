@@ -1,6 +1,5 @@
 {
   "pages": [
-    
       "pages/tabPages/trend/trend",
       "pages/subPages/language/language",
       "pages/subPages/search/search",

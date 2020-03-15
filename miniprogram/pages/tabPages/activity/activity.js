@@ -37,8 +37,10 @@ Page({
         if (!this.data.hasNextPage) return;
         const api = this.getApiUrl();
         utils.showLoading();
-        request.get(api).then(res => {
-            const data = res.data || [];
+        request.cloud('get', api).then(res => {
+            utils.hideLoading();
+            let data = res.data;
+            if (!data || !(data instanceof Array)) data = [];
             data.forEach(item => {
                 item.created_at = utils.formatTime(new Date(item.created_at), 'yyyy-MM-dd hh:mm:ss');
             });
@@ -47,7 +49,6 @@ Page({
                 hasNextPage: data.length === this.data.pageSize
             });
             this.data.page++;
-            utils.hideLoading();
         }).catch(err => {
             utils.showTip(err);
         }).finally(() => {

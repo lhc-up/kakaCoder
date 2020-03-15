@@ -37,9 +37,10 @@ Page({
         if (!this.data.hasNextPage) return;
         const pageParam = `?page=${this.data.page}&per_page=${this.data.pageSize}&state=${this.data.currentTab}`;
         utils.showLoading();
-        request.get(this.data.apiUrl + pageParam).then(res => {
+        request.cloud('get', this.data.apiUrl + pageParam).then(res => {
             utils.hideLoading();
-            const list = res.data || [];
+            let list = res.data;
+            if (!list || !(list instanceof Array)) list = [];
             list.forEach(item => {
                 item.updated_at = utils.formatTime(new Date(item.updated_at), 'yyyy-MM-dd hh:mm:ss');
                 if (!!item.closed_at) {

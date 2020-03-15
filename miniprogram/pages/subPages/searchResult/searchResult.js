@@ -102,7 +102,8 @@ Page({
         if (!this.data.repo.hasNextPage) return;
         const paramStr = this.getParams('repo');
         utils.showLoading();
-        request.get(url.searchRepositories + paramStr).then(res => {
+        request.cloud('get', url.searchRepositories + paramStr).then(res => {
+            utils.hideLoading();
             const data = res.data;
             if (!data) return;
             const list = data.items || [];
@@ -114,21 +115,21 @@ Page({
                 'repo.hasNextPage': !!list.length
             });
             this.data.repo.page++;
-            utils.hideLoading();
         }).catch(err => {
             utils.showTip(err);
         }).finally(() => {
             this.setData({
-                'load': true
+                load: true
             });
-        })
+        });
     },
     // 获取dev
     searchDevelopers() {
         if (!this.data.dev.hasNextPage) return;
         const paramStr = this.getParams('dev');
         utils.showLoading();
-        request.get(url.searchDevelopers + paramStr).then(res => {
+        request.cloud('get', url.searchDevelopers + paramStr).then(res => {
+            utils.hideLoading();
             const data = res.data;
             if (!data) return;
             const list = data.items || [];
@@ -137,7 +138,6 @@ Page({
                 'dev.hasNextPage': !!list.length
             });
             this.data.dev.page++;
-            utils.hideLoading();
         }).catch(err => {
             utils.showTip(err);
         });

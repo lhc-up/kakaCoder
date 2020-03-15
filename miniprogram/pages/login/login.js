@@ -34,7 +34,8 @@ Page({
         wx.setStorageSync(CONST.STORAGE_USERNAME, username);
         wx.setStorageSync(CONST.STORAGE_PASSWORD, password);
         utils.showLoading();
-        request.get(url.login).then(res => {
+        request.cloud('get', url.login).then(res => {
+            utils.hideLoading();
             if (res.statusCode !== 200) {
                 wx.removeStorageSync(CONST.STORAGE_USERNAME);
                 wx.removeStorageSync(CONST.STORAGE_PASSWORD);
@@ -48,8 +49,6 @@ Page({
             wx.navigateBack();
         }).catch(err => {
             utils.showTip(err);
-        }).finally(() => {
-            utils.hideLoading();
         });
     }
 });

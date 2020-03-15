@@ -70,9 +70,9 @@
                         <view class="attr">{{item.currentPeriodStars}} stars today</view>
                     </view>
                 </view>
-                <view class="developers">
+                <!-- <view class="developers">
                     <v-image wx:for="{{item.builtBy}}" wx:key="username" wx:for-item="builtBy" defaultImage="/static/images/avatar.png" src="{{builtBy.avatar}}"></v-image>
-                </view>
+                </view> -->
             </view>
         </view>
         <!-- 开发者列表 -->

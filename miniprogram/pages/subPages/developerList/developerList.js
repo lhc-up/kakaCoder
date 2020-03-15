@@ -39,17 +39,21 @@ Page({
         if (!this.data.hasNextPage) return;
         const pageParam = `?page=${this.data.page}&per_page=${this.data.pageSize}`;
         utils.showLoading();
-        request.get(this.data.apiUrl+pageParam).then(res => {
-            const list = res.data || [];
+        request.cloud('get', this.data.apiUrl + pageParam).then(res => {
+            utils.hideLoading();
+            let list = res.data;
+            if (!list || !(list instanceof Array)) list = [];
             this.setData({
                 developerList: [...this.data.developerList, ...list],
-                hasNextPage: list.length === this.data.pageSize,
-                load: true
+                hasNextPage: list.length === this.data.pageSize
             });
             this.data.page++;
-            utils.hideLoading();
         }).catch(err => {
             utils.showTip(err);
+        }).finally(() => {
+            this.setData({
+                load: true
+            });
         });
     },
     // 查看开发者
