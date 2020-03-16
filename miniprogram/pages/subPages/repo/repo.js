@@ -20,7 +20,8 @@ Page({
             'Download zip'
         ],
         isStarred: false,
-        isWatched: false
+        isWatched: false,
+        refresh: false
     },
     onLoad(option) {
         this.data.option = option;
@@ -28,11 +29,17 @@ Page({
         //     name: 'mediapipe',
         //     author: 'google'
         // };
+        this.init();
     },
     onShow() {
+        // 跨页面设置fresh
+        if (this.data.refresh) this.init();
+    },
+    init() {
         wx.setNavigationBarTitle({
             title: this.data.option.name || 'Github'
         });
+        this.data.refresh = false;
         this.getRepoDetail();
     },
     // 监听picker
@@ -59,7 +66,7 @@ Page({
     // 下拉刷新
     onPullDownRefresh() {
         wx.stopPullDownRefresh();
-        this.getRepoDetail();
+        this.init();
     },
     // 是否已登录
     isLogin() {
@@ -314,6 +321,7 @@ Page({
             });
         } else {
             targetPageObj.data.apiUrl = apiUrl;
+            targetPageObj.data.refresh = true;
             wx.navigateBack({
                 delta
             });
@@ -330,6 +338,7 @@ Page({
             });
         } else {
             targetPageObj.data.apiUrl = apiUrl;
+            targetPageObj.data.refresh = true;
             wx.navigateBack({
                 delta
             });
@@ -346,6 +355,7 @@ Page({
             });
         } else {
             targetPageObj.data.username = author;
+            targetPageObj.data.refresh = true;
             wx.navigateBack({
                 delta
             });

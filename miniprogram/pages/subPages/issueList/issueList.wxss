@@ -10,6 +10,20 @@
     background: #597EF7;
     z-index: 2;
 }
+.addIssue {
+    position: fixed;
+    width: 90rpx;
+    height: 90rpx;
+    right: 90rpx;
+    bottom: 120rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #597ef7;
+    border-radius: 50%;
+    box-sizing: border-box;
+    z-index: 10;
+}
 .select {
     position: absolute;
     left: 45rpx;
@@ -26,7 +40,7 @@
     padding: 10rpx 0 16rpx;
     box-sizing: border-box;
     color: #D6E4FF;
-    font-size: 32rpx;
+    font-size: 36rpx;
 }
 .tabWrap .tab:after {
     position: absolute;

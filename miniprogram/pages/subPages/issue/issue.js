@@ -13,17 +13,36 @@ Page({
         commentsList: [],
         page: 1,
         pageSize: 15,
-        hasNextPage: true
+        hasNextPage: true,
+        refresh: false
     },
     onLoad(option) {
         this.data.apiUrl = option.url || 'https://api.github.com/repos/google/mediapipe/issues/486';//486
+        this.init();
     },
     onShow() {
+        // 跨页面设置fresh
+        if (this.data.refresh) this.init();
+    },
+    init() {
+        this.data.commentsList = [];
+        this.data.hasNextPage = true;
+        this.data.page = 1;
+        this.data.refresh = false;
         this.getIssueDetail();
         this.getComments();
         wx.setNavigationBarTitle({
             title: 'issue #' + this.data.apiUrl.split('/').reverse()[0]
         });
+    },
+    // 下拉刷新
+    onPullDownRefresh() {
+        wx.stopPullDownRefresh();
+        this.init();
+    },
+    // 上拉加载
+    onReachBottom() {
+        this.getComments();
     },
     getIssueDetail() {
         utils.showLoading();
@@ -62,18 +81,5 @@ Page({
         }).catch(err => {
             utils.showTip(err);
         });
-    },
-    // 下拉刷新
-    onPullDownRefresh() {
-        wx.stopPullDownRefresh();
-        this.data.commentsList = [];
-        this.data.hasNextPage = true;
-        this.data.page = 1;
-        this.getIssueDetail();
-        this.getComments();
-    },
-    // 上拉加载
-    onReachBottom() {
-        this.getComments();
     }
 });

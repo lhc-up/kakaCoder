@@ -13,20 +13,26 @@ Page({
         username: '',
         userInfo: {},
         // 是否follow了该作者
-        isFollowing: false
+        isFollowing: false,
+        refresh: false
     },
     onLoad(option) {
         this.data.username = option.username;
+        this.init();
     },
     onShow() {
-        this.getUserInfo();
-        this.checkIfYouAreFollowing();
+        // 跨页面设置fresh
+        if (this.data.refresh) this.init();
     },
     // 下拉刷新
     onPullDownRefresh() {
         wx.stopPullDownRefresh();
+        this.init();
+    },
+    init() {
         this.getUserInfo();
         this.checkIfYouAreFollowing();
+        this.data.refresh = false;
     },
     // 获取用户信息
     getUserInfo() {
@@ -156,6 +162,7 @@ Page({
             // 按照各个页面参数的格式进行设置，有点麻烦，但为了避免页面栈溢出，还是得想办法处理的
             // 确保目标页面使用apiUrl作为请求地址
             targetPageObj.data.apiUrl = apisMap[type];
+            targetPageObj.data.refresh = true;
             wx.navigateBack({
                 delta: allPages.length - index - 1
             });

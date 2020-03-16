@@ -13,21 +13,28 @@ Page({
         page: 1,
         hasNextPage: true,
         pageSize: 15,
-        load: false
+        load: false,
+        refresh: false
     },
     onLoad(option) {
         this.data.apiUrl = decodeURI(option.url || 'https://api.github.com/users/dagar/followers');
+        this.init();
     },
     onShow() {
+        // 跨页面设置fresh
+        if (this.data.refresh) this.init();
+    },
+    init() {
+        this.data.developerList = [];
+        this.data.page = 1;
+        this.data.hasNextPage = true;
+        this.data.refresh = false;
         this.getDeveloperList();
     },
     // 下拉刷新
     onPullDownRefresh() {
         wx.stopPullDownRefresh();
-        this.data.developerList = [];
-        this.data.page = 1;
-        this.data.hasNextPage = true;
-        this.getDeveloperList();
+        this.init();
     },
     // 上拉加载
     onReachBottom() {
@@ -76,6 +83,7 @@ Page({
             const targetPageObj = allPages[index];
             // 按照各个页面参数的格式进行设置，有点麻烦，但为了避免页面栈溢出，还是得想办法处理的
             targetPageObj.data.username = name;
+            targetPageObj.data.refresh = true;
             wx.navigateBack({
                 delta: allPages.length - index - 1
             });

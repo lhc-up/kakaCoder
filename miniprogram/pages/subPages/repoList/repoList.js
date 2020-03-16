@@ -13,21 +13,27 @@ Page({
         page: 1,
         hasNextPage: true,
         pageSize: 15,
-        load: false
+        load: false,
+        refresh: false
     },
     onLoad(option) {
         this.data.apiUrl = decodeURI(option.url || 'https://api.github.com/users/dagar/repos');
+        this.init();
     },
     onShow() {
+        if (this.data.refresh) this.init();
+    },
+    init() {
+        this.data.repoList = [];
+        this.data.page = 1;
+        this.data.hasNextPage = true;
+        this.data.refresh = false;
         this.getRepoList();
     },
     // 下拉刷新
     onPullDownRefresh() {
         wx.stopPullDownRefresh();
-        this.data.repoList = [];
-        this.data.page = 1;
-        this.data.hasNextPage = true;
-        this.getRepoList();
+        this.init();
     },
     // 上拉加载
     onReachBottom() {
@@ -76,6 +82,7 @@ Page({
                 'option.name': name,
                 'option.author': author
             });
+            targetPageObj.data.refresh = true;
             wx.navigateBack({
                 delta: allPages.length - index - 1
             });

@@ -14,7 +14,7 @@ Page({
         userInfo: null,
         isStarred: false
     },
-    onShow() {
+    onLoad() {
         this.getUserInfo();
         this.isStarredMe();
     },

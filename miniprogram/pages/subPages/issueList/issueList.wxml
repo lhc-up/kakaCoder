@@ -3,6 +3,10 @@
         <v-icon type="zanwu1" color="#85a5ff" size="120"></v-icon>
         <text class="emptyText">暂无数据</text>
     </view>
+    <!-- 添加issue -->
+    <view bindtap="addIssue" class="addIssue">
+        <v-icon type="add" size="40" color="#D6E4FF"></v-icon>
+    </view>
     <view class="searchWrap">
         <view class="tabWrap">
             <view bindtap="switchTab" class="tab {{currentTab === 'open' ? 'selected' : ''}}" data-type="open">open</view>
