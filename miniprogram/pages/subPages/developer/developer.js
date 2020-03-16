@@ -22,6 +22,12 @@ Page({
         this.getUserInfo();
         this.checkIfYouAreFollowing();
     },
+    // 下拉刷新
+    onPullDownRefresh() {
+        wx.stopPullDownRefresh();
+        this.getUserInfo();
+        this.checkIfYouAreFollowing();
+    },
     // 获取用户信息
     getUserInfo() {
         const api = url.getUserInfo(this.data.username);

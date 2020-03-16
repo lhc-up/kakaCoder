@@ -6,12 +6,12 @@
         <text class="emptyText">Nothing here</text>
     </view>
     <view wx:if="{{load && eventList.length}}" class="eventList">
-        <view bindtap="viewDeveloperDetail" data-name="{{item.actor.login}}" wx:for="{{eventList}}" wx:key="id" class="eventItem">
+        <view wx:for="{{eventList}}" wx:key="id" class="eventItem">
             <view class="avatar">
                 <v-image defaultImage="/static/images/avatar.png" src="{{item.actor.avatar_url}}"></v-image>
             </view>
             <view class="eventContent">
-                <text class="user">{{item.actor.display_login}}</text>
+                <text catchtap="viewDeveloperDetail" data-name="{{item.actor.login}}" class="user">{{item.actor.display_login}}</text>
                 <text wx:if="{{item.type==='WatchEvent'}}" class="do">{{item.payload.action}}</text>
                 <text wx:elif="{{item.type==='CreateEvent'}}" class="do">create a {{item.payload.ref_type}}</text>
                 <text wx:elif="{{item.type==='ForkEvent'}}" class="do">forked</text>
@@ -27,7 +27,7 @@
                 <text wx:elif="{{item.type==='PublicEvent'}}" class="do">make</text>
                 <text wx:elif="{{item.type==='ReleaseEvent'}}" class="do">{{item.payload.action}}</text>
                 <text wx:else class="do">do something</text>
-                <text class="repo">{{item.repo.name}}</text>
+                <text catchtap="viewRepoDetail" data-name="{{item.repo.name}}" class="repo">{{item.repo.name}}</text>
                 <view class="time">update at: {{item.created_at}}</view>
             </view>
         </view>

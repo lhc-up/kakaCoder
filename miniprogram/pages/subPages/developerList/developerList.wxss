@@ -36,3 +36,17 @@
     color: #597ef7;
     word-break: break-all;
 }
+.emptyData {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.emptyText {
+    padding: 30rpx 0;
+    font-size: 32rpx;
+    color: #85a5ff;
+}

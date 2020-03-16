@@ -69,5 +69,13 @@ Page({
         wx.navigateTo({
             url: `/pages/subPages/developer/developer?username=${name}`
         });
+    },
+    // 查看仓库
+    viewRepoDetail(e) {
+        const { name } = e.currentTarget.dataset;
+        const arr = name.split('/');
+        wx.navigateTo({
+            url: `/pages/subPages/repo/repo?name=${arr[1]}&author=${arr[0]}`
+        });
     }
 });

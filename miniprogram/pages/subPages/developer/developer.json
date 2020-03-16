@@ -2,5 +2,6 @@
     "usingComponents": {},
     "navigationBarTitleText": "Developer",
     "navigationBarBackgroundColor": "#597EF7",
-    "backgroundColor": "#D6E4FF"
+    "backgroundColor": "#D6E4FF",
+    "enablePullDownRefresh": true
 }

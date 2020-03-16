@@ -8,6 +8,8 @@ const fetch = require('node-fetch');
 const cheerio = require('cheerio');
 const request = require('request');
 
+const languages = require('./languages.json');
+const spokenLanguages = require('./spokenLanguages.json');
 
 const trending = {
     baseUrl: 'https://github.com/trending',
@@ -24,21 +26,11 @@ const trending = {
 const tempTrending = {
     // 获取编程语言
     getLanguages() {
-        return new Promise((resolve, reject) => {
-            request.get('https://github-trending-api.now.sh/languages', (err, res, body) => {
-                const data = !!err ? [] : body;
-                resolve(data)
-            });
-        });
+        return languages;
     },
     // 获取语言
     getSpokenLanguages() {
-        return new Promise((resolve, reject) => {
-            request.get('https://github-trending-api.now.sh/spoken_languages', (err, res, body) => {
-                const data = !!err ? [] : body;
-                resolve(data)
-            });
-        });
+        return spokenLanguages;
     },
     // 获取trending repos
     getTrendingRepos(since='daily', language, spokenLanguageCode) {
@@ -46,7 +38,11 @@ const tempTrending = {
         if (language) paramStr += `&language=${language}`;
         if (spokenLanguageCode) paramStr += `&spokenLanguageCode=${spokenLanguageCode}`;
         return new Promise((resolve, reject) => {
-            request.get('https://github-trending-api.now.sh/repositories'+paramStr, (err, res, body) => {
+            request({
+                url: 'https://github-trending-api.now.sh/repositories' + paramStr,
+                method: 'get',
+                json: true
+            }, function(err, res, body) {
                 const data = !!err ? [] : body;
                 resolve(data)
             });
@@ -57,7 +53,11 @@ const tempTrending = {
         let paramStr = `?since=${since}`;
         if (language) paramStr += `&language=${language}`;
         return new Promise((resolve, reject) => {
-            request.get('https://github-trending-api.now.sh/developers'+paramStr, (err, res, body) => {
+            request({
+                url: 'https://github-trending-api.now.sh/developers' + paramStr,
+                method: 'get',
+                json: true
+            }, function(err, res, body) {
                 const data = !!err ? [] : body;
                 resolve(data)
             });

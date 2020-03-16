@@ -147,8 +147,7 @@ Page({
                     type: 'language'
                 }
             }).then(data => {
-                const list = JSON.parse(data.result);
-                resolve(list);
+                resolve(data.result);
             }).catch(err => {
                 reject(err);
             });
@@ -163,8 +162,7 @@ Page({
                     type: 'spoken'
                 }
             }).then(data => {
-                const list = JSON.parse(data.result);
-                resolve(list);
+                resolve(data.result);
             }).catch(err => {
                 reject(err);
             });

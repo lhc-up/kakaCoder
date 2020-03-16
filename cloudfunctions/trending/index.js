@@ -20,9 +20,9 @@ exports.main = async (event, context) => {
     } else if (type === 'dev') {
         return await trending.getTrendingDevelopers(since, language);
     } else if (type === 'language') {
-        return await trending.getLanguages();
+        return trending.getLanguages();
     } else if (type === 'spoken') {
-        return await trending.getSpokenLanguages();
+        return trending.getSpokenLanguages();
     } else {
         return '[]';
     }

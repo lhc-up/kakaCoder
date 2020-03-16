@@ -61,10 +61,6 @@ Page({
         wx.stopPullDownRefresh();
         this.getRepoDetail();
     },
-    // 上拉加载
-    onReachBottom() {
-        this.getRepoDetail();
-    },
     // 是否已登录
     isLogin() {
         const username = wx.getStorageSync(CONST.STORAGE_USERNAME);
