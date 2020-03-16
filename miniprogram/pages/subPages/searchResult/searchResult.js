@@ -102,7 +102,7 @@ Page({
         if (!this.data.repo.hasNextPage) return;
         const paramStr = this.getParams('repo');
         utils.showLoading();
-        request.cloud('get', url.searchRepositories + paramStr).then(res => {
+        request.transfer('get', url.searchRepositories + paramStr).then(res => {
             utils.hideLoading();
             const data = res.data;
             if (!data) return;
@@ -128,7 +128,7 @@ Page({
         if (!this.data.dev.hasNextPage) return;
         const paramStr = this.getParams('dev');
         utils.showLoading();
-        request.cloud('get', url.searchDevelopers + paramStr).then(res => {
+        request.transfer('get', url.searchDevelopers + paramStr).then(res => {
             utils.hideLoading();
             const data = res.data;
             if (!data) return;

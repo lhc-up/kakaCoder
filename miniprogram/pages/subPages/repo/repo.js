@@ -96,7 +96,7 @@ Page({
         const apiUrl = url.starRepo(fullName);
         utils.showLoading();
         if (this.data.isStarred) {
-            request.cloud('delete', apiUrl).then(res => {
+            request.transfer('delete', apiUrl).then(res => {
                 utils.hideLoading();
                 if (res.statusCode === 204) {
                     this.setData({
@@ -110,7 +110,7 @@ Page({
                 utils.showTip(err);
             });
         } else {
-            request.cloud('put', apiUrl).then(res => {
+            request.transfer('put', apiUrl).then(res => {
                 utils.hideLoading();
                 if (res.statusCode === 204) {
                     this.setData({
@@ -134,7 +134,7 @@ Page({
             return false;
         }
         const apiUrl = url.isStardRepo(this.data.repoDetail.full_name);
-        request.cloud('get', apiUrl).then(res => {
+        request.transfer('get', apiUrl).then(res => {
             this.setData({
                 isStarred: res.statusCode === 204
             });
@@ -151,7 +151,7 @@ Page({
         const apiUrl = this.data.repoDetail.subscription_url;
         utils.showLoading();
         if (this.data.isWatched) {
-            request.cloud('delete', apiUrl).then(res => {
+            request.transfer('delete', apiUrl).then(res => {
                 utils.hideLoading();
                 if (res.statusCode === 204) {
                     this.setData({
@@ -165,7 +165,7 @@ Page({
                 utils.showTip(err);
             });
         } else {
-            request.cloud('put', apiUrl).then(res => {
+            request.transfer('put', apiUrl).then(res => {
                 utils.hideLoading();
                 if (res.statusCode === 200) {
                     this.setData({
@@ -189,7 +189,7 @@ Page({
             return false;
         }
         const apiUrl = url.isWatchedRepo(this.data.repoDetail.full_name);
-        request.cloud('get', apiUrl).then(res => {
+        request.transfer('get', apiUrl).then(res => {
             this.setData({
                 isWatched: res.statusCode === 200 && res.data.subscribed
             });
@@ -204,7 +204,7 @@ Page({
         if (!fullName) return false;
         const apiUrl = url.forkRepo(fullName);
         utils.showLoading();
-        request.cloud('post', apiUrl).then(res => {
+        request.transfer('post', apiUrl).then(res => {
             utils.hideLoading();
             if (res.statusCode === 202) {
                 this.setData({
@@ -254,7 +254,7 @@ Page({
         const option = this.data.option;
         const api = url.getRepoDetail(option.author, option.name);
         utils.showLoading();
-        request.cloud('get', api).then(res => {
+        request.transfer('get', api).then(res => {
             const data = res.data;
             if (!data) return;
             this.setData({
@@ -272,7 +272,7 @@ Page({
     // 获取仓库readme
     getReadme(repoFullName) {
         const api = url.getRepoReadme(repoFullName);
-        request.cloud('get', api).then(res => {
+        request.transfer('get', api).then(res => {
             if (!res.data) return;
             this.setData({
                 readmeDetail: res.data

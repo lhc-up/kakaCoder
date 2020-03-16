@@ -27,7 +27,7 @@ Page({
     },
     getIssueDetail() {
         utils.showLoading();
-        request.cloud('get', this.data.apiUrl).then(res => {
+        request.transfer('get', this.data.apiUrl).then(res => {
             utils.hideLoading();
             const data = res.data;
             if (!data) return;
@@ -47,7 +47,7 @@ Page({
         if (!this.data.hasNextPage) return;
         const pageParams = `?page=${this.data.page}&per_page=${this.data.pageSize}`;
         utils.showLoading();
-        request.cloud('get', `${this.data.apiUrl}/comments${pageParams}`).then(res => {
+        request.transfer('get', `${this.data.apiUrl}/comments${pageParams}`).then(res => {
             utils.hideLoading();
             let list = res.data;
             if (!list || !(list instanceof Array)) list = [];

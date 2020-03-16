@@ -37,7 +37,7 @@ Page({
         if (!this.data.hasNextPage) return;
         const api = this.getApiUrl();
         utils.showLoading();
-        request.cloud('get', api).then(res => {
+        request.transfer('get', api).then(res => {
             utils.hideLoading();
             let data = res.data;
             if (!data || !(data instanceof Array)) data = [];

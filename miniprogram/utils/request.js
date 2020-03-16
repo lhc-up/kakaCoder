@@ -103,6 +103,45 @@ const request = {
     delete(url, data) {
         return this.request('delete', url, data);
     },
+    // 接口转发调用
+    transfer(method, url) {
+        return new Promise((resolve, reject) => {
+            const username = wx.getStorageSync(CONST.STORAGE_USERNAME) || '';
+            const password = wx.getStorageSync(CONST.STORAGE_PASSWORD) || '';
+            const systemInfo = wx.getSystemInfoSync();
+            const base64 = username && password ? ('Basic ' + utils.encodeBase64(`${username}:${password}`)) : '';
+            const headers = {
+                'User-Agent': username || (systemInfo.model + systemInfo.system),
+                'Authorization': base64
+            };
+            const data = {
+                method, url,
+                headers: JSON.stringify(headers)
+            };
+            wx.request({
+                method: 'post',
+                url: 'https://www.kakayang.cn/transfer/kakaCoder',
+                // url: 'http://localhost:8023/transfer/kakaCoder',
+                data: data,
+                header: {
+                    'Content-type': 'application/json'
+                },
+                success(res) {
+                    const result = res.data;
+                    if (result.statusCode === 8023) {
+                        reject(result);
+                    } else {
+                        resolve(result);
+                    }
+                },
+                fail(err) {
+                    console.log(err);
+                    reject('网络异常，请稍后再试！');
+                }
+            });
+        });
+    },
+    // 云函数调用
     cloud(method, url) {
         return new Promise((resolve, reject) => {
             const username = wx.getStorageSync(CONST.STORAGE_USERNAME) || '';

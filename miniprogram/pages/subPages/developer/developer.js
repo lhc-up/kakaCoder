@@ -26,7 +26,7 @@ Page({
     getUserInfo() {
         const api = url.getUserInfo(this.data.username);
         utils.showLoading();
-        request.cloud('get', api).then(res => {
+        request.transfer('get', api).then(res => {
             utils.hideLoading();
             const data = res.data;
             if (!data) return;
@@ -72,7 +72,7 @@ Page({
         const targetUsername = this.data.username;
         const apiUrl = url.followUser(targetUsername);
         utils.showLoading();
-        request.cloud('put', apiUrl).then(res => {
+        request.transfer('put', apiUrl).then(res => {
             utils.hideLoading();
             this.setData({
                 isFollowing: res.statusCode === 204
@@ -86,7 +86,7 @@ Page({
         const targetUsername = this.data.username;
         const apiUrl = url.unFollowUser(targetUsername);
         utils.showLoading();
-        request.cloud('delete', apiUrl).then(res => {
+        request.transfer('delete', apiUrl).then(res => {
             utils.hideLoading();
             this.setData({
                 isFollowing: res.statusCode !== 204
@@ -106,7 +106,7 @@ Page({
         if (!this.isLogin()) return;
         const targetUsername = this.data.username;
         const apiUrl = url.checkIfYouAreFollowing(targetUsername);
-        request.cloud('get', apiUrl).then(res => {
+        request.transfer('get', apiUrl).then(res => {
             // 204，follow
             // 404，unFollow
             this.setData({

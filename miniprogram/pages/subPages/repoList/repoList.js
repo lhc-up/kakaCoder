@@ -39,7 +39,7 @@ Page({
         if (!this.data.hasNextPage) return;
         const pageParam = `?page=${this.data.page}&per_page=${this.data.pageSize}`;
         utils.showLoading();
-        request.cloud('get', this.data.apiUrl+pageParam).then(res => {
+        request.transfer('get', this.data.apiUrl+pageParam).then(res => {
             utils.hideLoading();
             let list = res.data;
             if (!list || !(list instanceof Array)) list = [];
