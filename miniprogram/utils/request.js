@@ -129,7 +129,7 @@ const request = {
                 success(res) {
                     const result = res.data;
                     if (result.statusCode === 8023) {
-                        reject(result);
+                        reject(result.message);
                     } else {
                         resolve(result);
                     }
