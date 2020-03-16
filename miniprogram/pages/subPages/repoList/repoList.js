@@ -24,10 +24,12 @@ Page({
         if (this.data.refresh) this.init();
     },
     init() {
-        this.data.repoList = [];
         this.data.page = 1;
         this.data.hasNextPage = true;
         this.data.refresh = false;
+        this.setData({
+            repoList: []
+        });
         this.getRepoList();
     },
     // 下拉刷新

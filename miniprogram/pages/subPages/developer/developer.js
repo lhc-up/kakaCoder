@@ -33,6 +33,9 @@ Page({
         this.getUserInfo();
         this.checkIfYouAreFollowing();
         this.data.refresh = false;
+        this.setData({
+            userInfo: {}
+        });
     },
     // 获取用户信息
     getUserInfo() {

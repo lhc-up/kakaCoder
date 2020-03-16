@@ -40,6 +40,10 @@ Page({
             title: this.data.option.name || 'Github'
         });
         this.data.refresh = false;
+        this.setData({
+            repoDetail: {},
+            readmeDetail: {}
+        });
         this.getRepoDetail();
     },
     // 监听picker

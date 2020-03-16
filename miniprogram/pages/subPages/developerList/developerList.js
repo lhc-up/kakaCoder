@@ -25,10 +25,12 @@ Page({
         if (this.data.refresh) this.init();
     },
     init() {
-        this.data.developerList = [];
         this.data.page = 1;
         this.data.hasNextPage = true;
         this.data.refresh = false;
+        this.setData({
+            developerList: []
+        });
         this.getDeveloperList();
     },
     // 下拉刷新
