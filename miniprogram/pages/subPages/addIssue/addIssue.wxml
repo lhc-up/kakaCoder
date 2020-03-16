@@ -1,0 +1,12 @@
+<view class="container">
+    <view class="mainContent">
+        <view class="titleWrap">
+            <input bindinput="onInput" data-type="title" class="titleInput" placeholder="请输入Issue标题" placeholder-class="placeholder" />
+        </view>
+        <view class="content">
+            <textarea bindinput="onInput" data-type="content" class="textarea" placeholder="请输入Issue内容" placeholder-class="placeholder"></textarea>
+        </view>
+        <view bindtap="submit" class="submit" hover-stay-time="50" hover-class="btnHover">提  交</view>
+    </view>
+</view>
+  

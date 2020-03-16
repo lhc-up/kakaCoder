@@ -104,7 +104,7 @@ const request = {
         return this.request('delete', url, data);
     },
     // 接口转发调用
-    transfer(method, url) {
+    transfer(method, url, params) {
         return new Promise((resolve, reject) => {
             const username = wx.getStorageSync(CONST.STORAGE_USERNAME) || '';
             const password = wx.getStorageSync(CONST.STORAGE_PASSWORD) || '';
@@ -116,7 +116,8 @@ const request = {
             };
             const data = {
                 method, url,
-                headers: JSON.stringify(headers)
+                headers: JSON.stringify(headers),
+                params
             };
             wx.request({
                 method: 'post',

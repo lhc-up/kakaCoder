@@ -85,7 +85,7 @@ Page({
     // 添加issue
     addIssue() {
         wx.navigateTo({
-            url: '/pages/subPages/addIssue/addIssue'
+            url: '/pages/subPages/addIssue/addIssue?url=' + this.data.apiUrl
         });
     }
 });

@@ -1,6 +1,6 @@
 {
     "usingComponents": {},
-    "navigationBarTitleText": "addIssue",
+    "navigationBarTitleText": "New Issue",
     "navigationBarBackgroundColor": "#597EF7",
     "backgroundColor": "#D6E4FF"
 }
