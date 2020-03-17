@@ -25,8 +25,8 @@ Page({
     submit() {
         let { title, content } = this.data;
         if (!title) return utils.showTip('请输入标题！');
-        // let source = '\n\n\n\n\n\n**---来自高颜值的GitHub小程序kakaCoder：**\n\n![image](https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584375952345&di=14364d040dadb44ee5d9866cdfbe2b92&imgtype=0&src=http%3A%2F%2Fimg13.360buyimg.com%2Fn1%2Fs450x450_jfs%2Ft10621%2F21%2F71475238%2F208015%2Fb1baea47%2F59c4da54N79d8fa81.jpg)';
-        let source = '\n\n\n\n\n\n**---来自高颜值的GitHub小程序kakaCoder**';
+        let source = '\n\n\n\n\n\n**------来自高颜值的GitHub小程序kakaCoder：**\n\n![image](https://6769-gitguber-v850e-1256494515.tcb.qcloud.la/gh_366bbc8b202f_258.jpg?sign=77773623070e46b1c871b8956ee14808&t=1584423750)';
+        // let source = '\n\n\n\n\n\n**------来自高颜值的GitHub小程序kakaCoder**';
         utils.showLoading();
         request.transfer('post', this.data.apiUrl, {
             title, 
