@@ -1,0 +1,27 @@
+.container {
+    padding: 30rpx;
+    box-sizing: border-box;
+    background-color: #f0f5ff;
+}
+.listWrap {
+    border-radius: 10rpx;
+    background-color: #fff;
+}
+.footer {
+    font-size: 22rpx;
+}
+.btnWrap {
+    position: fixed;
+    width: 100rpx;
+    bottom: 120rpx;
+    left: 50rpx;
+    z-index: 10;
+}
+.btnWrap .btn {
+    width: 80rpx;
+    height: 60rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20rpx;
+}

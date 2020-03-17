@@ -376,11 +376,10 @@ Page({
     },
     // 查看code
     viewCode() {
-        wx.showModal({
-            content: '敬请期待',
-            showCancel: false,
-            confirmText: '确定',
-            confirmColor: '#597ef7'
+        const repoName = this.data.repoDetail.full_name;
+        const repoUrl = this.data.repoDetail.url + '/contents';
+        wx.navigateTo({
+            url: `/pages/subPages/fileList/fileList?url=${repoUrl}&repoName=${repoName}`
         });
     }
 });

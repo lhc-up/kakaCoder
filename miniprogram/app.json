@@ -13,6 +13,8 @@
       "pages/subPages/addComment/addComment",
       "pages/subPages/issueList/issueList",
       "pages/subPages/prList/prList",
+      "pages/subPages/fileList/fileList",
+      "pages/subPages/fileDetail/fileDetail",
       "pages/subPages/about/about",
       "pages/tabPages/me/me",
       "pages/tabPages/activity/activity",

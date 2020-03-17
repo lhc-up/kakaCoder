@@ -1,0 +1,9 @@
+.container {
+    padding: 30rpx;
+    box-sizing: border-box;
+    background-color: #f0f5ff;
+}
+.fileContent {
+    border-radius: 10rpx;
+    background-color: #fff;
+}

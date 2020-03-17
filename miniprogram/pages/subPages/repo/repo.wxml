@@ -29,26 +29,6 @@
                 </view>
             </picker>
         </view>
-        <!-- <view class="card">
-            <view class="cardItem">
-                <view class="itemTop">
-                    <v-icon type="link1" color="#597ef7" size="30"></v-icon>
-                </view>
-                <view class="itemBottom">Copy link</view>
-            </view>
-            <view class="cardItem">
-                <view class="itemTop">
-                    <v-icon type="downloadfromthecloud" color="#597ef7" size="30"></v-icon>
-                </view>
-                <view class="itemBottom">Down zip</view>
-            </view>
-            <view class="cardItem">
-                <view class="itemTop">
-                    <v-icon type="weibiaoti-" color="#597ef7" size="30"></v-icon>
-                </view>
-                <view class="itemBottom">Share</view>
-            </view>
-        </view> -->
         <view class="list">
             <v-cell-group>
                 <v-cell bindclick="viewCode" title="Code" titleSize="34rpx" is-link></v-cell>

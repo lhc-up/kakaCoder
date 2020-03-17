@@ -34,11 +34,26 @@ Component({
     methods: {
         parse() {
             const { content, type, base64 } = this.data;
-            const result = towxml(base64 ? utils.decodeBase64(content) : content, type);
+            const result = towxml(base64 ? utils.decodeBase64(content) : content, type, {
+                events: {
+                    tap: this.handleClick
+                }
+            });
             this.setData({
                 loading: false,
                 article: result
             });
+        },
+        handleClick(e) {
+            const { data } = e.currentTarget.dataset;
+            if (data.tag && data.tag === 'img') {
+                if (data.attr && data.attr.src) {
+                    const src = data.attr.src;
+                    wx.previewImage({
+                        urls: [src]
+                    });
+                }
+            }
         }
     }
 });

@@ -1,0 +1,5 @@
+<view class="container">
+    <view class="fileContent">
+        <v-parse content="{{fileDetal.content}}"></v-parse>
+    </view>
+</view>
