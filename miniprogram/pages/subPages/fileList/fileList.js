@@ -28,6 +28,14 @@ Page({
         wx.stopPullDownRefresh();
         this.init();
     },
+    // 分享
+    onShareAppMessage() {
+        let title = '我在用手机看代码，你也来试试吧！';
+        return {
+            title,
+            path: `/pages/subPages/fileList/fileList?url=${this.data.filePath}&repoName=${this.data.repoName}&fileName=${this.data.fileName}`
+        }
+    },
     init() {
         let filePath = this.data.filePath;
         // contents后面没有任何参数时，表示是第一级

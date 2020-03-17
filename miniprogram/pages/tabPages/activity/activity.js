@@ -32,6 +32,13 @@ Page({
     onReachBottom() {
         this.getEventList();
     },
+    // 分享
+    onShareAppMessage() {
+        return {
+            title: '真热闹啊，快来看看今天GitHub都有哪些大事件！',
+            path: '/pages/tabPages/activity/activity'
+        }
+    },
     // 获取事件列表
     getEventList() {
         if (!this.data.hasNextPage) return;

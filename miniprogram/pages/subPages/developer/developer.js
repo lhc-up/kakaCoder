@@ -29,6 +29,22 @@ Page({
         wx.stopPullDownRefresh();
         this.init();
     },
+    // 分享
+    onShareAppMessage() {
+        let title = '这个作者你认识吗？';
+        const followers = this.data.userInfo.followers || 0;
+        if (followers < 500) {
+            title += '我看他的很多项目质量都很高！'
+        } else if (followers < 1500) {
+            title += '这么多的关注者！'
+        } else {
+            title += `${followers} 的关注者，不来看看吗？`
+        }
+        return {
+            title,
+            path: `/pages/subPages/developer/developer?username=${this.data.username}`
+        }
+    },
     init() {
         this.getUserInfo();
         this.checkIfYouAreFollowing();

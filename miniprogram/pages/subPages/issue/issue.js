@@ -44,6 +44,14 @@ Page({
     onReachBottom() {
         this.getComments();
     },
+    // 分享
+    onShareAppMessage() {
+        let title = '这个Issue你怎么看？';
+        return {
+            title,
+            path: `/pages/subPages/issue/issue?url=${this.data.apiUrl}`
+        }
+    },
     getIssueDetail() {
         utils.showLoading();
         request.transfer('get', this.data.apiUrl).then(res => {

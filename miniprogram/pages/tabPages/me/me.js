@@ -24,6 +24,16 @@ Page({
         this.getUserInfo();
         this.isStarredMe();
     },
+    // 分享
+    onShareAppMessage() {
+        let title = '哇！才一天没看，我的项目竟然被star了这么多次！';
+        const username = wx.getStorageSync(CONST.STORAGE_USERNAME);
+        if (username) title = `我是${username}，怎么样，羡慕我的star数吗？`
+        return {
+            title,
+            path: '/pages/tabPages/me/me'
+        }
+    },
     // 获取用户信息
     getUserInfo() {
         const userInfo = wx.getStorageSync(CONST.STORAGE_USERINFO);

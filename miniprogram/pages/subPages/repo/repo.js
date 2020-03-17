@@ -35,6 +35,25 @@ Page({
         // 跨页面设置fresh
         if (this.data.refresh) this.init();
     },
+    // 分享
+    onShareAppMessage() {
+        let title = '我发现了一个不错的项目，';
+        const starCount = this.data.repoDetail.stargazers_count || 0;
+        if (starCount < 500) {
+            title += 'star在飙升！'
+        } else if (starCount < 1500) {
+            title += 'star也很多，快来看看吧！'
+        } else if (starCount < 3000) {
+            title += `${starCount}的star数，质量可不是盖的！`
+        } else {
+            title += `${starCount} star！就问你怕不怕！`
+        }
+        const option = this.data.option;
+        return {
+            title,
+            path: `/pages/subPages/repo/repo?name=${option.name}&author=${option.author}`
+        }
+    },
     init() {
         wx.setNavigationBarTitle({
             title: this.data.option.name || 'Github'

@@ -38,6 +38,13 @@ Page({
         wx.stopPullDownRefresh();
         this.searchList();
     },
+    // 分享
+    onShareAppMessage() {
+        return {
+            title: '快来看看今天有哪些热门的仓库和开发者吧！',
+            path: '/pages/tabPages/trend/trend'
+        }
+    },
     switchTab(e) {
         const tabName = e.currentTarget.dataset.type;
         wx.pageScrollTo({
