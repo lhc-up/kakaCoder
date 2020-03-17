@@ -1,4 +1,8 @@
 <view class="container">
+    <!-- 添加评论 -->
+    <view bindtap="addComment" class="addComment">
+        <v-icon type="add" size="40" color="#D6E4FF"></v-icon>
+    </view>
     <view class="mainContent">
         <view class="topCard">
             <view class="cardTitle">

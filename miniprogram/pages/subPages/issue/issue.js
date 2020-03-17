@@ -81,5 +81,11 @@ Page({
         }).catch(err => {
             utils.showTip(err);
         });
+    },
+    // 添加评论
+    addComment() {
+        wx.navigateTo({
+            url: '/pages/subPages/addComment/addComment?url=' + this.data.apiUrl + '/comments'
+        });
     }
 });

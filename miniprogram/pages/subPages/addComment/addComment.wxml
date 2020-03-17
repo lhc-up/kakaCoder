@@ -1,0 +1,9 @@
+<view class="container">
+    <view class="mainContent">
+        <view class="content">
+            <textarea bindinput="onInput" class="textarea" placeholder="请输入评论内容" placeholder-class="placeholder"></textarea>
+        </view>
+        <view bindtap="submit" class="submit" hover-stay-time="50" hover-class="btnHover">提  交</view>
+    </view>
+</view>
+  

@@ -1,6 +1,20 @@
 .container {
     background-color: #f0f5ff;
 }
+.addComment {
+    position: fixed;
+    width: 90rpx;
+    height: 90rpx;
+    right: 90rpx;
+    bottom: 120rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #597ef7;
+    border-radius: 50%;
+    box-sizing: border-box;
+    z-index: 10;
+}
 .mainContent {
     padding: 20rpx;
 }
