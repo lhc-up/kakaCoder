@@ -24,7 +24,7 @@ const trending = {
 
 // 临时方案
 const tempTrending = {
-    cacheDuration: 10 * 60 * 1000,
+    cacheDuration: 60 * 60 * 1000,
     // 获取编程语言
     getLanguages() {
         return languages;

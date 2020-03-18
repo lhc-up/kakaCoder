@@ -10,7 +10,7 @@
 		"newFeature": true,
 		"coverView": true,
 		"autoAudits": false,
-		"showShadowRootInWxmlPanel": true,
+		"showShadowRootInWxmlPanel": false,
 		"scopeDataCheck": false,
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
@@ -43,9 +43,20 @@
 		"game": {
 			"list": []
 		},
-		"miniprogram": {
+		"gamePlugin": {
 			"current": -1,
 			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": -1,
+					"name": "pages/tabPages/trend/trend",
+					"pathName": "pages/tabPages/trend/trend",
+					"scene": null
+				}
+			]
 		}
 	}
 }

@@ -25,7 +25,8 @@ Page({
             duration: 'daily',
             language: '',
             spokenLanguage: ''
-        }
+        },
+        load: false
     },
     onLoad() {
         this.searchList();
@@ -158,6 +159,9 @@ Page({
             utils.showTip(err.toString());
             console.log(err);
         }
+        this.setData({
+            load: true
+        });
     },
     // 获取repo trending
     getRepositories() {

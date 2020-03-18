@@ -16,13 +16,11 @@ Page({
     },
     onShow() {
         this.getUserInfo();
-        this.isStarredMe();
     },
     // 下拉刷新
     onPullDownRefresh() {
         wx.stopPullDownRefresh();
         this.getUserInfo();
-        this.isStarredMe();
     },
     // 分享
     onShareAppMessage() {
@@ -65,6 +63,7 @@ Page({
             this.setData({
                 userInfo: data
             });
+            this.isStarredMe();
         }).catch(err => {
             utils.showTip(err);
         });

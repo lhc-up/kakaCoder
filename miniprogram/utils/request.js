@@ -111,7 +111,7 @@ const request = {
             const systemInfo = wx.getSystemInfoSync();
             const base64 = username && password ? ('Basic ' + utils.encodeBase64(`${username}:${password}`)) : '';
             const headers = {
-                'User-Agent': username || (systemInfo.model + systemInfo.system),
+                // 'User-Agent': username || (systemInfo.model + systemInfo.system),
                 'Authorization': base64
             };
             const data = {
@@ -123,6 +123,7 @@ const request = {
                 method: 'post',
                 url: 'https://www.kakayang.cn/transfer/kakaCoder',
                 // url: 'http://localhost:8023/transfer/kakaCoder',
+                // url: 'https://api.github.com/repos/luohao8023/kakaCoder',
                 data: data,
                 header: {
                     'Content-type': 'application/json'

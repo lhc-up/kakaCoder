@@ -286,9 +286,16 @@ Page({
             this.setData({
                 repoDetail: data
             });
-            this.isStarredRepo();
-            this.isWatchedRepo();
             this.getReadme(data.full_name);
+            // 避免并发请求
+            let timer1 = setTimeout(() => {
+                this.isStarredRepo();
+                clearTimeout(timer1);
+            }, 1000);
+            let timer2 = setTimeout(() => {
+                this.isWatchedRepo();
+                clearTimeout(timer2);
+            }, 2000);
         }).catch(err => {
             utils.showTip(err);
         }).finally(() => {

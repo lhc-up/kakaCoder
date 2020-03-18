@@ -47,7 +47,6 @@ Page({
     },
     init() {
         this.getUserInfo();
-        this.checkIfYouAreFollowing();
         this.data.refresh = false;
         this.setData({
             userInfo: {}
@@ -64,6 +63,10 @@ Page({
             this.setData({
                 userInfo: data
             });
+            let timer = setTimeout(() => {
+                this.checkIfYouAreFollowing();
+                clearTimeout(timer);
+            }, 800);
         }).catch(err => {
             utils.showTip(err);
         });

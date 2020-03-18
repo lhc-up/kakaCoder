@@ -30,7 +30,6 @@ Page({
         this.data.page = 1;
         this.data.refresh = false;
         this.getIssueDetail();
-        this.getComments();
         wx.setNavigationBarTitle({
             title: 'issue #' + this.data.apiUrl.split('/').reverse()[0]
         });
@@ -65,6 +64,7 @@ Page({
             this.setData({
                 issueDetail: data
             });
+            this.getComments();
         }).catch(err => {
             utils.showTip(err);
         });

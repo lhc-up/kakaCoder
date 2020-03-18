@@ -40,7 +40,6 @@ Page({
     onLoad(option) {
         this.data.keyword = option.keyword || 'js';
         this.searchRepositories();
-        this.searchDevelopers();
     },
     // 下拉刷新
     onPullDownRefresh() {
@@ -74,6 +73,11 @@ Page({
         this.setData({
             currentTab: tabName
         });
+        if (tabName === 'repo' && !this.data.repo.list.length) {
+            this,searchRepositories();
+        } else if (tabName === 'dev' && !this.data.dev.list.length) {
+            this.searchDevelopers();
+        }
     },
     // 显示actionSheet
     showActionSheet() {
@@ -102,7 +106,7 @@ Page({
         if (!this.data.repo.hasNextPage) return;
         const paramStr = this.getParams('repo');
         utils.showLoading();
-        request.transfer('get', url.searchRepositories + paramStr).then(res => {
+        request.transfer('get', encodeURI(url.searchRepositories + paramStr)).then(res => {
             utils.hideLoading();
             const data = res.data;
             if (!data) return;
@@ -128,7 +132,7 @@ Page({
         if (!this.data.dev.hasNextPage) return;
         const paramStr = this.getParams('dev');
         utils.showLoading();
-        request.transfer('get', url.searchDevelopers + paramStr).then(res => {
+        request.transfer('get', encodeURI(url.searchDevelopers + paramStr)).then(res => {
             utils.hideLoading();
             const data = res.data;
             if (!data) return;

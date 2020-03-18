@@ -30,8 +30,8 @@
         <text hidden="{{currentTab==='repo'}}" class="dev">These are the developers building the hot tools today.</text>
     </view>
     <view class="listWrap">
-        <template is="trend-repo" data="{{show: currentTab==='repo' && !repoList.length, count: 8}}"></template>
-        <template is="trend-dev" data="{{show: currentTab==='dev' && !developerList.length, count: 4}}"></template>
+        <template is="trend-repo" data="{{show: currentTab==='repo' && !load, count: 8}}"></template>
+        <template is="trend-dev" data="{{show: currentTab==='dev' && !load, count: 4}}"></template>
         <!-- 仓库列表 -->
         <view hidden="{{currentTab==='dev'}}" class="repoList">
             <view bindtap="viewRepoDetail" data-name="{{item.name}}" data-author="{{item.author}}" wx:for="{{repoList}}" wx:key="name" class="repoItem">
