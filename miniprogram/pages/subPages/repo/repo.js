@@ -91,15 +91,9 @@ Page({
         wx.stopPullDownRefresh();
         this.init();
     },
-    // 是否已登录
-    isLogin() {
-        const username = wx.getStorageSync(CONST.STORAGE_USERNAME);
-        const password = wx.getStorageSync(CONST.STORAGE_PASSWORD);
-        return username && password;
-    },
     // 操作前判断是否已登录，未登录给出弹窗提示
     getIsLoginBeforeOperate() {
-        if (this.isLogin()) return true;
+        if (utils.isLogin()) return true;
         wx.showModal({
             content: '请先登录',
             confirmText: '确定',
@@ -153,16 +147,19 @@ Page({
     },
     // 是否star了该仓库
     isStarredRepo() {
-        if (!this.isLogin()) {
+        if (!utils.isLogin()) {
             this.setData({
                 isStarred: false
             });
             return false;
         }
-        const apiUrl = url.isStardRepo(this.data.repoDetail.full_name);
-        request.transfer('get', apiUrl).then(res => {
+        const option = this.data.option;
+        request.cloud('getIfYouAreStrringRepo', {
+            owner: option.author,
+            repo: option.name
+        }).then(res => {
             this.setData({
-                isStarred: res.statusCode === 204
+                isStarred: res.status === 204
             });
         }).catch(err => {
             utils.showTip(err);
@@ -208,7 +205,7 @@ Page({
     },
     // 是否watch了该仓库
     isWatchedRepo() {
-        if (!this.isLogin()) {
+        if (!utils.isLogin()) {
             this.setData({
                 isWatched: false
             });
@@ -278,24 +275,19 @@ Page({
     // 获取仓库详情
     getRepoDetail() {
         const option = this.data.option;
-        const api = url.getRepoDetail(option.author, option.name);
         utils.showLoading();
-        request.transfer('get', api).then(res => {
+        request.cloud('getRepoDetail', {
+            owner: option.author,
+            repo: option.name
+        }).then(res => {
             const data = res.data;
             if (!data) return;
             this.setData({
                 repoDetail: data
             });
-            this.getReadme(data.full_name);
-            // 避免并发请求
-            let timer1 = setTimeout(() => {
-                this.isStarredRepo();
-                clearTimeout(timer1);
-            }, 1000);
-            let timer2 = setTimeout(() => {
-                this.isWatchedRepo();
-                clearTimeout(timer2);
-            }, 2000);
+            this.getReadme();
+            this.isStarredRepo();
+            this.isWatchedRepo();
         }).catch(err => {
             utils.showTip(err);
         }).finally(() => {
@@ -303,9 +295,12 @@ Page({
         })
     },
     // 获取仓库readme
-    getReadme(repoFullName) {
-        const api = url.getRepoReadme(repoFullName);
-        request.transfer('get', api).then(res => {
+    getReadme() {
+        const option = this.data.option;
+        request.cloud('getReadme', {
+            owner: option.author,
+            repo: option.name
+        }).then(res => {
             if (!res.data) return;
             this.setData({
                 readmeDetail: res.data

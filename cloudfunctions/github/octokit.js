@@ -304,6 +304,34 @@ const github = {
                 reject(err)
             });
         });
+    },
+    // 获取仓库详情
+    getRepoDetail(token, param={}) {
+        return new Promise((resolve, reject) => {
+            const octokit = this.getOctokitInstance(token);
+            const { owner, repo } = param;
+            octokit.repos.get({
+                owner, repo
+            }).then(res => {
+                resolve(res);
+            }).catch(err => {
+                reject(err)
+            });
+        });
+    },
+    // 获取readme
+    getReadme(token, param={}) {
+        return new Promise((resolve, reject) => {
+            const octokit = this.getOctokitInstance(token);
+            const { owner, repo } = param;
+            octokit.repos.getReadme({
+                owner, repo
+            }).then(res => {
+                resolve(res);
+            }).catch(err => {
+                reject(err)
+            });
+        });
     }
 }
 
