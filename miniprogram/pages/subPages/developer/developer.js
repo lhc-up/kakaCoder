@@ -54,26 +54,24 @@ Page({
     },
     // 获取用户信息
     getUserInfo() {
-        const api = url.getUserInfo(this.data.username);
         utils.showLoading();
-        request.transfer('get', api).then(res => {
+        request.cloud('getInfoByUsername', {
+            username: this.data.username
+        }).then(res => {
             utils.hideLoading();
             const data = res.data;
             if (!data) return;
             this.setData({
                 userInfo: data
             });
-            let timer = setTimeout(() => {
-                this.checkIfYouAreFollowing();
-                clearTimeout(timer);
-            }, 800);
+            this.checkIfYouAreFollowing();
         }).catch(err => {
             utils.showTip(err);
         });
     },
     // 点击follow按钮
     handleFollowBtnClick() {
-        if (!this.isLogin()) {
+        if (!utils.isLogin()) {
             this.showLoginModal();
         } else {
             if (!this.data.isFollowing) {
@@ -103,13 +101,13 @@ Page({
     },
     // follow
     follow() {
-        const targetUsername = this.data.username;
-        const apiUrl = url.followUser(targetUsername);
         utils.showLoading();
-        request.transfer('put', apiUrl).then(res => {
+        request.cloud('followUser', {
+            username: this.data.username
+        }).then(data => {
             utils.hideLoading();
             this.setData({
-                isFollowing: res.statusCode === 204
+                isFollowing: data.status === 204
             });
         }).catch(err => {
             url.showTip(err);
@@ -117,34 +115,28 @@ Page({
     },
     // unFollow
     unFollow() {
-        const targetUsername = this.data.username;
-        const apiUrl = url.unFollowUser(targetUsername);
         utils.showLoading();
-        request.transfer('delete', apiUrl).then(res => {
+        request.cloud('unFollowUser', {
+            username: this.data.username
+        }).then(data => {
             utils.hideLoading();
             this.setData({
-                isFollowing: res.statusCode !== 204
+                isFollowing: data.status !== 204
             });
         }).catch(err => {
             url.showTip(err);
         });
     },
-    // 是否登录
-    isLogin() {
-        const username = wx.getStorageSync(CONST.STORAGE_USERNAME);
-        const password = wx.getStorageSync(CONST.STORAGE_PASSWORD);
-        return username && password;
-    },
     // 检查是否follow了该用户,只有当前用户登录了才会检查
     checkIfYouAreFollowing() {
-        if (!this.isLogin()) return;
-        const targetUsername = this.data.username;
-        const apiUrl = url.checkIfYouAreFollowing(targetUsername);
-        request.transfer('get', apiUrl).then(res => {
+        if (!utils.isLogin()) return;
+        request.cloud('checkFollowing', {
+            username: this.data.username
+        }).then(res => {
             // 204，follow
             // 404，unFollow
             this.setData({
-                isFollowing: res.statusCode === 204
+                isFollowing: res.status === 204
             });
         }).catch(err => {
             utils.showTip(err);
@@ -160,21 +152,41 @@ Page({
             'following': '/pages/subPages/developerList/developerList',
             'stars': '/pages/subPages/repoList/repoList'
         };
-        const apisMap = {
-            'repos': url.getUserPublicRepos(userInfo.login),
-            'followers': url.getFollowers(userInfo.login),
-            'following': url.getFollowing(userInfo.login),
-            'stars': url.getUserStarredRepos(userInfo.login)
+        const urlParamMap = {
+            'repos': {
+                funcType: 'getPublicReposForUser',
+                param: {
+                    username: userInfo.login
+                }
+            },
+            'followers': {
+                funcType: 'getFollowersOfUser',
+                param: {
+                    username: userInfo.login
+                }
+            },
+            'following': {
+                funcType: 'getFollowingOfUser',
+                param: {
+                    username: userInfo.login
+                }
+            },
+            'stars': {
+                funcType: 'getUserStarredRepos',
+                param: {
+                    username: userInfo.login
+                }
+            }
         }
         // 目标页面路由
         const targetPageRoute = pageRouteMap[type];
         // 查看页面栈，如果页面栈中已存在目标页面，则使用navigateBackTo的方式跳转，防止循环跳转，页面栈溢出
-        let allPages =  getCurrentPages();
+        let allPages = getCurrentPages();
         const index = allPages.findIndex(item => targetPageRoute.indexOf(item.route) >= 0);
         if (index < 0) {
             // 页面栈中不存在，则正常跳转
             wx.navigateTo({
-                url: targetPageRoute + '?url=' + encodeURI(apisMap[type])
+                url: `${targetPageRoute}?funcType=${urlParamMap[type].funcType}&param=${JSON.stringify(urlParamMap[type].param)}`
             });
         } else {
             // 如果存在目标页面，则使用返回的方式跳转，并手动设置该页面的参数
@@ -183,7 +195,8 @@ Page({
             const targetPageObj = allPages[index];
             // 按照各个页面参数的格式进行设置，有点麻烦，但为了避免页面栈溢出，还是得想办法处理的
             // 确保目标页面使用apiUrl作为请求地址
-            targetPageObj.data.apiUrl = apisMap[type];
+            targetPageObj.data.funcType = urlParamMap[type].funcType;
+            targetPageObj.data.param = urlParamMap[type].param;
             targetPageObj.data.refresh = true;
             wx.navigateBack({
                 delta: allPages.length - index - 1

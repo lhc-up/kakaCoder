@@ -8,16 +8,20 @@ import request from '../../../utils/request.js';
 import utils from '../../../utils/util.js';
 Page({
     data: {
-        apiUrl: '',
         repoList: [],
         page: 1,
         hasNextPage: true,
         pageSize: 15,
         load: false,
-        refresh: false
+        refresh: false,
+        // 调用云函数的type
+        funcType: '',
+        // 调用云函数的参数
+        param: {}
     },
     onLoad(option) {
-        this.data.apiUrl = decodeURI(option.url || 'https://api.github.com/users/dagar/repos');
+        this.data.funcType = option.funcType;
+        this.data.param = JSON.parse(option.param);
         this.init();
     },
     onShow() {
@@ -26,10 +30,13 @@ Page({
     init() {
         this.data.page = 1;
         this.data.hasNextPage = true;
-        this.data.refresh = false;
-        this.setData({
-            repoList: []
-        });
+        if (this.data.refresh) {
+            // refresh为true时，是为了避免页面栈溢出，回退到此页面，需要刷新数据
+            this.setData({
+                developerList: []
+            });
+            this.data.refresh = false;
+        }
         this.getRepoList();
     },
     // 下拉刷新
@@ -43,11 +50,14 @@ Page({
     },
     // 获取仓库列表
     getRepoList() {
-        if (!this.data.apiUrl) return;
+        if (!this.data.funcType) return;
         if (!this.data.hasNextPage) return;
-        const pageParam = `?page=${this.data.page}&per_page=${this.data.pageSize}`;
+        const { funcType, param } = this.data;
         utils.showLoading();
-        request.transfer('get', this.data.apiUrl+pageParam).then(res => {
+        request.cloud(funcType, Object.assign(param, {
+            per_page: this.data.pageSize,
+            page: this.data.page
+        })).then(res => {
             utils.hideLoading();
             let list = res.data;
             if (!list || !(list instanceof Array)) list = [];

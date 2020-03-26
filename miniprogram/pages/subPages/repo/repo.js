@@ -361,13 +361,18 @@ Page({
     viewContributors() {
         const targetRoute = '/pages/subPages/developerList/developerList';
         const { exist, delta, targetPageObj } = this.getRouteIsExistInStack(targetRoute);
-        const apiUrl = encodeURI(this.data.repoDetail.contributors_url);
+        const funcType = 'getContributors';
+        const param = {
+            owner: this.data.repoDetail.owner.login,
+            repo: this.data.repoDetail.name
+        }
         if (!exist) {
             wx.navigateTo({
-                url: targetRoute + '?url=' + apiUrl
+                url: `${targetRoute}?funcType=${funcType}&param=${JSON.stringify(param)}`
             });
         } else {
-            targetPageObj.data.apiUrl = apiUrl;
+            targetPageObj.data.funcType = funcType;
+            targetPageObj.data.param = param;
             targetPageObj.data.refresh = true;
             wx.navigateBack({
                 delta

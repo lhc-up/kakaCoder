@@ -42,9 +42,15 @@ Page({
     // 获取事件列表
     getEventList() {
         if (!this.data.hasNextPage) return;
-        const api = this.getApiUrl();
+        const isLogin = utils.isLogin();
+        const type = isLogin ? 'getUserEvents' : 'getPublicEvents';
+        const param = {
+            per_page: this.data.pageSize,
+            page: this.data.page
+        };
+        if (isLogin) param.username = wx.getStorageSync(CONST.STORAGE_USERNAME);
         utils.showLoading();
-        request.transfer('get', api).then(res => {
+        request.cloud(type, param).then(res => {
             utils.hideLoading();
             let data = res.data;
             if (!data || !(data instanceof Array)) data = [];
@@ -65,10 +71,11 @@ Page({
         });
     },
     // 获取请求路径，有用户信息时，获取用户events，否则获取public events
-    getApiUrl() {
+    getFuncType() {
         const username = wx.getStorageSync(CONST.STORAGE_USERNAME);
-        const api = !!username ? url.getReceivedEvents(username) : url.getPublicEvents;
-        return api + '?page=' + this.data.page + '&per_page=' + this.data.pageSize;
+        const password = wx.getStorageSync(CONST.STORAGE_PASSWORD);
+        const token = wx.getStorageSync(CONST.STORAGE_TOKEN);
+        return (token || (username && password)) ? 'getUserEvents' : 'getPublicEvents';
     },
     // 查看开发者
     viewDeveloperDetail(e) {

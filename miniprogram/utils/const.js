@@ -15,6 +15,8 @@ const CONST = {
     STORAGE_USERNAME: 'username',
     // 密码
     STORAGE_PASSWORD: 'password',
+    // token
+    STORAGE_TOKEN: 'token',
     // 用户信息
     STORAGE_USERINFO: 'userInfo',
     // 接口调用限制的原因

@@ -12,15 +12,17 @@ let app =  getApp();
 Page({
     data: {
         userInfo: null,
-        isStarred: false
+        isStarred: true
     },
     onShow() {
         this.getUserInfo();
+        this.isStarredMe();
     },
     // 下拉刷新
     onPullDownRefresh() {
         wx.stopPullDownRefresh();
         this.getUserInfo();
+        this.isStarredMe();
     },
     // 分享
     onShareAppMessage() {
@@ -41,21 +43,17 @@ Page({
             });
             return;
         }
+        const token = wx.getStorageSync(CONST.STORAGE_TOKEN);
         const username = wx.getStorageSync(CONST.STORAGE_USERNAME);
-        const password = wx.getStorageSync(CONST.STORAGE_PASSWORD);
-        if (!username || !password) {
+        if (!token) {
             this.setData({
                 userInfo: null
             });
             return;
         }
         utils.showLoading();
-        request.transfer('get', url.login).then(res => {
+        request.cloud('getInfoByUsername', { username }).then(res => {
             utils.hideLoading();
-            if (res.statusCode !== 200) {
-                this.removeStorage();
-                return false;
-            }
             const data = res.data;
             if (!data) return;
             app.globalData.userInfo = data;
@@ -63,7 +61,6 @@ Page({
             this.setData({
                 userInfo: data
             });
-            this.isStarredMe();
         }).catch(err => {
             utils.showTip(err);
         });
@@ -86,23 +83,22 @@ Page({
             'issues': '/pages/subPages/issueList/issueList',
             'about': '/pages/subPages/about/about'
         };
-        const apisMap = {
-            'repos': url.getUserPublicRepos(userInfo.login),
-            'followers': url.getFollowers(userInfo.login),
-            'following': url.getFollowing(userInfo.login),
-            'stars': url.getUserStarredRepos(userInfo.login),
-            'issues': url.getRepoIssues('luohao8023', 'kakaCoder'),
+        const urlParam = {
+            'repos': `?funcType=getMyRepos&param=${JSON.stringify({})}`,
+            'followers': `?funcType=getMyFollowers&param=${JSON.stringify({})}`,
+            'following': `?funcType=getMyFollowing&param=${JSON.stringify({})}`,
+            'stars': `?funcType=getMyStarredRepos&param=${JSON.stringify({})}`,
+            'issues': '?url='+url.getRepoIssues('luohao8023', 'kakaCoder'),
             'about': ''
         }
         wx.navigateTo({
-            url: pageRouteMap[type] + '?url=' + encodeURI(apisMap[type])
+            url: pageRouteMap[type] + urlParam[type]
         });
     },
     // star
     starMe() {
-        const username = wx.getStorageSync(CONST.STORAGE_USERNAME);
-        const password = wx.getStorageSync(CONST.STORAGE_PASSWORD);
-        if (!username || !password) {
+        const token = wx.getStorageSync(CONST.STORAGE_TOKEN);
+        if (!token) {
             wx.showModal({
                 content: '请先登录',
                 confirmText: '确定',
@@ -117,11 +113,14 @@ Page({
             });
             return false;
         }
-        const apiUrl = url.starRepo('luohao8023/kakaCoder');
         utils.showLoading();
-        request.transfer('put', apiUrl).then(res => {
+        request.cloud('toggleStarRepo', {
+            type: 'star',
+            owner: "luohao8023",
+            repo: "kakaCoder"
+        }).then(res => {
             utils.hideLoading();
-            if (res.statusCode === 204) {
+            if (res.status === 204) {
                 utils.showTip('Thank you!');
                 this.setData({
                     isStarred: true
@@ -133,25 +132,20 @@ Page({
     },
     // 是否star了
     isStarredMe() {
-        const username = wx.getStorageSync(CONST.STORAGE_USERNAME);
-        const password = wx.getStorageSync(CONST.STORAGE_PASSWORD);
-        if (!username || !password) {
+        const token = wx.getStorageSync(CONST.STORAGE_TOKEN);
+        if (!token) {
             this.setData({
                 isStarred: false
             });
             return false;
         }
-        const apiUrl = url.isStardRepo('luohao8023/kakaCoder');
-        request.transfer('get', apiUrl).then(res => {
-            if (res.statusCode === 404) {
-                this.setData({
-                    isStarred: false
-                });
-            } else if (res.statusCode === 204) {
-                this.setData({
-                    isStarred: true
-                });
-            }
+        request.cloud('getIfYouAreStrringRepo', {
+            owner: 'luohao8023',
+            repo: 'kakaCoder'
+        }).then(data => {
+            this.setData({
+                isStarred: data.isStared
+            });
         }).catch(err => {
             utils.showTip(err);
         });

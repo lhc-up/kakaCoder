@@ -143,31 +143,17 @@ const request = {
             });
         });
     },
-    // 云函数调用
-    cloud(method, url) {
+    // 云函数调用，仅供调用github接口
+    cloud(type, param) {
         return new Promise((resolve, reject) => {
-            const username = wx.getStorageSync(CONST.STORAGE_USERNAME) || '';
-            const password = wx.getStorageSync(CONST.STORAGE_PASSWORD) || '';
-            const systemInfo = wx.getSystemInfoSync();
-            const base64 = username && password ? ('Basic ' + utils.encodeBase64(`${username}:${password}`)) : '';
-            const headers = {
-                'User-Agent': username || (systemInfo.model + systemInfo.system),
-                'Authorization': base64
-            };
+            const token = wx.getStorageSync(CONST.STORAGE_TOKEN) || '';
             wx.cloud.callFunction({
-                name: 'requestTransfer',
+                name: 'github',
                 data: {
-                    url, method, headers
+                    type, token, param
                 }
             }).then(res => {
-                const { result } = res;
-                console.log(res);
-                if (result.statusCode === 8023) {
-                    reject(result.message);
-                } else {
-                    result.data = JSON.parse(result.data);
-                    resolve(result);
-                }
+                resolve(res.result);
             }).catch(err => {
                 reject(err);
             });

@@ -3,6 +3,7 @@
  * @author: haoluo2
  * @date: 2020-02-04
 */
+import CONST from './const.js';
 const utils = {
     // 日期格式化
     formatTime(date, format) {
@@ -137,6 +138,11 @@ const utils = {
             }
         }
         return string;
+    },
+    isLogin() {
+        const token = wx.getStorageSync(CONST.STORAGE_TOKEN);
+        // 本地有token视为已登录
+        return !!token;
     }
 };
 
