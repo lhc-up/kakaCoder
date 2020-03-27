@@ -36,8 +36,18 @@ const utils = {
     },
     // 微信默认提示
     showTip(msg) {
+        let tip = '';
+        if (typeof msg === 'string') {
+            tip = msg;
+        } else if (msg instanceof Error) {
+            tip = msg.message;
+        } else if(typeof msg === 'object' && msg !== null) {
+            tip = msg.message || msg.msg || '请求异常，请重试！';
+        } else {
+            tip = '请求异常，请重试！';
+        }
         wx.showToast({
-            title: (msg || '').toString(),
+            title: tip,
             icon: 'none',
             image: '',
             duration: 2000,

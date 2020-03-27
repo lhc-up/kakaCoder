@@ -74,7 +74,6 @@ Page({
     // 查看各类型页面
     viewPages(e) {
         const type = e.currentTarget.dataset.type;
-        const userInfo = this.data.userInfo;
         const pageRouteMap = {
             'repos': '/pages/subPages/repoList/repoList',
             'followers': '/pages/subPages/developerList/developerList',
@@ -88,7 +87,7 @@ Page({
             'followers': `?funcType=getMyFollowers&param=${JSON.stringify({})}`,
             'following': `?funcType=getMyFollowing&param=${JSON.stringify({})}`,
             'stars': `?funcType=getMyStarredRepos&param=${JSON.stringify({})}`,
-            'issues': '?url='+url.getRepoIssues('luohao8023', 'kakaCoder'),
+            'issues': `?funcType=getMyIssues&param=${JSON.stringify({})}`,
             'about': ''
         }
         wx.navigateTo({

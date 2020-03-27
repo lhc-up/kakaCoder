@@ -3,10 +3,8 @@
  * @author: haoluo2
  * @date: 2020-03-05
 */
-
 import utils from '../../../utils/util.js';
 import request from '../../../utils/request.js';
-import url from '../../../utils/interface.js';
 import CONST from '../../../utils/const.js';
 Page({
     data: {

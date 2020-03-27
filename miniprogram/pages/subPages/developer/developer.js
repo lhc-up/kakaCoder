@@ -3,11 +3,9 @@
  * @author: haoluo2
  * @date: 2020-03-08
 */
-
 import request from '../../../utils/request.js';
 import utils from '../../../utils/util.js';
 import url from '../../../utils/interface.js';
-import CONST from '../../../utils/const.js';
 Page({
     data: {
         username: '',

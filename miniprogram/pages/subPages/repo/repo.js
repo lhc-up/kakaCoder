@@ -3,7 +3,6 @@
  * @author: haoluo2
  * @date: 2020-03-09
 */
-
 import request from '../../../utils/request.js';
 import utils from '../../../utils/util.js';
 Page({
