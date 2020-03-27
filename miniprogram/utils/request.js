@@ -49,12 +49,14 @@ const request = {
     },
     // 处理请求限制的问题
     handleRequestLimit(res) {
+        const headers = res.headers;
+        if (!headers) return;
         // 总次数
-        const totalCount = res.header['X-RateLimit-Limit'];
+        const totalCount = headers['x-ratelimit-limit'];
         // 剩余次数
-        const remainCount = res.header['X-RateLimit-Remaining'];
+        const remainCount = headers['x-ratelimit-remaining'];
         // 重置时间
-        const resetTime = res.header['X-RateLimit-Reset'];
+        const resetTime = headers['x-ratelimit-reset'];
         // 只处理GitHub的请求
         if (!totalCount) return false;
         if (remainCount > 5) {
@@ -110,8 +112,28 @@ const request = {
                     type, token, param
                 }
             }).then(res => {
-                this.handleRequestLimit(res);
+                this.handleRequestLimit(res.result);
                 resolve(res.result);
+                if (res.result.status === 401) {
+                    wx.showModal({
+                        content: '登录信息已失效，请重新登录(或刷新当前页面)！',
+                        showCancel: true,
+                        confirmText: '确定',
+                        confirmColor: '#597ef7',
+                        success: (result) => {
+                            if (result.confirm) {
+                                wx.navigateTo({
+                                    url: '/pages/login/login'
+                                });
+                            }
+                        },
+                        complete: () => {
+                            wx.clearStorage();
+                        }
+                    });
+                } else if (res.result.status >= 500) {
+                    utils.showTip('获取是墙太高了，稍后再试试吧！');
+                }
             }).catch(err => {
                 reject(err);
             });

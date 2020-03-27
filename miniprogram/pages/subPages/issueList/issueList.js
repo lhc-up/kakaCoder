@@ -65,7 +65,7 @@ Page({
         if (!this.data.hasNextPage) return;
         const { funcType, param } = this.data;
         utils.showLoading();
-        request.cloud(funcType, Object.assign(param, {
+        request.cloud(funcType, Object.assign({}, param, {
             per_page: this.data.pageSize,
             page: this.data.page,
             state: this.data.currentTab
@@ -91,7 +91,7 @@ Page({
     // 查看issue详情
     viewIssueDetail(e) {
         const param = this.data.param;
-        param.number = e.currentTarget.dataset.number;
+        param.issue_number = e.currentTarget.dataset.number;
         wx.navigateTo({
             url: `/pages/subPages/issue/issue?param=${JSON.stringify(param)}`
         });

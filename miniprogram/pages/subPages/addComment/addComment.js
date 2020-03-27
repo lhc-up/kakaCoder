@@ -25,7 +25,7 @@ Page({
         let source = '\n\n\n\n\n\n**------来自高颜值的GitHub小程序kakaCoder：**\n\n![image](https://6769-gitguber-v850e-1256494515.tcb.qcloud.la/gh_366bbc8b202f_258.jpg?sign=77773623070e46b1c871b8956ee14808&t=1584423750)';
         // let source = '\n\n\n\n\n\n**------来自高颜值的GitHub小程序kakaCoder**';
         utils.showLoading();
-        request.cloud('createComment', Object.assign(this.data.param, {
+        request.cloud('createComment', Object.assign({}, this.data.param, {
             body: (content || '') + source
         })).then(res => {
             if (res.status === 201) {

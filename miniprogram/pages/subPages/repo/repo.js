@@ -116,6 +116,7 @@ Page({
             owner: option.author,
             repo: option.name
         }).then(res => {
+            utils.hideLoading();
             if (res.status === 204) {
                 this.setData({
                     isStarred: !this.data.isStarred,
@@ -159,25 +160,10 @@ Page({
             repo: option.name
         }).then(res => {
             utils.hideLoading();
-            if (this.data.isWatched) {
-                if (res.status === 204) {
-                    this.setData({
-                        isWatched: false,
-                        'repoDetail.subscribers_count': this.data.repoDetail.subscribers_count - 1
-                    });
-                } else {
-                    utils.showTip('出错了，请重试!');
-                }
-            } else {
-                if (res.statusCode === 200) {
-                    this.setData({
-                        isWatched: true,
-                        'repoDetail.subscribers_count': this.data.repoDetail.subscribers_count + 1
-                    });
-                } else {
-                    utils.showTip('出错了，请重试!');
-                }
-            }
+            this.setData({
+                isWatched: !this.data.isWatched,
+                'repoDetail.subscribers_count': this.data.repoDetail.subscribers_count - (this.data.isWatched ? 1 : -1)
+            });
         }).catch(err => {
             utils.showTip(err);
         });

@@ -30,7 +30,7 @@ Page({
         this.data.refresh = false;
         this.getIssueDetail();
         wx.setNavigationBarTitle({
-            title: 'issue #' + this.data.param.number
+            title: 'issue #' + this.data.param.issue_number
         });
     },
     // 下拉刷新
@@ -72,7 +72,7 @@ Page({
     getComments() {
         if (!this.data.hasNextPage) return;
         utils.showLoading();
-        request.cloud('getCommentListForIssue', Object.assign(this.data.param, {
+        request.cloud('getCommentListForIssue', Object.assign({}, this.data.param, {
             per_page: this.data.pageSize,
             page: this.data.page
         })).then(res => {

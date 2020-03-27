@@ -53,7 +53,7 @@ Page({
         if (!this.data.hasNextPage) return;
         const { funcType, param } = this.data;
         utils.showLoading();
-        request.cloud(funcType, Object.assign(param, {
+        request.cloud(funcType, Object.assign({}, param, {
             per_page: this.data.pageSize,
             page: this.data.page
         })).then(res => {

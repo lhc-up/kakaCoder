@@ -396,7 +396,7 @@ const github = {
         return new Promise((resolve, reject) => {
             const octokit = this.getOctokitInstance(token);
             const { owner, repo, title, body } = param;
-            octokit.issues.createComment({
+            octokit.issues.create({
                 // 其他参数目前暂不支持
                 owner, repo, title, body
             }).then(res => {
