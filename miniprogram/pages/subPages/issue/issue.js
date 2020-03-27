@@ -8,16 +8,17 @@ import request from '../../../utils/request.js';
 import utils from '../../../utils/util.js';
 Page({
     data: {
-        apiUrl: '',
         issueDetail: {},
         commentsList: [],
         page: 1,
         pageSize: 15,
         hasNextPage: true,
-        refresh: false
+        refresh: false,
+        // 调用云函数的参数
+        param: {}
     },
     onLoad(option) {
-        this.data.apiUrl = option.url || 'https://api.github.com/repos/google/mediapipe/issues/486';//486
+        this.data.param = JSON.parse(option.param);
         this.init();
     },
     onShow() {
@@ -25,13 +26,12 @@ Page({
         if (this.data.refresh) this.init();
     },
     init() {
-        this.data.commentsList = [];
         this.data.hasNextPage = true;
         this.data.page = 1;
         this.data.refresh = false;
         this.getIssueDetail();
         wx.setNavigationBarTitle({
-            title: 'issue #' + this.data.apiUrl.split('/').reverse()[0]
+            title: 'issue #' + this.data.param.number
         });
     },
     // 下拉刷新
@@ -48,12 +48,12 @@ Page({
         let title = '这个Issue你怎么看？';
         return {
             title,
-            path: `/pages/subPages/issue/issue?url=${this.data.apiUrl}`
+            path: `/pages/subPages/issue/issue?param=${JSON.stringify(this.data.param)}`
         }
     },
     getIssueDetail() {
         utils.showLoading();
-        request.transfer('get', this.data.apiUrl).then(res => {
+        request.cloud('getIssueDetail', this.data.param).then(res => {
             utils.hideLoading();
             const data = res.data;
             if (!data) return;
@@ -72,9 +72,11 @@ Page({
     // 获取评论
     getComments() {
         if (!this.data.hasNextPage) return;
-        const pageParams = `?page=${this.data.page}&per_page=${this.data.pageSize}`;
         utils.showLoading();
-        request.transfer('get', `${this.data.apiUrl}/comments${pageParams}`).then(res => {
+        request.cloud('getCommentListForIssue', Object.assign(this.data.param, {
+            per_page: this.data.pageSize,
+            page: this.data.page
+        })).then(res => {
             utils.hideLoading();
             let list = res.data;
             if (!list || !(list instanceof Array)) list = [];
@@ -93,7 +95,7 @@ Page({
     // 添加评论
     addComment() {
         wx.navigateTo({
-            url: '/pages/subPages/addComment/addComment?url=' + this.data.apiUrl + '/comments'
+            url: '/pages/subPages/addComment/addComment?param=' + JSON.stringify(this.data.param)
         });
     }
 });

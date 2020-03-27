@@ -8,17 +8,21 @@ import request from '../../../utils/request.js';
 import utils from '../../../utils/util.js';
 Page({
     data: {
-        apiUrl: '',
         currentTab: 'open',
         load: false,
         issuelist: [],
         page: 1,
         pageSize: 15,
         hasNextPage: true,
-        refresh: false
+        refresh: false,
+        // 调用云函数的type
+        funcType: '',
+        // 调用云函数的参数
+        param: {}
     },
     onLoad(option) {
-        this.data.apiUrl = option.url || 'https://api.github.com/repos/google/mediapipe/issues';
+        this.data.funcType = option.funcType;
+        this.data.param = JSON.parse(option.param);
         this.init();
     },
     onShow() {
@@ -29,7 +33,13 @@ Page({
         this.data.issuelist = [];
         this.data.page = 1;
         this.data.hasNextPage = true;
-        this.data.refresh = false;
+        if (this.data.refresh) {
+            // refresh为true时，是为了避免页面栈溢出，回退到此页面，需要刷新数据
+            this.setData({
+                issuelist: []
+            });
+            this.data.refresh = false;
+        }
         this.getIssueList();
     },
     // 下拉刷新
@@ -54,9 +64,13 @@ Page({
     },
     getIssueList() {
         if (!this.data.hasNextPage) return;
-        const pageParam = `?page=${this.data.page}&per_page=${this.data.pageSize}&state=${this.data.currentTab}`;
+        const { funcType, param } = this.data;
         utils.showLoading();
-        request.transfer('get', this.data.apiUrl + pageParam).then(res => {
+        request.cloud(funcType, Object.assign(param, {
+            per_page: this.data.pageSize,
+            page: this.data.page,
+            state: this.data.currentTab
+        })).then(res => {
             utils.hideLoading();
             let list = res.data;
             if (!list || !(list instanceof Array)) list = [];
@@ -77,15 +91,16 @@ Page({
     },
     // 查看issue详情
     viewIssueDetail(e) {
-        const number = e.currentTarget.dataset.number;
+        const param = this.data.param;
+        param.number = e.currentTarget.dataset.number;
         wx.navigateTo({
-            url: `/pages/subPages/issue/issue?url=${this.data.apiUrl}/${number}`
+            url: `/pages/subPages/issue/issue?param=${JSON.stringify(param)}`
         });
     },
     // 添加issue
     addIssue() {
         wx.navigateTo({
-            url: '/pages/subPages/addIssue/addIssue?url=' + this.data.apiUrl
+            url: '/pages/subPages/addIssue/addIssue?param=' + JSON.stringify(this.data.param)
         });
     }
 });

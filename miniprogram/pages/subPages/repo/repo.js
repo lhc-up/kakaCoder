@@ -4,10 +4,8 @@
  * @date: 2020-03-09
 */
 
-import url from '../../../utils/interface.js';
 import request from '../../../utils/request.js';
 import utils from '../../../utils/util.js';
-import CONST from '../../../utils/const.js';
 Page({
     data: {
         option: {},
@@ -111,39 +109,25 @@ Page({
     // star/unstar这个仓库
     starRepo() {  
         if (!this.getIsLoginBeforeOperate()) return false;
-        const fullName = this.data.repoDetail.full_name;
-        if (!fullName) return false;
-        const apiUrl = url.starRepo(fullName);
+        const option = this.data.option;
+        const type = this.data.isStarred ? 'unstar' : 'star';
         utils.showLoading();
-        if (this.data.isStarred) {
-            request.transfer('delete', apiUrl).then(res => {
-                utils.hideLoading();
-                if (res.statusCode === 204) {
-                    this.setData({
-                        isStarred: false,
-                        'repoDetail.stargazers_count': this.data.repoDetail.stargazers_count - 1
-                    });
-                } else {
-                    utils.showTip('出错了，请重试!');
-                }
-            }).catch(err => {
-                utils.showTip(err);
-            });
-        } else {
-            request.transfer('put', apiUrl).then(res => {
-                utils.hideLoading();
-                if (res.statusCode === 204) {
-                    this.setData({
-                        isStarred: true,
-                        'repoDetail.stargazers_count': this.data.repoDetail.stargazers_count + 1
-                    });
-                } else {
-                    utils.showTip('出错了，请重试!');
-                }
-            }).catch(err => {
-                utils.showTip(err);
-            });
-        }
+        request.cloud('toggleStarRepo', {
+            type,
+            owner: option.author,
+            repo: option.name
+        }).then(res => {
+            if (res.status === 204) {
+                this.setData({
+                    isStarred: !this.data.isStarred,
+                    'repoDetail.stargazers_count': this.data.repoDetail.stargazers_count - (this.data.isStarred ? 1 : -1)
+                });
+            } else {
+                utils.showTip('出错了，请重试!');
+            }
+        }).catch(err => {
+            utils.showTip(err);
+        });
     },
     // 是否star了该仓库
     isStarredRepo() {
@@ -168,15 +152,16 @@ Page({
     // watch/unwatch这个仓库
     watchRepo() {
         if (!this.getIsLoginBeforeOperate()) return false;
-        const fullName = this.data.repoDetail.full_name;
-        if (!fullName) return false;
-        // const apiUrl = url.starRepo(fullName);
-        const apiUrl = this.data.repoDetail.subscription_url;
+        const option = this.data.option;
+        const funcType = this.data.isWatched ? 'unWatchRepo' : 'watchRepo';
         utils.showLoading();
-        if (this.data.isWatched) {
-            request.transfer('delete', apiUrl).then(res => {
-                utils.hideLoading();
-                if (res.statusCode === 204) {
+        request.cloud(funcType, {
+            owner: option.author,
+            repo: option.name
+        }).then(res => {
+            utils.hideLoading();
+            if (this.data.isWatched) {
+                if (res.status === 204) {
                     this.setData({
                         isWatched: false,
                         'repoDetail.subscribers_count': this.data.repoDetail.subscribers_count - 1
@@ -184,12 +169,7 @@ Page({
                 } else {
                     utils.showTip('出错了，请重试!');
                 }
-            }).catch(err => {
-                utils.showTip(err);
-            });
-        } else {
-            request.transfer('put', apiUrl).then(res => {
-                utils.hideLoading();
+            } else {
                 if (res.statusCode === 200) {
                     this.setData({
                         isWatched: true,
@@ -198,10 +178,10 @@ Page({
                 } else {
                     utils.showTip('出错了，请重试!');
                 }
-            }).catch(err => {
-                utils.showTip(err);
-            });
-        }
+            }
+        }).catch(err => {
+            utils.showTip(err);
+        });
     },
     // 是否watch了该仓库
     isWatchedRepo() {
@@ -211,10 +191,13 @@ Page({
             });
             return false;
         }
-        const apiUrl = url.isWatchedRepo(this.data.repoDetail.full_name);
-        request.transfer('get', apiUrl).then(res => {
+        const option = this.data.option;
+        request.cloud('getIsWatchedRepo', {
+            owner: option.author,
+            repo: option.name
+        }).then(res => {
             this.setData({
-                isWatched: res.statusCode === 200 && res.data.subscribed
+                isWatched: res.status === 200 && res.data.subscribed
             });
         }).catch(err => {
             utils.showTip(err);
@@ -223,13 +206,14 @@ Page({
     // fork该仓库
     forkRepo() {
         if (!this.getIsLoginBeforeOperate()) return false;
-        const fullName = this.data.repoDetail.full_name;
-        if (!fullName) return false;
-        const apiUrl = url.forkRepo(fullName);
+        const option = this.data.option;
         utils.showLoading();
-        request.transfer('post', apiUrl).then(res => {
+        request.cloud('forkRepo', {
+            owner: option.author,
+            repo: option.name
+        }).then(res => {
             utils.hideLoading();
-            if (res.statusCode === 202) {
+            if (res.status === 202) {
                 this.setData({
                     'repoDetail.forks_count': res.data.network_count || this.data.repoDetail.forks_count
                 })
@@ -280,6 +264,7 @@ Page({
             owner: option.author,
             repo: option.name
         }).then(res => {
+            utils.hideLoading();
             const data = res.data;
             if (!data) return;
             this.setData({
@@ -290,9 +275,7 @@ Page({
             this.isWatchedRepo();
         }).catch(err => {
             utils.showTip(err);
-        }).finally(() => {
-            utils.hideLoading();
-        })
+        });
     },
     // 获取仓库readme
     getReadme() {
@@ -309,23 +292,6 @@ Page({
             utils.showTip(err);
         });
     },
-    // 解析markdown
-    parseMarkdown(content) {
-        // 云函数解析
-        wx.cloud.callFunction({
-            name: 'parseMd',
-            data: {
-                content,
-                type: 'markdown'
-            }
-        }).then(res => {
-            console.log(res);
-        }).catch(err => {
-            console.log(err)
-        }).finally(() => {
-            console.log(1)
-        });
-    },
     // 判断目标页面是否已在页面栈中，返回是否存在，存在的话index，以及需要返回的层级，目标页面对象
     getRouteIsExistInStack(targetRouteName) {
         const allPages =  getCurrentPages();
@@ -339,13 +305,18 @@ Page({
     viewIssues() {
         const targetRoute = '/pages/subPages/issueList/issueList';
         const { exist, delta, targetPageObj } = this.getRouteIsExistInStack(targetRoute);
-        const apiUrl = encodeURI(this.data.repoDetail.issues_url.replace('{/number}', ''));
+        const funcType = 'getRepoIssues';
+        const param = {
+            owner: this.data.repoDetail.owner.login,
+            repo: this.data.repoDetail.name
+        }
         if (!exist) {
             wx.navigateTo({
-                url: targetRoute + '?url=' + apiUrl
+                url: `${targetRoute}?funcType=${funcType}&param=${JSON.stringify(param)}`
             });
         } else {
-            targetPageObj.data.apiUrl = apiUrl;
+            targetPageObj.data.funcType = funcType;
+            targetPageObj.data.param = param;
             targetPageObj.data.refresh = true;
             wx.navigateBack({
                 delta

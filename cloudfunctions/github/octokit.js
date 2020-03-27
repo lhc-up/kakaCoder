@@ -135,7 +135,7 @@ const github = {
             }).then(res => {
                 resolve(res);
             }).catch(err => {
-                reject(err)
+                reject(err);
             });
         });
     },
@@ -148,7 +148,7 @@ const github = {
             }).then(res => {
                 resolve(res);
             }).catch(err => {
-                reject(err)
+                reject(err);
             });
         });
     },
@@ -161,7 +161,7 @@ const github = {
             }).then(res => {
                 resolve(res);
             }).catch(err => {
-                reject(err)
+                reject(err);
             });
         });
     },
@@ -174,7 +174,7 @@ const github = {
             }).then(res => {
                 resolve(res);
             }).catch(err => {
-                reject(err)
+                reject(err);
             });
         });
     },
@@ -188,7 +188,7 @@ const github = {
             }).then(res => {
                 resolve(res);
             }).catch(err => {
-                reject(err)
+                reject(err);
             });
         });
     },
@@ -202,7 +202,7 @@ const github = {
             }).then(res => {
                 resolve(res);
             }).catch(err => {
-                reject(err)
+                reject(err);
             });
         });
     },
@@ -216,7 +216,7 @@ const github = {
             }).then(res => {
                 resolve(res);
             }).catch(err => {
-                reject(err)
+                reject(err);
             });
         });
     },
@@ -230,7 +230,7 @@ const github = {
             }).then(res => {
                 resolve(res);
             }).catch(err => {
-                reject(err)
+                reject(err);
             });
         });
     },
@@ -244,7 +244,7 @@ const github = {
             }).then(res => {
                 resolve(res);
             }).catch(err => {
-                reject(err)
+                reject(err);
             });
         });
     },
@@ -259,7 +259,7 @@ const github = {
             }).then(res => {
                 resolve(res);
             }).catch(err => {
-                reject(err)
+                reject(err);
             });
         });
     },
@@ -273,7 +273,7 @@ const github = {
             }).then(res => {
                 resolve(res);
             }).catch(err => {
-                reject(err)
+                reject(err);
             });
         });
     },
@@ -287,7 +287,7 @@ const github = {
             }).then(res => {
                 resolve(res);
             }).catch(err => {
-                reject(err)
+                reject(err);
             });
         });
     },
@@ -301,7 +301,7 @@ const github = {
             }).then(res => {
                 resolve(res);
             }).catch(err => {
-                reject(err)
+                reject(err);
             });
         });
     },
@@ -315,7 +315,7 @@ const github = {
             }).then(res => {
                 resolve(res);
             }).catch(err => {
-                reject(err)
+                reject(err);
             });
         });
     },
@@ -329,7 +329,237 @@ const github = {
             }).then(res => {
                 resolve(res);
             }).catch(err => {
-                reject(err)
+                reject(err);
+            });
+        });
+    },
+    // 不再watch一个仓库
+    unWatchRepo(token, param={}) {
+        return new Promise((resolve, reject) => {
+            const octokit = this.getOctokitInstance(token);
+            const { owner, repo } = param;
+            octokit.activity.deleteRepoSubscription({
+                owner, repo
+            }).then(res => {
+                resolve(res);
+            }).catch(err => {
+                reject(err);
+            });
+        });
+    },
+    // 关注一个仓库，目前只实现关注功能，后续可实现是否接受通知等
+    watchRepo(token, param={}) {
+        return new Promise((resolve, reject) => {
+            const octokit = this.getOctokitInstance(token);
+            const { owner, repo } = param;
+            octokit.activity.setRepoSubscription({
+                owner, repo,
+                subscribed: true,
+                ignored: false
+            }).then(res => {
+                resolve(res);
+            }).catch(err => {
+                reject(err);
+            });
+        });
+    },
+    // 是否watch了仓库
+    getIsWatchedRepo(token, param={}) {
+        return new Promise((resolve, reject) => {
+            const octokit = this.getOctokitInstance(token);
+            const { owner, repo } = param;
+            octokit.activity.getRepoSubscription({
+                owner, repo
+            }).then(res => {
+                resolve(res);
+            }).catch(err => {
+                reject(err);
+            });
+        });
+    },
+    // fork仓库
+    forkRepo(token, param={}) {
+        return new Promise((resolve, reject) => {
+            const octokit = this.getOctokitInstance(token);
+            const { owner, repo } = param;
+            octokit.repos.createFork({
+                owner, repo
+            }).then(res => {
+                resolve(res);
+            }).catch(err => {
+                reject(err);
+            });
+        });
+    },
+    // 新建issue
+    createIssue(token, param={}) {
+        return new Promise((resolve, reject) => {
+            const octokit = this.getOctokitInstance(token);
+            const { owner, repo, title, body } = param;
+            octokit.issues.createComment({
+                // 其他参数目前暂不支持
+                owner, repo, title, body
+            }).then(res => {
+                resolve(res);
+            }).catch(err => {
+                reject(err);
+            });
+        });
+    },
+    // 编辑issue
+    updateIssue(token, param={}) {
+        return new Promise((resolve, reject) => {
+            const octokit = this.getOctokitInstance(token);
+            const { owner, repo, issue_number, title, body } = param;
+            octokit.issues.update({
+                // 其他参数目前暂不支持
+                owner, repo, issue_number, title, body
+            }).then(res => {
+                resolve(res);
+            }).catch(err => {
+                reject(err);
+            });
+        });
+    },
+    // 新建评论
+    createComment(token, param={}) {
+        return new Promise((resolve, reject) => {
+            const octokit = this.getOctokitInstance(token);
+            const { owner, repo, issue_number, body } = param;
+            octokit.issues.createComment({
+                owner, repo, issue_number, body
+            }).then(res => {
+                resolve(res);
+            }).catch(err => {
+                reject(err);
+            });
+        });
+    },
+    // 编辑评论
+    updateComment(token, param={}) {
+        return new Promise((resolve, reject) => {
+            const octokit = this.getOctokitInstance(token);
+            const { owner, repo, comment_id, body } = param;
+            octokit.issues.updateComment({
+                owner, repo, comment_id, body
+            }).then(res => {
+                resolve(res);
+            }).catch(err => {
+                reject(err);
+            });
+        });
+    },
+    // 删除评论
+    deleteComment(token, param={}) {
+        return new Promise((resolve, reject) => {
+            const octokit = this.getOctokitInstance(token);
+            const { owner, repo, comment_id } = param;
+            octokit.issues.deleteComment({
+                owner, repo, comment_id
+            }).then(res => {
+                resolve(res);
+            }).catch(err => {
+                reject(err);
+            });
+        });
+    },
+    // 获取评论详情
+    getCommentDetail(token, param={}) {
+        return new Promise((resolve, reject) => {
+            const octokit = this.getOctokitInstance(token);
+            const { owner, repo, comment_id } = param;
+            octokit.issues.getComment({
+                owner, repo, comment_id
+            }).then(res => {
+                resolve(res);
+            }).catch(err => {
+                reject(err);
+            });
+        });
+    },
+    // 获取issue详情
+    getIssueDetail(token, param={}) {
+        return new Promise((resolve, reject) => {
+            const octokit = this.getOctokitInstance(token);
+            const { owner, repo, issue_number } = param;
+            octokit.issues.get({
+                owner, repo, issue_number
+            }).then(res => {
+                resolve(res);
+            }).catch(err => {
+                reject(err);
+            });
+        });
+    },
+    // 获取issue的评论列表
+    getCommentListForIssue(token, param={}) {
+        return new Promise((resolve, reject) => {
+            const octokit = this.getOctokitInstance(token);
+            const { owner, repo, issue_number, per_page, page } = param;
+            octokit.issues.listComments({
+                // 还有个since参数，有需要再加
+                owner, repo, issue_number, per_page, page
+            }).then(res => {
+                resolve(res);
+            }).catch(err => {
+                reject(err);
+            });
+        });
+    },
+    // 获取授权用户收到的所有issue
+    getMyIssues(token, param={}) {
+        return new Promise((resolve, reject) => {
+            const octokit = this.getOctokitInstance(token);
+            const { per_page, page } = param;
+            octokit.issues.list({
+                per_page, page
+            }).then(res => {
+                resolve(res);
+            }).catch(err => {
+                reject(err);
+            });
+        });
+    },
+    // 获取仓库的issue
+    getRepoIssues(token, param={}) {
+        return new Promise((resolve, reject) => {
+            const octokit = this.getOctokitInstance(token);
+            const { owner, repo, per_page, page, state } = param;
+            octokit.issues.listForRepo({
+                // 还有很多其他参数，这里暂不实现了
+                owner, repo, per_page, page, state
+            }).then(res => {
+                resolve(res);
+            }).catch(err => {
+                reject(err);
+            });
+        });
+    },
+    // 搜索repos
+    searchRepositories(token, param={}) {
+        return new Promise((resolve, reject) => {
+            const octokit = this.getOctokitInstance(token);
+            const { q, sort, order, per_page, page } = param;
+            octokit.search.repos({
+                q, sort, order, per_page, page
+            }).then(res => {
+                resolve(res);
+            }).catch(err => {
+                reject(err);
+            });
+        });
+    },
+    // 搜索uers
+    searchDevelopers(token, param={}) {
+        return new Promise((resolve, reject) => {
+            const octokit = this.getOctokitInstance(token);
+            const { q, sort, order, per_page, page } = param;
+            octokit.search.users({
+                q, sort, order, per_page, page
+            }).then(res => {
+                resolve(res);
+            }).catch(err => {
+                reject(err);
             });
         });
     }

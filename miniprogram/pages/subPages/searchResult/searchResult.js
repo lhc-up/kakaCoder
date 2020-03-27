@@ -29,7 +29,7 @@ Page({
             sort: ''
         },
         // 关键字，由搜索页面传来
-        keyword: 'js',
+        keyword: '',
         // repo排序条件，默认降序
         repoSort: '',
         // dev排序条件，默认降序
@@ -104,9 +104,14 @@ Page({
     // 获取repo
     searchRepositories() {
         if (!this.data.repo.hasNextPage) return;
-        const paramStr = this.getParams('repo');
         utils.showLoading();
-        request.transfer('get', encodeURI(url.searchRepositories + paramStr)).then(res => {
+        request.cloud('searchRepositories', {
+            q: this.data.keyword,
+            sort: this.data.repoSort || '',
+            order: 'desc',
+            per_page: 15,
+            page: this.data.repo.page
+        }).then(res => {
             utils.hideLoading();
             const data = res.data;
             if (!data) return;
@@ -130,9 +135,14 @@ Page({
     // 获取dev
     searchDevelopers() {
         if (!this.data.dev.hasNextPage) return;
-        const paramStr = this.getParams('dev');
         utils.showLoading();
-        request.transfer('get', encodeURI(url.searchDevelopers + paramStr)).then(res => {
+        request.cloud('searchDevelopers', {
+            q: this.data.keyword,
+            sort: this.data.devSort || '',
+            order: 'desc',
+            per_page: 15,
+            page: this.data.dev.page
+        }).then(res => {
             utils.hideLoading();
             const data = res.data;
             if (!data) return;
