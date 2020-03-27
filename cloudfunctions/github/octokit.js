@@ -562,6 +562,20 @@ const github = {
                 reject(err);
             });
         });
+    },
+    // 获取repo内容
+    getRepoContent(token, param={}) {
+        return new Promise((resolve, reject) => {
+            const octokit = this.getOctokitInstance(token);
+            const { owner, repo, path } = param;
+            octokit.repos.getContents({
+                owner, repo, path
+            }).then(res => {
+                resolve(res);
+            }).catch(err => {
+                reject(err);
+            });
+        });
     }
 }
 

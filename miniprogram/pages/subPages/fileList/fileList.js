@@ -3,23 +3,22 @@
  * @author: haoluo2
  * @date: 2020-03-13
 */
-
 import request from '../../../utils/request.js';
 import utils from '../../../utils/util.js';
-import url from '../../../utils/interface.js';
-import CONST from '../../../utils/const.js';
 Page({
     data: {
-        // 文件路径
-        filePath: '',
         fileList: [],
         showBackBtn: false,
-        repoName: '',
-        fileName: ''
+        fileName: '',
+        repo: '',
+        owner: '',
+        // 文件路径
+        path: ''
     },
     onLoad(option) {
-        this.data.filePath = option.url || 'https://api.github.com/repos/luohao8023/kakaCoder/contents';
-        this.data.repoName = option.repoName || 'luohao8023/kakaCoder';
+        this.data.path = option.path||'';
+        this.data.repo = option.repo;
+        this.data.owner = option.owner;
         this.data.fileName = option.fileName || '';
         this.init();
     },
@@ -31,28 +30,31 @@ Page({
     // 分享
     onShareAppMessage() {
         let title = '我在用手机看代码，你也来试试吧！';
+        const { path, repo, owner, fileName } = this.data;
         return {
             title,
-            path: `/pages/subPages/fileList/fileList?url=${this.data.filePath}&repoName=${this.data.repoName}&fileName=${this.data.fileName}`
+            path: `/pages/subPages/fileList/fileList?path=${path}&repo=${repo}&owner=${owner}&fileName=${fileName}`
         }
     },
     init() {
-        let filePath = this.data.filePath;
         // contents后面没有任何参数时，表示是第一级
-        const isFirstLevel = filePath.split('/').reverse()[0] === 'contents';
+        const isFirstLevel = !this.data.path;
         this.setData({
             showBackBtn: !isFirstLevel
         });
         wx.setNavigationBarTitle({
-            title: isFirstLevel ? this.data.repoName : this.data.fileName
+            title: isFirstLevel ? this.data.repo : this.data.fileName
         });
         this.getFileList();
     },
     getFileList() {
+        const { path, repo, owner } = this.data; 
         utils.showLoading();
-        request.transfer('get', this.data.filePath).then(res => {
+        request.cloud('getRepoContent', {
+            path, repo, owner
+        }).then(res => {
             utils.hideLoading();
-            if (res.statusCode === 200) {
+            if (res.status === 200) {
                 const list = res.data || [];
                 list.forEach(item => {
                     if (item.type === 'file') {
@@ -78,13 +80,14 @@ Page({
         });
     },
     handleClick(e) {
-        const { type, url, name } = e.currentTarget.dataset;
+        const { type, path, name } = e.currentTarget.dataset;
         if (type === 'file') {
+            const { owner, repo } = this.data;
             wx.navigateTo({
-                url: '/pages/subPages/fileDetail/fileDetail?url=' + encodeURI(url)
+                url: `/pages/subPages/fileDetail/fileDetail?owner=${owner}&repo=${repo}&path=${path}`
             });
         } else {
-            this.data.filePath = url;
+            this.data.path = path;
             this.data.fileName = name;
             this.init();
         }
@@ -92,11 +95,10 @@ Page({
     },
     // 返回上一级文件列表
     goBack() {
-        let currentFilePath = this.data.filePath;
+        let currentPath = this.data.path;
         // 去掉最后一级路径参数
-        // //都会被截取掉，所以把https://单独拿出来
-        let targetFilePath = 'https://' + currentFilePath.split('/').slice(2, -1).join('/');
-        this.data.filePath = targetFilePath;
+        let targetPath = currentPath.split('/').slice(0, -1).join('/');
+        this.data.path = targetPath;
         this.init();
     },
     // 显示modal提示

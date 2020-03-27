@@ -9,7 +9,7 @@
     </view>
     <view class="listWrap">
         <v-cell-group>
-            <v-cell wx:for="{{fileList}}" wx:key="name" bindclick="handleClick" data-type="{{item.type}}" data-url="{{item.url}}" data-name="{{item.name}}" title="{{item.name}}" titleSize="30rpx" is-link>
+            <v-cell wx:for="{{fileList}}" wx:key="name" bindclick="handleClick" data-type="{{item.type}}" data-path="{{item.path}}" data-url="{{item.url}}" data-name="{{item.name}}" title="{{item.name}}" titleSize="30rpx" is-link>
                 <v-icon slot="icon" type="{{item.type==='file'?'file':'folder'}}" size="32"></v-icon>
                 <view wx:if="{{item.type==='file'}}" slot="footer" class="footer">{{item.size}}</view>
             </v-cell>

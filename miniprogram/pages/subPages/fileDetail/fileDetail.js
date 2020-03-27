@@ -1,25 +1,25 @@
-import utils from "../../../utils/util";
-import request from "../../../utils/request";
-
 /**
  * @name: 查看文件详情
  * @author: haoluo2
  * @date: 2020-03-13
 */
-
+import utils from "../../../utils/util";
+import request from "../../../utils/request";
 Page({
     data: {
-        filePath: '',
-        fileDetal: {}
+        fileDetal: {},
+        option: {}
     },
     onLoad(option) {
-        const url = option.url;
-        this.data.filePath = url ? decodeURI(url) : 'https://api.github.com/repos/luohao8023/kakaCoder/contents/project.config.json?ref=master';
+        this.data.option = option;
         this.getFileDetail();
     },
     getFileDetail() {
+        const { owner, repo, path } = this.data.option;
         utils.showLoading();
-        request.transfer('get', this.data.filePath).then(res => {
+        request.cloud('getRepoContent', {
+            owner, repo, path
+        }).then(res => {
             utils.hideLoading();
             const fileDetal = res.data || {};
             this.setData({

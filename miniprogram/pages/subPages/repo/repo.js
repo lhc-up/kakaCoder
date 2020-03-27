@@ -373,10 +373,9 @@ Page({
     },
     // 查看code
     viewCode() {
-        const repoName = this.data.repoDetail.full_name;
-        const repoUrl = this.data.repoDetail.url + '/contents';
+        const { name, author } = this.data.option;
         wx.navigateTo({
-            url: `/pages/subPages/fileList/fileList?url=${repoUrl}&repoName=${repoName}`
+            url: `/pages/subPages/fileList/fileList?repo=${name}&owner=${author}`
         });
     }
 });
