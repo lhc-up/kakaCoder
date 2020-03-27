@@ -1,16 +1,28 @@
 .container {
+    padding-top: 100rpx;
     background-color: #597EF7;
 }
-.welcome {
-    height: 300rpx;
-    font-size: 50rpx;
-    text-align: center;
-    padding-top: 100rpx;
-    color: #d6e4ff;
-    box-sizing: border-box;
+.tabWrap {
+    display: flex;
+    padding: 30rpx;
+    justify-content: center;
+    margin-bottom: 50rpx;
+}
+.tabWrap .tab {
+    position: relative;
+    margin: 0 50rpx;
+    padding: 20rpx;
+    font-size: 30rpx;
+    color: #adc6ff;
+    transition: all ease .2s;
+}
+.tabWrap .tab.select {
+    color: #1d39c4;
+    transform: scale(1.1);
 }
 .formWrap {
     width: 550rpx;
+    height: 300rpx;
     margin: 0 auto;
 }
 .formWrap .input {
@@ -24,7 +36,7 @@
 .placeholder {
     color: #adc6ff;
 }
-.formWrap .btn {
+.btn {
     width: 300rpx;
     height: 80rpx;
     margin: 120rpx auto;
@@ -34,11 +46,15 @@
     border-radius: 10rpx;
     background-color: #2f54eb;
 }
-.formWrap .btnHover {
+.btnHover {
     opacity: .6;
 }
 .tip {
     font-size: 24rpx;
     color: #ADC6FF;
     text-align: center;
+}
+.token {
+    padding-top: 20rpx;
+    color: #87e8de;
 }

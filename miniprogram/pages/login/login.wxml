@@ -1,9 +1,22 @@
 <view class="container">
-    <view class="welcome">Welcome</view>
-    <view class="formWrap">
-        <input class="input" data-type="username" bindinput="onInput" placeholder-class="placeholder" placeholder="Username"/>
-        <input bindconfirm="login" type="password" class="input" data-type="password" bindinput="onInput" placeholder-class="placeholder" placeholder="Password"/>
-        <view bindtap="login" hover-stay-time="50" hover-class="btnHover" class="btn">LOGIN</view>
+    <view class="tabWrap">
+        <view bindtap="switchTab" class="tab {{currentIndex===0?'select':''}}" data-index="0">token</view>
+        <view bindtap="switchTab" class="tab {{currentIndex===1?'select':''}}" data-index="1">账号密码</view>
     </view>
-    <view class="tip">账号密码只做本地存储，不上传服务器，请放心</view>
+    <view class="formWrap">
+        <swiper current="{{currentIndex}}">
+            <swiper-item>
+                <input class="input" bindconfirm="loginByToken" data-type="token" bindinput="onInput" placeholder="请输入token"/>
+            </swiper-item>
+            <swiper-item>
+                <input class="input" data-type="username" bindinput="onInput" placeholder-class="placeholder" placeholder="请输入用户名"/>
+                <input bindconfirm="login" type="password" class="input" data-type="password" bindinput="onInput" placeholder-class="placeholder" placeholder="请输入密码"/>
+            </swiper-item>
+        </swiper>
+    </view>
+    <view bindtap="handleLogin" hover-stay-time="50" hover-class="btnHover" class="btn">LOGIN</view>
+    <view class="tip">账号密码以及token只做本地存储，不上传服务器</view>
+    <view class="tip">推荐使用token方式登录</view>
+    <view class="tip">复制以下地址至浏览器，查看token生成步骤：</view>
+    <view bindtap="copyLink" class="tip token">https://github.com/settings/tokens/new</view>
 </view>
